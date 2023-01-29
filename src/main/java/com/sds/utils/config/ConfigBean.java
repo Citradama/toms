@@ -8,6 +8,9 @@ public class ConfigBean {
 	private String endpoint_muser;
 	private String endpoint_musergroup;
 	private String endpoint_musergroupmenu;
+	private String endpoint_mcust;
+	private String endpoint_mcategory;
+	private String endpoint_tquest;
 
 	public String getUrl_base() {
 		return url_base;
@@ -55,6 +58,30 @@ public class ConfigBean {
 
 	public void setEndpoint_musergroupmenu(String endpoint_musergroupmenu) {
 		this.endpoint_musergroupmenu = endpoint_musergroupmenu;
+	}
+
+	public String getEndpoint_mcust() {
+		return endpoint_mcust;
+	}
+
+	public void setEndpoint_mcust(String endpoint_mcust) {
+		this.endpoint_mcust = endpoint_mcust;
+	}
+
+	public String getEndpoint_mcategory() {
+		return endpoint_mcategory;
+	}
+
+	public void setEndpoint_mcategory(String endpoint_mcategory) {
+		this.endpoint_mcategory = endpoint_mcategory;
+	}
+
+	public String getEndpoint_tquest() {
+		return endpoint_tquest;
+	}
+
+	public void setEndpoint_tquest(String endpoint_tquest) {
+		this.endpoint_tquest = endpoint_tquest;
 	}
 
 }

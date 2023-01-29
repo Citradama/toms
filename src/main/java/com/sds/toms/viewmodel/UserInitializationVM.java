@@ -94,7 +94,7 @@ public class UserInitializationVM {
 						buttonHeader.setClientAttribute("aria-expanded", "false");
 						buttonHeader.setClientAttribute("aria-controls", "collapseOne" + idx);
 						Label label = new Label(obj.getMmenu().getMenugroup());
-						label.setStyle("font-size:12px");
+						label.setStyle("font-size:14px");
 						buttonHeader.appendChild(label);
 						buttonHeader.setParent(h2);
 
@@ -120,7 +120,7 @@ public class UserInitializationVM {
 					i.setClientAttribute("class", "fas fa-circle fa-fw me-3");
 					HtmlNativeComponent span = new HtmlNativeComponent("span");
 					Label label = new Label(obj.getMmenu().getMenuname());
-					label.setStyle("font-size:12px");
+					label.setStyle("font-size:14px");
 					span.appendChild(label);
 					a.appendChild(i);
 					a.appendChild(span);

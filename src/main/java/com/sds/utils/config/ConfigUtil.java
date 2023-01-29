@@ -23,6 +23,9 @@ public class ConfigUtil {
 				config.setEndpoint_muser(prop.getProperty("endpoint_muser"));
 				config.setEndpoint_musergroup(prop.getProperty("endpoint_musergroup"));
 				config.setEndpoint_musergroupmenu(prop.getProperty("endpoint_musergroupmenu"));
+				config.setEndpoint_mcust(prop.getProperty("endpoint_mcust"));
+				config.setEndpoint_mcategory(prop.getProperty("endpoint_mcategory"));
+				config.setEndpoint_tquest(prop.getProperty("endpoint_tquest"));
 				
 				System.out.println("--- Initialize Configuration...");
 				System.out.println("--- url_base : " + config.getUrl_base());

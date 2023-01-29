@@ -1,8 +1,8 @@
 <?page title="${desktop.webApp.appName}"?>
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 
-<?link rel="stylesheet" type="text/css"	href="mdb/css/bootstrap.min.css" ?>
-<?link rel="stylesheet" type="text/css" href="mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="/mdb/css/mdb.min.css" ?>
 
 <?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
 <?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=1223" ?>
@@ -29,7 +29,7 @@
 		<div class="container-fluid" style="font-size: 12px;">
 			<div class="d-flex justify-content-between">
 				<div class="navbar-brand d-flex align-items-center color-900">
-					<n:img src="../images/logo1.png" width="20%" class="img-fluid no-filter" style="margin-right:90px;"/>
+					<n:img src="/images/logo-01.png" width="20%" class="img-fluid no-filter" style="margin-right:90px;"/>
 					
 					 <menubar id="menuBar" autodrop="true" style="margin:15px;background-color: #2a91b6; border-color:#2a91b6">
 					 	<menu label="Kategori" style="font-size:12px; background-color:  #2a91b6">
@@ -53,7 +53,7 @@
 							 href="#" ca:role="button" ca:data-bs-toggle="dropdown" visible="false">
 							 <h:img
 								class="avatar lg img-thumbnail rounded-circle shadow"
-								src="../images/User.png"  />
+								src="/images/User.png"  />
 						  </a>
 					  </div>
 					</h:li>
@@ -72,9 +72,9 @@
 							<div id="slider" sclass="myslider" width="600px" height="300px"
 		       				  	 w:onBind="this.bxSlider = jq(this).bxSlider();"
 		      					 w:reloadSlider="function() { this.bxSlider.reloadSlider();}">
-								<div sclass="slide"><image src="../images/img1.png" width="100%" class="img-fluid no-filter"/></div>
-								<div sclass="slide"><image src="../images/img2.png" width="100%" class="img-fluid no-filter"/></div>
-											<div sclass="slide"><image src="../images/img3.png" width="100%" class="img-fluid no-filter"/></div>
+								<div sclass="slide"><image src="/images/img1.png" width="100%" class="img-fluid no-filter"/></div>
+								<div sclass="slide"><image src="/images/img2.png" width="100%" class="img-fluid no-filter"/></div>
+											<div sclass="slide"><image src="/images/img3.png" width="100%" class="img-fluid no-filter"/></div>
 							</div>
 						</div>
 					</div>
@@ -85,7 +85,7 @@
 			    <div class="card">
 			           <div class="card-header" style="background-color:#55B4EA">	
 			           <hlayout> 
-			           	 <image src="../images/bestsell.png"
+			           	 <image src="/images/bestsell.png"
 										width="30px" class="img-fluid no-filter"/> 
 			          	 <label value="Pembelajaran Terlaris" style="font-align:bottom; font-size:18px; font-family:arial; font-weight:bold"/>
 			          </hlayout>		          
@@ -95,7 +95,7 @@
 			              <div class="row">
 			              	<div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
 			              	<separator />
-			              	    <image src="../images/lessons/math.jpg"
+			              	    <image src="/images/lessons/math.jpg"
 										width="100%" class="img-fluid no-filter"/>
 								<separator />
 								<separator />
@@ -105,7 +105,7 @@
 			              	       </div>
 			              	        <div align="right" class="col-6">
 			              	           <a onClick="@command('doFav')">
-			              	           <image id="imgheart11" src="../images/heartblank.png"
+			              	           <image id="imgheart11" src="/images/heartblank.png"
 										width="24px" class="img-fluid no-filter"/></a>
 			              	       </div>
 			              	    </div>
@@ -129,7 +129,7 @@
 			              	        <div align="right" class="col-6">
 			              	        <hlayout>
 			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="../images/star.png"
+			              	           <image src="/images/star.png"
 										width="20px" class="img-fluid no-filter"/>
 			              	        </hlayout>
 			              	        </div>
@@ -147,7 +147,7 @@
 			              	</div>
 			              	<div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
 			              	<separator />
-			              	    <image src="../images/lessons/math1.jpg"
+			              	    <image src="/images/lessons/math1.jpg"
 										width="100%" class="img-fluid no-filter"/>
 								<separator />
 								<separator />
@@ -157,7 +157,7 @@
 			              	       </div>
 			              	        <div align="right" class="col-6">
 			              	           <a>
-			              	           <image src="../images/heartblank.png"
+			              	           <image src="/images/heartblank.png"
 										width="24px" class="img-fluid no-filter"/></a>
 			              	       </div>
 			              	    </div>
@@ -181,7 +181,7 @@
 			              	        <div align="right" class="col-6">
 			              	        <hlayout>
 			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="../images/star.png"
+			              	           <image src="/images/star.png"
 										width="20px" class="img-fluid no-filter"/>
 			              	        </hlayout>
 			              	        </div>
@@ -199,7 +199,7 @@
 			              	</div>
 			              <div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
 			              	<separator />
-			              	    <image src="../images/lessons/science.jpg"
+			              	    <image src="/images/lessons/science.jpg"
 										width="100%" class="img-fluid no-filter"/>
 								<separator />
 								<separator />
@@ -209,7 +209,7 @@
 			              	       </div>
 			              	        <div align="right" class="col-6">
 			              	           <a>
-			              	           <image src="../images/heartblank.png"
+			              	           <image src="/images/heartblank.png"
 										width="24px" class="img-fluid no-filter"/></a>
 			              	       </div>
 			              	    </div>
@@ -233,7 +233,7 @@
 			              	        <div align="right" class="col-6">
 			              	        <hlayout>
 			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="../images/star.png"
+			              	           <image src="/images/star.png"
 										width="20px" class="img-fluid no-filter"/>
 			              	        </hlayout>
 			              	        </div>
@@ -251,7 +251,7 @@
 			              	</div>
 			              <div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
 			              	<separator />
-			              	    <image src="../images/lessons/science1.jpg"
+			              	    <image src="/images/lessons/science1.jpg"
 										width="100%" class="img-fluid no-filter"/>
 								<separator />
 								<separator />
@@ -261,7 +261,7 @@
 			              	       </div>
 			              	        <div align="right" class="col-6">
 			              	           <a>
-			              	           <image src="../images/heartblank.png"
+			              	           <image src="/images/heartblank.png"
 										width="24px" class="img-fluid no-filter"/></a>
 			              	       </div>
 			              	    </div>
@@ -285,7 +285,7 @@
 			              	        <div align="right" class="col-6">
 			              	        <hlayout>
 			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="../images/star.png"
+			              	           <image src="/images/star.png"
 										width="20px" class="img-fluid no-filter"/>
 			              	        </hlayout>
 			              	        </div>
@@ -312,7 +312,7 @@
 		<div class="card">
 			           <div class="card-header" style="background-color:#55B4EA">	
 			           <hlayout> 
-			           	 <image src="../images/new.png"
+			           	 <image src="/images/new.png"
 										width="30px" class="img-fluid no-filter"/> 
 			          	 <label value="Pembelajaran Terbaru" style="font-align:bottom; font-size:18px; font-family:arial; font-weight:bold"/>
 			          </hlayout>		          
@@ -322,7 +322,7 @@
 			              <div class="row">
 			              	<div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
 			              	<separator />
-			              	    <image src="../images/lessons/math.jpg"
+			              	    <image src="/images/lessons/math.jpg"
 										width="100%" class="img-fluid no-filter"/>
 								<separator />
 								<separator />
@@ -332,7 +332,7 @@
 			              	       </div>
 			              	        <div align="right" class="col-6">
 			              	           <a onClick="@command('doFav')">
-			              	           <image id="imgheart1" src="../images/heartblank.png"
+			              	           <image id="imgheart1" src="/images/heartblank.png"
 										width="24px" class="img-fluid no-filter"/></a>
 			              	       </div>
 			              	    </div>
@@ -356,7 +356,7 @@
 			              	        <div align="right" class="col-6">
 			              	        <hlayout>
 			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="../images/star.png"
+			              	           <image src="/images/star.png"
 										width="20px" class="img-fluid no-filter"/>
 			              	        </hlayout>
 			              	        </div>
@@ -374,7 +374,7 @@
 			              	</div>
 			              	<div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
 			              	<separator />
-			              	    <image src="../images/lessons/math1.jpg"
+			              	    <image src="/images/lessons/math1.jpg"
 										width="100%" class="img-fluid no-filter"/>
 								<separator />
 								<separator />
@@ -384,7 +384,7 @@
 			              	       </div>
 			              	        <div align="right" class="col-6">
 			              	           <a>
-			              	           <image src="../images/heartblank.png"
+			              	           <image src="/images/heartblank.png"
 										width="24px" class="img-fluid no-filter"/></a>
 			              	       </div>
 			              	    </div>
@@ -408,7 +408,7 @@
 			              	        <div align="right" class="col-6">
 			              	        <hlayout>
 			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="../images/star.png"
+			              	           <image src="/images/star.png"
 										width="20px" class="img-fluid no-filter"/>
 			              	        </hlayout>
 			              	        </div>
@@ -426,7 +426,7 @@
 			              	</div>
 			              <div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
 			              	<separator />
-			              	    <image src="../images/lessons/science.jpg"
+			              	    <image src="/images/lessons/science.jpg"
 										width="100%" class="img-fluid no-filter"/>
 								<separator />
 								<separator />
@@ -436,7 +436,7 @@
 			              	       </div>
 			              	        <div align="right" class="col-6">
 			              	           <a>
-			              	           <image src="../images/heartblank.png"
+			              	           <image src="/images/heartblank.png"
 										width="24px" class="img-fluid no-filter"/></a>
 			              	       </div>
 			              	    </div>
@@ -460,7 +460,7 @@
 			              	        <div align="right" class="col-6">
 			              	        <hlayout>
 			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="../images/star.png"
+			              	           <image src="/images/star.png"
 										width="20px" class="img-fluid no-filter"/>
 			              	        </hlayout>
 			              	        </div>
@@ -478,7 +478,7 @@
 			              	</div>
 			              <div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
 			              	<separator />
-			              	    <image src="../images/lessons/science1.jpg"
+			              	    <image src="/images/lessons/science1.jpg"
 										width="100%" class="img-fluid no-filter"/>
 								<separator />
 								<separator />
@@ -488,7 +488,7 @@
 			              	       </div>
 			              	        <div align="right" class="col-6">
 			              	           <a>
-			              	           <image src="../images/heartblank.png"
+			              	           <image src="/images/heartblank.png"
 										width="24px" class="img-fluid no-filter"/></a>
 			              	       </div>
 			              	    </div>
@@ -512,7 +512,7 @@
 			              	        <div align="right" class="col-6">
 			              	        <hlayout>
 			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="../images/star.png"
+			              	           <image src="/images/star.png"
 										width="20px" class="img-fluid no-filter"/>
 			              	        </hlayout>
 			              	        </div>
@@ -544,7 +544,7 @@
 					style="padding-left:60px; padding-right:60px; background-color: #f3fdff !important; box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24); border-radius:8px">
 				<separator />
 				<separator />
-					<n:img src="../images/logo1.png"
+					<n:img src="/images/logo-01.png"
 						class="img-fluid mb-4 no-filter " width="70%">
 					</n:img>
 					<n:hr />
@@ -607,7 +607,7 @@
 					style="padding-left:60px; padding-right:60px; background-color: #f3fdff !important; box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24); border-radius:8px">
 				<separator />
 				<separator />
-					<n:img src="../images/logo1.png"
+					<n:img src="/images/logo-01.png"
 						class="img-fluid mb-4 no-filter " width="70%">
 					</n:img>
 					<n:hr />
@@ -709,7 +709,7 @@
 									tooltiptext="Register" onClick="@command('doRegist')"/>
 							</div>
 							<div align="left" style="margin-top:-25px"> 
-								<a href="../view/indexcust.zul">
+								<a href="/toms">
    								 <label value="Kembali ke halaman awal" style="font-size:12px;padding:-20px"/>
 								</a>
 							</div>
@@ -752,13 +752,13 @@
 					   
 					 <hlayout> 
 					     <a>
-					         <image src="../images/ic-facebook.png"
+					         <image src="/images/ic-facebook.png"
 								width="24px" class="img-fluid no-filter" tooltiptext="Facebook"/></a>
 					     <a>
-					         <image src="../images/ic-instagram.png"
+					         <image src="/images/ic-instagram.png"
 								width="24px" class="img-fluid no-filter" tooltiptext="Instagram"/></a>
 						 <a>
-					         <image src="../images/ic-twitter.png"
+					         <image src="/images/ic-twitter.png"
 								width="24px" class="img-fluid no-filter" tooltiptext="Twitter"/></a>
 					 </hlayout>
 				  </vlayout>				  
@@ -770,10 +770,10 @@
 				      <hlayout>
 					
 					      <a>
-					      <image src="../images/ic-playstore.png"
+					      <image src="/images/ic-playstore.png"
 								width="100px" class="img-fluid no-filter" tooltiptext="Google Play"/></a>
 					      <a>
-					      <image src="../images/ic-appstore.png"
+					      <image src="/images/ic-appstore.png"
 								width="px" class="img-fluid no-filter" tooltiptext="App Store"/></a>
 					
 					  </hlayout>

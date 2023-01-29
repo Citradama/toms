@@ -22,11 +22,13 @@ import org.zkoss.zul.RowRenderer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
+import com.sds.toms.model.Mcust;
 import com.sds.toms.model.Muniversity;
 import com.sds.toms.pojo.ObjectResp;
 import com.sds.utils.config.ConfigUtil;
 
-public class MuniversityListVM {
+public class McustListVM {
+	
 
 	private Integer totalrecord;
 	
@@ -40,12 +42,14 @@ public class MuniversityListVM {
 		doReset();
 		
 		if (grid != null) {
-			grid.setRowRenderer(new RowRenderer<Muniversity>() {
+			grid.setRowRenderer(new RowRenderer<Mcust>() {
 
 				@Override
-				public void render(Row row, Muniversity data, int index) throws Exception {
+				public void render(Row row, Mcust data, int index) throws Exception {
 					row.getChildren().add(new Label(String.valueOf(index + 1)));
-					row.getChildren().add(new Label(data.getUniversityname() != null ? data.getUniversityname() : ""));
+					row.getChildren().add(new Label(data.getCustid() != null ? data.getCustid() : ""));
+					row.getChildren().add(new Label(data.getCustname() != null ? data.getCustname() : ""));
+					row.getChildren().add(new Label(data.getEmail() != null ? data.getEmail() : ""));
 
 					Button btnDetail = new Button("Detail");
 					btnDetail.setClass("btn btn-sm btn-info");
@@ -72,15 +76,16 @@ public class MuniversityListVM {
 	
 	public void doReset() {
 		totalrecord = 0;
+		
 		ObjectResp Resp = null;
 
-		String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_muniversity();
+		String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mcust();
 		Resp = RespHandler.getObject(url);
 
 		if (Resp.getCode() == 200) {
 			ObjectMapper mapper = new ObjectMapper();
-			List<Muniversity> objList = mapper.convertValue(Resp.getData(),
-					new TypeReference<List<Muniversity>>() {
+			List<Mcust> objList = mapper.convertValue(Resp.getData(),
+					new TypeReference<List<Mcust>>() {
 					});
 
 			System.out.println(objList.size());

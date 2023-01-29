@@ -22,30 +22,36 @@ import org.zkoss.zul.RowRenderer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
-import com.sds.toms.model.Muniversity;
+import com.sds.toms.model.Mcategory;
+import com.sds.toms.model.Tquest;
 import com.sds.toms.pojo.ObjectResp;
 import com.sds.utils.config.ConfigUtil;
 
-public class MuniversityListVM {
+public class TquestListVM {
 
 	private Integer totalrecord;
 	
 	@Wire
 	private Grid grid;
-	
+
 	@AfterCompose
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		Selectors.wireComponents(view, this, false);
-		
+
 		doReset();
-		
+
 		if (grid != null) {
-			grid.setRowRenderer(new RowRenderer<Muniversity>() {
+			grid.setRowRenderer(new RowRenderer<Tquest>() {
 
 				@Override
-				public void render(Row row, Muniversity data, int index) throws Exception {
+				public void render(Row row, Tquest data, int index) throws Exception {
 					row.getChildren().add(new Label(String.valueOf(index + 1)));
-					row.getChildren().add(new Label(data.getUniversityname() != null ? data.getUniversityname() : ""));
+					row.getChildren().add(new Label(data.getQuestid() != null ? data.getQuestid() : ""));
+					row.getChildren()
+							.add(new Label(data.getMcategory() != null ? data.getMcategory().getCategory() : ""));
+					row.getChildren().add(new Label(data.getMdosen() != null ? data.getMdosen().getDosenname() : ""));
+					row.getChildren().add(new Label(data.getRowstat() != null ? data.getRowstat() : ""));
+					row.getChildren().add(new Label(data.getStatus() != null ? data.getStatus() : ""));
 
 					Button btnDetail = new Button("Detail");
 					btnDetail.setClass("btn btn-sm btn-info");
@@ -57,7 +63,6 @@ public class MuniversityListVM {
 
 					});
 
-
 					Div div = new Div();
 					div.setClass("btn-group");
 					div.appendChild(btnDetail);
@@ -67,21 +72,20 @@ public class MuniversityListVM {
 
 			});
 		}
-		
+
 	}
-	
+
 	public void doReset() {
 		totalrecord = 0;
 		ObjectResp Resp = null;
 
-		String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_muniversity();
+		String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mcategory();
 		Resp = RespHandler.getObject(url);
 
 		if (Resp.getCode() == 200) {
 			ObjectMapper mapper = new ObjectMapper();
-			List<Muniversity> objList = mapper.convertValue(Resp.getData(),
-					new TypeReference<List<Muniversity>>() {
-					});
+			List<Mcategory> objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Mcategory>>() {
+			});
 
 			System.out.println(objList.size());
 			grid.setModel(new ListModelList<>(objList));
@@ -98,5 +102,4 @@ public class MuniversityListVM {
 	public void setTotalrecord(Integer totalrecord) {
 		this.totalrecord = totalrecord;
 	}
-	
 }

@@ -1,0 +1,96 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12213" ?>
+
+<zk xmlns:w="client" xmlns:n="native">
+	<div class="card"
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.McustListVM')">
+		<div class="card-header" style="background-color:white;">
+			<n:h5>
+				<n:i class="fas fa-list"></n:i>
+				Daftar Customer
+			</n:h5>
+		</div>
+		<div class="card-body">
+			<groupbox id="gbSearch">
+				<caption label="${labels.common.searching}"
+					image="/images/search.png" />
+				<grid>
+					<columns>
+						<column width="170px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<label value="${labels.lecturer.id}" />
+							<textbox cols="25" maxlength="20" />
+						</row>
+
+					</rows>
+					<foot>
+						<footer />
+						<footer>
+							<div class="row">
+								<div class="col-md-1">
+									<n:div>
+										<button autodisable="self"
+											label=" ${labels.common.search}" class="btn btn-warning"
+											iconSclass="z-icon-search" onClick="@command('doSearch')" />
+										<button autodisable="self"
+											label=" ${labels.common.reset}" class="btn btn-primary"
+											iconSclass="z-icon-repeat" onClick="@command('doReset')" />
+
+									</n:div>
+								</div>
+							</div>
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+			<separator />
+			<separator />
+			<div class="row">
+				<div class="col-md-12" align="right">
+					<button autodisable="self" label=" Buat Baru"
+						sclass="btn btn-primary btn-sm" iconSclass="z-icon-plus"
+						onClick="@command('doAddnew')">
+					</button>
+
+				</div>
+			</div>
+			<separator />
+			<div class="row">
+				<div class="col-md">
+					<paging id="paging" autohide="true"
+						style="margin-bottom:-20px" />
+				</div>
+				<div class="col-md-2" align="right">
+					<label value="Total Data :"
+						style="font-weight: bold" />
+					<label value="@load(vm.totalrecord)"
+						style="font-weight: bold" />
+				</div>
+			</div>
+			<div style="max-width:1400px; overflow:auto">
+				<timer id="timer" />
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}" width="40px"
+							align="right" class="head-color " />
+						<column label="${labels.lecturer.id}"
+							width="150px" class="head-color " />
+						<column label="${labels.lecturer.name}"
+							class="head-color " />
+						<column label="${labels.lecturer.university}"
+							width="230px" class="head-color " />
+						<column label="${labels.common.action}"
+							width="250px" align="center" class="head-color" />
+					</columns>
+				</grid>
+			</div>
+		</div>
+	</div>
+</zk>

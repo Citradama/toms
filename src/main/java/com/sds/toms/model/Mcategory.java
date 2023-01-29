@@ -5,6 +5,7 @@ import java.util.Date;
 public class Mcategory {
 
 	private Integer mcategorypk;
+	private String category;
 	private String rowstat;
 	private Integer rowedit;
 	private Date createtime;
@@ -66,6 +67,14 @@ public class Mcategory {
 
 	public void setUpdatedby(String updatedby) {
 		this.updatedby = updatedby;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 }

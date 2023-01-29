@@ -26,7 +26,9 @@ import com.sds.toms.model.Mdosen;
 import com.sds.toms.pojo.ObjectResp;
 import com.sds.utils.config.ConfigUtil;
 
-public class MdosenListVM {
+public class MdosenListVM {	
+
+	private Integer totalrecord;
 
 	@Wire
 	private Grid grid;
@@ -71,6 +73,8 @@ public class MdosenListVM {
 	}
 	
 	public void doReset() {
+		totalrecord = 0;
+		
 		ObjectResp Resp = null;
 
 		String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mdosen();
@@ -84,8 +88,17 @@ public class MdosenListVM {
 
 			System.out.println(objList.size());
 			grid.setModel(new ListModelList<>(objList));
+			totalrecord = objList.size();
 		} else {
 			System.out.println("nulll");
 		}
+	}
+
+	public Integer getTotalrecord() {
+		return totalrecord;
+	}
+
+	public void setTotalrecord(Integer totalrecord) {
+		this.totalrecord = totalrecord;
 	}
 }
