@@ -29,7 +29,7 @@
 		<div class="container-fluid" style="font-size: 12px;">
 			<div class="d-flex justify-content-between">
 				<div class="navbar-brand d-flex align-items-center color-900">
-					<n:img src="/images/logo-01.png" width="20%" class="img-fluid no-filter" style="margin-right:90px;"/>
+					<n:img src="images/logo-01.png" width="80px" class="img-fluid no-filter" style="margin-right:90px;"/>
 					
 					 <menubar id="menuBar" autodrop="true" style="margin:15px;background-color: #2a91b6; border-color:#2a91b6">
 					 	<menu label="Kategori" style="font-size:12px; background-color:  #2a91b6">
@@ -544,10 +544,9 @@
 					style="padding-left:60px; padding-right:60px; background-color: #f3fdff !important; box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24); border-radius:8px">
 				<separator />
 				<separator />
-					<n:img src="/images/logo-01.png"
-						class="img-fluid mb-4 no-filter " width="70%">
-					</n:img>
-					<n:hr />
+					<n:img src="images/logo-01.png"
+						class="img-fluid mb-4 no-filter " width="40%">
+					</n:img> 
 					<n:br/>
 					<label sclass="text-danger" />
 					<label value="Email" style="font-size:14px; font-weight:bold"/>
@@ -607,8 +606,8 @@
 					style="padding-left:60px; padding-right:60px; background-color: #f3fdff !important; box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24); border-radius:8px">
 				<separator />
 				<separator />
-					<n:img src="/images/logo-01.png"
-						class="img-fluid mb-4 no-filter " width="70%">
+					<n:img src="images/logo-01.png"
+						class="img-fluid mb-4 no-filter " width="40%">
 					</n:img>
 					<n:hr />
 					<n:br/>

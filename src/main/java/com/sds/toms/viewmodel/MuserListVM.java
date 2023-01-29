@@ -27,6 +27,9 @@ import com.sds.toms.pojo.ObjectResp;
 import com.sds.utils.config.ConfigUtil;
 
 public class MuserListVM {
+	
+
+	private Integer totalrecord;
 
 	@Wire
 	private Grid grid;
@@ -47,8 +50,11 @@ public class MuserListVM {
 					row.getChildren().add(new Label(data.getUsername() != null ? data.getUsername() : ""));
 					row.getChildren().add(new Label(data.getMusergroup() != null ? data.getMusergroup().getUsergroupname() : ""));
 					
-					Button btnDetail = new Button("Detail");
+					Button btnDetail = new Button();
 					btnDetail.setClass("btn btn-sm btn-info");
+					btnDetail.setIconSclass("z-icon-eye");
+					btnDetail.setStyle("border-radius:200px; margin:3px");
+					btnDetail.setTooltiptext("Detail");
 					btnDetail.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
 						@Override
@@ -56,11 +62,37 @@ public class MuserListVM {
 						}
 
 					});
+					
+					Button btnEdit = new Button();
+					btnEdit.setClass("btn btn-sm btn-success");
+					btnEdit.setIconSclass("z-icon-edit");
+					btnEdit.setStyle("border-radius:200px; margin:3px");
+					btnEdit.setTooltiptext("Ubah");
+					btnEdit.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
+						@Override
+						public void onEvent(Event event) throws Exception {
+						}
+
+					});
+					
+					Button btnDelete = new Button();
+					btnDelete.setClass("btn btn-sm btn-danger");
+					btnDelete.setIconSclass("z-icon-trash");
+					btnDelete.setStyle("border-radius:200px; margin:3px");
+					btnDelete.setTooltiptext("Hapus");
+					btnDelete.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+
+						@Override
+						public void onEvent(Event event) throws Exception {
+						}
+
+					});
 
 					Div div = new Div();
-					div.setClass("btn-group");
 					div.appendChild(btnDetail);
+					div.appendChild(btnEdit);
+					div.appendChild(btnDelete);
 					row.getChildren().add(div);
 
 				}
@@ -71,6 +103,7 @@ public class MuserListVM {
 	}
 	
 	public void doReset() {
+		totalrecord = 0;
 		ObjectResp Resp = null;
 
 		String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_muser();
@@ -84,8 +117,17 @@ public class MuserListVM {
 
 			System.out.println(objList.size());
 			grid.setModel(new ListModelList<>(objList));
+			totalrecord = objList.size();
 		} else {
 			System.out.println("nulll");
 		}
+	}
+
+	public Integer getTotalrecord() {
+		return totalrecord;
+	}
+
+	public void setTotalrecord(Integer totalrecord) {
+		this.totalrecord = totalrecord;
 	}
 }

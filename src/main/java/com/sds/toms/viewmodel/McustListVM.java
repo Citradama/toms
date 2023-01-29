@@ -51,8 +51,11 @@ public class McustListVM {
 					row.getChildren().add(new Label(data.getCustname() != null ? data.getCustname() : ""));
 					row.getChildren().add(new Label(data.getEmail() != null ? data.getEmail() : ""));
 
-					Button btnDetail = new Button("Detail");
+					Button btnDetail = new Button();
 					btnDetail.setClass("btn btn-sm btn-info");
+					btnDetail.setIconSclass("z-icon-eye");
+					btnDetail.setStyle("border-radius:200px; margin:3px");
+					btnDetail.setTooltiptext("Detail");
 					btnDetail.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
 						@Override
@@ -60,11 +63,37 @@ public class McustListVM {
 						}
 
 					});
+					
+					Button btnEdit = new Button();
+					btnEdit.setClass("btn btn-sm btn-success");
+					btnEdit.setIconSclass("z-icon-edit");
+					btnEdit.setStyle("border-radius:200px; margin:3px");
+					btnEdit.setTooltiptext("Ubah");
+					btnEdit.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
+						@Override
+						public void onEvent(Event event) throws Exception {
+						}
+
+					});
+					
+					Button btnDelete = new Button();
+					btnDelete.setClass("btn btn-sm btn-danger");
+					btnDelete.setIconSclass("z-icon-trash");
+					btnDelete.setStyle("border-radius:200px; margin:3px");
+					btnDelete.setTooltiptext("Hapus");
+					btnDelete.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+
+						@Override
+						public void onEvent(Event event) throws Exception {
+						}
+
+					});
 
 					Div div = new Div();
-					div.setClass("btn-group");
 					div.appendChild(btnDetail);
+					div.appendChild(btnEdit);
+					div.appendChild(btnDelete);
 					row.getChildren().add(div);
 
 				}

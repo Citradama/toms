@@ -55,8 +55,8 @@
 								class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center"
 								href="#" id="navbarDropdownMenuLink" role="button"
 								data-mdb-toggle="dropdown" aria-expanded="false">
-								<image src="/images/user.png"
-									height="24px" sclass="rounded-circle" />
+								<image src="/images/User.png"
+									height="35px" sclass="rounded-circle" />
 							</n:a>
 							<n:ul
 								class="dropdown-menu dropdown-menu-end"

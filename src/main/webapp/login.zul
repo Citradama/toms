@@ -19,29 +19,33 @@
 		padding-top: 40px; padding-bottom: 10px; }
 	</style>
 	<div id="bdlogin" class="container-fluid page-body"
-		style="background-image: url('images/landing-page2.png'); background-repeat: no-repeat; background-attachment: inherit;
-		background-position: center; background-size: cover;">
+		style="background-image: url('images/blank-papergrey.jpg'); background-repeat: no-repeat; background-attachment: inherit;
+		background-position: center; background-size: cover;"
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.AuthentificationVm')">
 		<div class="row animated fadeIn vh-100">
 			<div class="col-md-4 offset-md-7  my-auto">
 
-				<n:form id="fmlogin"
+				<n:form id="fmlogin" style="background-color:#fafeff"
 					class="border border-light z-depth-1-half pl-4 pr-4">
-					<n:img src="images/logo1.png" class="img-fluid mb-4"
-						width="200px" height="100px">
+					<n:img src="images/logo-01.png"
+						class="img-fluid mb-4" width="200px" height="100px">
 					</n:img>
 					<div>
 						<label sclass="text-danger" />
 						<textbox id="tbUsername" maxlength="15"
-							focus="true" style="background-color: #f1f2f2 !important;border-radius:10px"
-							sclass="form-control form-control-md mb-4"
-							placeholder="User ID" />
+							focus="true"
+							style="background-color: #f1f2f2 !important;border-radius:10px"
+							sclass="form-control form-control-md mb-4" placeholder="User ID"
+							value="@bind(vm.userid)" />
 						<textbox id="tbPassword" type="password"
-							maxlength="20" style="background-color: #f1f2f2 !important; border-radius:10px"
+							maxlength="20" value="@bind(vm.password)"
+							style="background-color: #f1f2f2 !important; border-radius:10px"
 							sclass="form-control form-control-md mb-4"
 							onOK="@command('doLogin')" placeholder="Password" />
 						<separator />
 						<button onClick="@command('doLogin')"
-							autodisable="self" style="background-color: #576cfb !important; border-radius:10px"
+							autodisable="self"
+							style="background-color: #795182 !important; border-radius:10px"
 							class="btn btn-info btn-block my-4" label="LOG IN" />
 					</div>
 				</n:form>

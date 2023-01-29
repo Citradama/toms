@@ -35,18 +35,15 @@
 						<footer />
 						<footer>
 							<div class="row">
-								<div class="col-md-2">
-									<n:div role="group">
-										<a autodisable="self"
-											label=" ${labels.common.search}" width="60%"
-											class="btn btn-warning" iconSclass="z-icon-search"
-											onClick="@command('doSearch')">
-										</a>
-										<a autodisable="self"
-											label=" ${labels.common.reset}" width="60%"
-											class="btn btn-primary" iconSclass="z-icon-repeat"
-											onClick="@command('doReset')">
-										</a>
+								<div class="col-md-1">
+									<n:div>
+										<button autodisable="self"
+											label=" ${labels.common.search}" class="btn btn-warning"
+											iconSclass="z-icon-search" onClick="@command('doSearch')" />
+										<button autodisable="self"
+											label=" ${labels.common.reset}" class="btn btn-primary"
+											iconSclass="z-icon-repeat" onClick="@command('doReset')" />
+
 									</n:div>
 								</div>
 							</div>

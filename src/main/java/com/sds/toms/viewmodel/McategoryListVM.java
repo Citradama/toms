@@ -48,7 +48,7 @@ public class McategoryListVM {
 					row.getChildren().add(new Label(data.getCategory() != null ? data.getCategory() : ""));
 
 					Button btnDetail = new Button();
-					btnDetail.setClass("btn btn-sm btn-default");
+					btnDetail.setClass("btn btn-sm btn-info");
 					btnDetail.setIconSclass("z-icon-eye");
 					btnDetail.setStyle("border-radius:200px; margin:3px");
 					btnDetail.setTooltiptext("Detail");

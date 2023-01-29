@@ -23,11 +23,7 @@
 						<column />
 					</columns>
 					<rows>
-						<row>
-							<label value="${labels.lecturer.id}" />
-							<textbox cols="25" maxlength="20" />
-						</row>
-
+					
 					</rows>
 					<foot>
 						<footer />
