@@ -1,0 +1,164 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12213" ?>
+
+<zk xmlns:w="client" xmlns:n="native">
+	<window>
+		<caption />
+		<div class="card">
+			<div class="card-header">
+				<n:h6>
+					Form User
+				</n:h6>
+			</div>
+
+			<div id="divBody" class="card-body pt-1 pb-1 pl-1 pr-1">
+				<groupbox mold="3d" title="Form User">
+					<grid>
+						<columns>
+							<column width="200px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<hlayout>
+									<label
+										value="${labels.user.userid}" />
+									<label value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<textbox id="tbUserid" cols="40"
+										maxlength="15" />
+								</hlayout>
+							</row>
+							<row>
+								<hlayout>
+									<label
+										value="${labels.user.username}" />
+									<label value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<textbox id="tbUsername" cols="40"
+										maxlength="40" />
+								</hlayout>
+							</row>
+							<row>
+								<hlayout>
+									<label value="${labels.user.nohp}" />
+									<label value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<textbox id="tbHp" cols="40" maxlength="40" />
+								</hlayout>
+							</row>
+							<row>
+								<hlayout>
+									<label value="${labels.user.email}" />
+									<label value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<textbox id="tbEmail" cols="40" maxlength="40" />
+								</hlayout>
+							</row>
+							<row>
+								<hlayout>
+									<label value="${labels.user.npp}" />
+									<label value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<textbox id="tbNpp" cols="40" maxlength="40" />
+								</hlayout>
+							</row>
+							<row>
+								<hlayout>
+									<label
+										value="${labels.user.usergroup}" />
+									<label style="color:red">*</label>
+								</hlayout>
+								<hlayout>
+									<combobox id="cbUsergroup"
+										model="@load(vm.musergroup)" cols="37"
+										selectedItem="@bind(e.musergroup)">
+										<template name="model"
+											var="musergroup">
+											<comboitem
+												label="@load(musergroup.usergroupname)" />
+										</template>
+									</combobox>
+									<label
+										value="@load(vmsgs['musergroup'])" style="color:red" />
+								</hlayout>
+							</row>
+							<row>
+								<hlayout>
+									<label value="Username" />
+									<label value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<textbox id="txUsername" cols="40" maxlength="40" />
+								</hlayout>
+							</row>
+							<row>
+								<hlayout>
+									<label value="Password" />
+									<label value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<textbox id="txPassword" type="password" cols="40" maxlength="40" />
+								</hlayout>
+							</row>
+
+							<row>
+								<hlayout>
+									<label>Status Akun</label>
+									<label style="color:red">*</label>
+								</hlayout>
+								<hlayout>
+									<radiogroup id="rg"
+										selectedItem="@bind(e.isactive)" />
+									<radio id="rbY" label="Aktif"
+										value="Y" radiogroup="rg" />
+									<radio id="rbN" label="Tidak Aktif"
+										value="N" radiogroup="rg" />
+									<label
+										value="@load(vmsgs['isactive'])" style="color:red" />
+								</hlayout>
+							</row>
+							<row>
+								<hlayout>
+									<label>Status Terkunci</label>
+									<label style="color:red">*</label>
+								</hlayout>
+								<hlayout>
+									<radiogroup id="rgLock"
+										selectedItem="@bind(e.isblock)" />
+									<radio id="rbLock" label="Terkunci"
+										value="Y" radiogroup="rgLock" />
+									<radio id="rbUnlock"
+										label="Tidak Terkunci" value="N" radiogroup="rgLock" />
+									<label
+										value="@load(vmsgs['isblock'])" style="color:red" />
+								</hlayout>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+
+			</div>
+			<div id="divFooter" class="card-footer">
+				<n:div class="btn-group" role="group">
+					<button id="btnSave" label="Simpan"
+						autodisable="self" sclass="btn btn-primary btn-sm" width="110px"
+						iconSclass="z-icon-save" onClick="@command('doSave')" />
+					<button id="btnCancel" label="Batal"
+						onClick="@command('doReset')" autodisable="self"
+						sclass="btn  btn-default btn-sm" width="110px"
+						iconSclass="z-icon-times" />
+				</n:div>
+			</div>
+		</div>
+		<separator />
+	</window>
+</zk>

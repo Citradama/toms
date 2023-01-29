@@ -1,0 +1,107 @@
+body {
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+z-button {
+	
+}
+
+.avio .page-header {
+	background-color: #005E6A !important;
+}
+
+.zzzavio .zzzzbody-header .zzzmenu-link {
+	overflow: auto;
+	display: flex !important;
+	justify-content: normal !important;
+}
+
+img {
+	filter: none !important;
+}
+
+.swal2-container {
+	z-index: 9999999999999999999999 !important;
+}
+
+.z-loading {
+	position: fixed !important;
+	left: 50% !important;
+	top: 50% !important;
+	z-index: 292929292929292929292 !important;
+}
+
+.z-window-modal {
+	position: fixed !important;
+	max-height: 90% !important;
+	z-index: 1800 !important;
+	overflow-x: hidden !important;
+	overflow-y: scroll !important;
+}
+
+.z-window-content{
+	position: relative;
+    bottom: 10px;
+	overflow-x: hidden !important;
+	overflow-y: hidden !important;
+	height: 100% !important;
+}
+
+div::-webkit-scrollbar {
+	background: grey;
+	visibility: visible;
+	width: 4px;
+}
+
+div::-webkit-scrollbar-thumb {
+	background: 0 0;
+	visibility: visible;
+}
+
+div::-webkit-scrollbar-track {
+	visibility: visible;
+	background: 0 0;
+}
+
+div:hover::-webkit-scrollbar-thumb {
+	background: orange;
+}
+
+
+
+
+body::-webkit-scrollbar {
+	background: grey;
+	visibility: visible;
+	width: 4px;
+}
+
+body::-webkit-scrollbar-thumb {
+	background: 0 0;
+	visibility: visible;
+}
+
+body::-webkit-scrollbar-track {
+	visibility: visible;
+	background: 0 0;
+}
+
+body:hover::-webkit-scrollbar-thumb {
+	background: orange;
+}
+
+.accordion{
+	height: 100%;
+    overflow-y: auto;
+}
+
+.head-color{
+	background-color:#5ea1b8;
+	border:0px; 
+	border-bottom:1px solid #fff; 
+	color:white; 
+	font-weight:bold; 
+	font-size:11px;
+	font-family:arial;
+}

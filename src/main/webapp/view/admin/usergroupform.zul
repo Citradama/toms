@@ -1,0 +1,100 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12213" ?>
+
+<zk xmlns:w="client" xmlns:n="native" xmlns:x="xhtml">
+
+	<window id="winUsergroupform" style="border-radius:7px">
+		<caption />
+		<div class="card">
+			<div class="card-header" id="divRoot">
+				<n:h5>
+					<n:i class="far fa-edit"></n:i>
+					<label id="lbTitle" style="font-size:16px" />
+				</n:h5>
+			</div>
+			<div class="card-body pt-1 pb-1 pl-1 pr-1">
+				<groupbox mold="3d" closable="false">
+					<caption label="Form Grup User" />
+					<grid>
+						<columns>
+							<column width="200px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<hlayout>
+									<label
+										value="${labels.usergroup.usergroupcode}" />
+									<label style="color:red">*</label>
+								</hlayout>
+								<hlayout>
+									<textbox
+										value="@bind(e.usergroupcode)" cols="20" maxlength="20"
+										id="txUsergroupcode" />
+									<label
+										value="@load(vmsgs['usergroupcode'])" style="color:red" />
+								</hlayout>
+							</row>
+							<row>
+								<hlayout>
+									<label
+										value="${labels.usergroup.usergroupname}" />
+									<label style="color:red">*</label>
+								</hlayout>
+								<hlayout>
+									<textbox
+										value="@bind(e.usergroupname)" cols="40" maxlength="40"
+										id="txUsergroupname" />
+									<label
+										value="@load(vmsgs['usergroupname'])" style="color:red" />
+								</hlayout>
+							</row>
+							<row>
+								<label
+									value="${labels.usergroup.usergroupdesc}" />
+
+								<textbox value="@bind(e.usergroupdesc)"
+									cols="40" rows="3" maxlength="100" id="txUsergroupdesc" />
+								<!-- <label
+									value="@load(vmsgs['usergroupdesc'])" style="color:red" /> -->
+
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<separator />
+				<separator />
+				<groupbox mold="3d" closable="false" id="gbSetup">
+					<caption label="Setup Menu" />
+					<div id="divListMenu" />
+				</groupbox>
+				<groupbox title="Daftar Menu" closable="false"
+					id="gbDaftar">
+					<grid mold="paging" pageSize="10"
+						pagingPosition="top" sclass="table-bordered" id="gridMenu"
+						emptyMessage="${labels.common.emptymsg}">
+						<columns class="head-color">
+							<column label="No." width="40px"
+								align="right" class="head-color" />
+							<column label="Nama Menu"
+								class="head-color" />
+						</columns>
+					</grid>
+				</groupbox>
+				<div class="card-footer" id="divFooter">
+					<separator />
+					<separator />
+					<n:div class="btn-group" role="group">
+						<button id="btnSave" label="Simpan"
+							class="${labels.button.submit}" onClick="@command('doSave')"
+							autodisable="self" sclass="btn btn-primary btn-sm" width="110px" />
+						<button id="btnCancel" label="Batal"
+							class="${labels.button.cancel}" onClick="@command('doReset')"
+							autodisable="self" sclass="btn btn-default btn-sm" width="110px" />
+					</n:div>
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

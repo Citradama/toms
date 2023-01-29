@@ -1,0 +1,104 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12213" ?>
+
+
+<zk xmlns:w="client" xmlns:n="native">
+	<div class="/view/admin/usergrouplist.zul card"
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.MusergroupListVM')">
+		<div class="card-header" style="background-color:white;">
+			<n:h5>
+				<n:i class="fas fa-list"></n:i>
+				${labels.usergroup.list}
+			</n:h5>
+		</div>
+		<div class="card-body">
+			<groupbox id="gbSearch">
+				<caption label="${labels.common.searching}"
+					image="/images/search.png" />
+				<grid>
+					<columns>
+						<column width="170px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<label value="Kode Grup User" />
+							<textbox cols="25" maxlength="20" />
+						</row>
+						<row>
+							<label value="Nama Grup user" />
+							<textbox cols="25" maxlength="40" />
+						</row>
+					</rows>
+					<foot>
+						<footer />
+						<footer>
+							<div class="row">
+								<div class="col-md-2">
+									<n:div role="group">
+										<a autodisable="self"
+											label=" ${labels.common.search}" width="60%"
+											class="btn btn-warning" iconSclass="z-icon-search"
+											onClick="@command('doSearch')">
+										</a>
+										<a autodisable="self"
+											label=" ${labels.common.reset}" width="60%"
+											class="btn btn-primary" iconSclass="z-icon-repeat"
+											onClick="@command('doReset')">
+										</a>
+									</n:div>
+								</div>
+							</div>
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+			<separator />
+			<separator />
+			<div class="row">
+				<div class="col-md-12" align="right">
+					<button autodisable="self" label=" Buat Baru "
+						sclass="btn btn-primary btn-sm" iconSclass="z-icon-plus"
+						onClick="@command('doAddnew')">
+					</button>
+
+				</div>
+			</div>
+			<separator />
+			<separator />
+			<div class="row">
+				<div class="col-md">
+					<paging id="paging" autohide="true"
+						style="margin-bottom:-20px" />
+				</div>
+				<div class="col-md-2" align="right">
+					<label value="Total Data :"
+						style="font-weight: bold" />
+					<!-- <label value="@load(vm.pageTotalSize)"
+						style="font-weight: bold" /> -->
+				</div>
+			</div>
+			<div>
+				<grid id="grid" mold="paging" pageSize="3"
+					pagingPosition="top" emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}" width="40px"
+							align="right" class="head-color" />
+						<column
+							label="${labels.usergroup.usergroupcode}" width="180px"
+							sort="auto(usergroupcode)" class="head-color" />
+						<column
+							label="${labels.usergroup.usergroupname}"
+							sort="auto(usergroupname)" class="head-color" />
+						<column
+							label="${labels.usergroup.usergroupdesc}"
+							sort="auto(usergroupdesc)" class="head-color" />
+						<column label="${labels.common.action}"
+							width="300px" align="center" class="head-color" />
+					</columns>
+				</grid>
+			</div>
+		</div>
+	</div>
+</zk>

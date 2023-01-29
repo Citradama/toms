@@ -1,0 +1,47 @@
+:root{
+	--chart-color1:#49b468!important;
+	}
+
+body{
+	padding: 0px!important;
+	margin: 0px!important;
+	background-image: url("/toms/images/bg-dood.jpg")!important;
+	background-repeat: repeat;
+}
+
+.avio .page-body::after{
+	
+}
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.no-filter{
+	filter: none!important;
+   
+}
+
+.chart-color0 {
+	background-color:#fcda32!important;
+}
+
+.text-light1{
+	color: none!important;
+}
+
+.swal2-container{
+	z-index: 9999999999999!important;
+}
+
+.head-color{
+	background-color:#5ea1b8;
+	border:0px; 
+	border-bottom:1px solid #fff; 
+	color:white; 
+	font-weight:bold; 
+	font-size:12px;
+	font-family:arial;
+}
