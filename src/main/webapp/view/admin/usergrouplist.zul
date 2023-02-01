@@ -72,12 +72,12 @@
 				<div class="col-md-2" align="right">
 					<label value="Total Data :"
 						style="font-weight: bold" />
-					<!-- <label value="@load(vm.pageTotalSize)"
-						style="font-weight: bold" /> -->
+					<label value="@load(vm.totalrecord)"
+						style="font-weight: bold" />
 				</div>
 			</div>
 			<div>
-				<grid id="grid" mold="paging" pageSize="3"
+				<grid id="grid" mold="paging" pageSize="10"
 					pagingPosition="top" emptyMessage="${labels.common.emptymsg}">
 					<columns>
 						<column label="${labels.common.no}" width="40px"

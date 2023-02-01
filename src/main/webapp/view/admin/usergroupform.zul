@@ -1,12 +1,15 @@
 <?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
 <?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
 <?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12213" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets2/css/custom.css?v=122131" ?>
 
 <zk xmlns:w="client" xmlns:n="native" xmlns:x="xhtml">
 
-	<window id="winUsergroupform" style="border-radius:7px">
+	<window id="winUsergroupform"
+		viewModel="@id('vm')@init('com.sds.toms.viewmodel.MusergroupFormVM')"
+		validationMessages="@id('vmsgs')" style="border-radius:7px">
 		<caption />
-		<div class="card">
+		<div class="card">UsergroupFormVm.java
 			<div class="card-header" id="divRoot">
 				<n:h5>
 					<n:i class="far fa-edit"></n:i>
@@ -30,7 +33,7 @@
 								</hlayout>
 								<hlayout>
 									<textbox
-										value="@bind(e.usergroupcode)" cols="20" maxlength="20"
+										value="@bind(vm.obj.usergroupcode)" cols="20" maxlength="20"
 										id="txUsergroupcode" />
 									<label
 										value="@load(vmsgs['usergroupcode'])" style="color:red" />
@@ -44,7 +47,7 @@
 								</hlayout>
 								<hlayout>
 									<textbox
-										value="@bind(e.usergroupname)" cols="40" maxlength="40"
+										value="@bind(vm.obj.usergroupname)" cols="40" maxlength="40"
 										id="txUsergroupname" />
 									<label
 										value="@load(vmsgs['usergroupname'])" style="color:red" />
@@ -54,7 +57,7 @@
 								<label
 									value="${labels.usergroup.usergroupdesc}" />
 
-								<textbox value="@bind(e.usergroupdesc)"
+								<textbox value="@bind(vm.obj.usergroupdesc)"
 									cols="40" rows="3" maxlength="100" id="txUsergroupdesc" />
 								<!-- <label
 									value="@load(vmsgs['usergroupdesc'])" style="color:red" /> -->

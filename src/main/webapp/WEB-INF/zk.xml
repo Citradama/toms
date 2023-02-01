@@ -9,5 +9,16 @@
 		<value>toms</value>
 	</preference>
 	-->
-	
+	<preference>
+		<name>org.zkoss.zk.ui.WebApp.name</name>
+		<value>TOMS</value>
+	</preference>
+	<library-property>
+		<name>org.zkoss.theme.preferred</name>
+		<value>iceblue_c</value>
+	</library-property>
+	<library-property>
+		<name>org.zkoss.zul.Paging.mold</name>
+		<value>os</value>
+	</library-property>
 </zk>

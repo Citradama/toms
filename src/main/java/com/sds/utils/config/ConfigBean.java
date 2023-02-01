@@ -10,6 +10,7 @@ public class ConfigBean {
 	private String endpoint_musergroupmenu;
 	private String endpoint_mcust;
 	private String endpoint_mcategory;
+	private String endpoint_mmenu;
 	private String endpoint_tquest;
 
 	public String getUrl_base() {
@@ -82,6 +83,14 @@ public class ConfigBean {
 
 	public void setEndpoint_tquest(String endpoint_tquest) {
 		this.endpoint_tquest = endpoint_tquest;
+	}
+
+	public String getEndpoint_mmenu() {
+		return endpoint_mmenu;
+	}
+
+	public void setEndpoint_mmenu(String endpoint_mmenu) {
+		this.endpoint_mmenu = endpoint_mmenu;
 	}
 
 }

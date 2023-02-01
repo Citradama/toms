@@ -16,7 +16,7 @@
 		<div class="card-body">
 			<groupbox id="gbSearch">
 				<caption label="${labels.common.searching}"
-					image="/images/search.png" />
+					image="/images/search.png" style="font-size:12px" />
 				<grid>
 					<columns>
 						<column width="170px" />
@@ -75,21 +75,20 @@
 				<div class="col-md-2" align="right">
 					<label value="Total Data :"
 						style="font-weight: bold" />
-					<!-- <label value="@load(vm.pageTotalSize)"
-						style="font-weight: bold" /> -->
+					<label value="@load(vm.totalrecord)"
+						style="font-weight: bold" />
 				</div>
 			</div>
 			<div style="max-width:1400px; overflow:auto">
-				<timer id="timer" />
-				<grid id="grid"
-					emptyMessage="${labels.common.emptymsg}">
+				<grid id="grid" mold="paging" pageSize="10"
+					pagingPosition="top" emptyMessage="${labels.common.emptymsg}">
 					<columns>
 						<column label="${labels.common.no}" width="40px"
 							align="right" class="head-color" />
 						<column label="${labels.user.userid}"
 							width="150px" sort="auto(userid)" class="head-color" />
 						<column label="${labels.user.username}"
-							sort="auto(username)"  class="head-color" />
+							sort="auto(username)" class="head-color" />
 						<column label="Grup User"
 							sort="auto(musergroup.usergroupname)" width="200px"
 							class="head-color" />
