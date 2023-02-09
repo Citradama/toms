@@ -19,18 +19,18 @@
 		padding-top: 40px; padding-bottom: 10px; }
 	</style>
 	<div id="bdlogin" class="container-fluid page-body"
-		style="background-image: url('images/blank-papergrey.jpg'); background-repeat: no-repeat; background-attachment: inherit;
+		style="background-image: url('images/landingpage.jpg'); background-repeat: no-repeat; background-attachment: inherit;
 		background-position: center; background-size: cover;"
 		viewModel="@id('vm') @init('com.sds.toms.viewmodel.AuthentificationVm')">
 		<div class="row animated fadeIn vh-100">
-			<div class="col-md-4 offset-md-7  my-auto">
-
-				<n:form id="fmlogin" style="background-color:#fafeff"
-					class="border border-light z-depth-1-half pl-4 pr-4">
-					<n:img src="images/logo-01.png"
-						class="img-fluid mb-4" width="200px" height="100px">
-					</n:img>
+			<div class="col-md-3 offset-md-8  my-auto" style="" align="center">
+				<n:img src="images/logo-01.png" class="img-fluid mb-4"
+					width="150px" height="80px">
+				</n:img>
+				<n:form id="fmlogin"
+					class="border border-2 z-depth-1-half pl-4 pr-4" >
 					<div>
+					<separator/>
 						<label sclass="text-danger" />
 						<textbox id="tbUsername" maxlength="15"
 							focus="true"

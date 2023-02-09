@@ -1,0 +1,142 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12213" ?>
+
+<zk xmlns:w="client" xmlns:n="native"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
+	<window id="winLecturer" width="60%"
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.McustFormVM')"
+		validationMessages="@id('vmsgs')" border="normal" closable="true"
+		action="hide: slideUp" position="center,center">
+		<caption />
+		<div class="card">
+			<div class="card-header">
+				<n:h6>Form Customer</n:h6>
+			</div>
+
+			<div class="card-body pt-1 pb-1 pl-1 pr-1"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+				<h:form>
+					<div class="row">
+						<div class="col">
+							<hlayout>
+								<label class="form-label">
+									ID Customer
+								</label>
+								<label class="text-danger"
+									value="@load(vmsgs['custid'])">
+								</label>
+							</hlayout>
+							<h:input id="txCustid" type="text"
+								class="form-control" value="@bind(e.custid)" />
+
+						</div>
+						<div class="col">
+							<hlayout>
+								<label class="form-label">No HP</label>
+								<label class="text-danger"
+									value="@load(vmsgs['hp'])">
+								</label>
+							</hlayout>
+							<h:input id="txHp" type="text"
+								class="form-control" value="@bind(e.hp)" />
+
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<hlayout>
+								<label class="form-label">
+									Nama Customer
+								</label>
+								<label class="text-danger"
+									value="@load(vmsgs['custname'])">
+								</label>
+							</hlayout>
+							<h:input id="txCustname" type="text"
+								class="form-control" value="@bind(e.custname)" />
+
+						</div>
+						<div class="col">
+							<hlayout>
+								<label class="form-label">Email</label>
+
+								<label class="text-danger"
+									value="@load(vmsgs['email'])">
+								</label>
+							</hlayout>
+							<h:input id="txEmail" type="text"
+								class="form-control" value="@bind(e.email)" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<hlayout>
+								<label class="form-label">
+									Universitas
+								</label>
+								<label style="color:red"
+									value="@load(vmsgs['muniversity'])" />
+							</hlayout>
+							<combobox id="cbUniv" width="100%" height="100%" style="font-size:14px"
+								selectedItem="@bind(e.muniversity)" />
+						</div>
+						<div class="col">
+							<hlayout>
+								<label class="form-label">
+									Jurusan
+								</label>
+								<label class="text-danger"
+									value="@load(vmsgs['major'])">
+								</label>
+							</hlayout>
+							<h:input id="txMajor" type="text"
+								class="form-control" value="@bind(e.major)" />
+						</div>
+					</div>
+					<div class="row" id="divPassword">
+						<div class="col">
+							<hlayout>
+								<label class="form-label">
+									Password
+								</label>
+								<label class="text-danger"
+									value="@load(vm.valPass)">
+								</label>
+							</hlayout>
+							<h:input id="txPassword" type="password"
+								class="form-control" value="@bind(vm.password)" />
+						</div>
+						<div class="col">
+							<hlayout>
+								<label class="form-label">
+									Konfirmasi Password
+								</label>
+								<label class="text-danger"
+									value="@load(vm.valConfpass)">
+								</label>
+							</hlayout>
+							<h:input id="txConfpass" type="password"
+								class="form-control" value="@bind(vm.confpass)" />
+						</div>
+					</div>
+				</h:form>
+				<n:br />
+				<div id="divFooter">
+					<button onClick="@command('doSave')" width="100%"
+						class="btn btn-primary" style="background-color: #481449;">
+						${labels.common.save}
+					</button>
+					<button onClick="@command('doReset')" width="100%"
+						class="btn btn-warning">
+						Batal
+					</button>
+				</div>
+			</div>
+
+
+		</div>
+		<separator />
+	</window>
+</zk>

@@ -9,14 +9,15 @@
 		viewModel="@id('vm')@init('com.sds.toms.viewmodel.MusergroupFormVM')"
 		validationMessages="@id('vmsgs')" style="border-radius:7px">
 		<caption />
-		<div class="card">UsergroupFormVm.java
+		<div class="card">
 			<div class="card-header" id="divRoot">
 				<n:h5>
 					<n:i class="far fa-edit"></n:i>
 					<label id="lbTitle" style="font-size:16px" />
 				</n:h5>
 			</div>
-			<div class="card-body pt-1 pb-1 pl-1 pr-1">
+			<div class="card-body pt-1 pb-1 pl-1 pr-1"
+				form="@id('e') @load(vm.obj) @save(vm.obj, before='doSave') @validator(vm.validator)">
 				<groupbox mold="3d" closable="false">
 					<caption label="Form Grup User" />
 					<grid>
@@ -33,7 +34,7 @@
 								</hlayout>
 								<hlayout>
 									<textbox
-										value="@bind(vm.obj.usergroupcode)" cols="20" maxlength="20"
+										value="@bind(e.usergroupcode)" cols="20" maxlength="20"
 										id="txUsergroupcode" />
 									<label
 										value="@load(vmsgs['usergroupcode'])" style="color:red" />
@@ -47,7 +48,7 @@
 								</hlayout>
 								<hlayout>
 									<textbox
-										value="@bind(vm.obj.usergroupname)" cols="40" maxlength="40"
+										value="@bind(e.usergroupname)" cols="40" maxlength="40"
 										id="txUsergroupname" />
 									<label
 										value="@load(vmsgs['usergroupname'])" style="color:red" />
@@ -57,7 +58,7 @@
 								<label
 									value="${labels.usergroup.usergroupdesc}" />
 
-								<textbox value="@bind(vm.obj.usergroupdesc)"
+								<textbox value="@bind(e.usergroupdesc)"
 									cols="40" rows="3" maxlength="100" id="txUsergroupdesc" />
 								<!-- <label
 									value="@load(vmsgs['usergroupdesc'])" style="color:red" /> -->

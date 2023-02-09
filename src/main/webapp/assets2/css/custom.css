@@ -1,6 +1,8 @@
 body {
-	padding: 0px !important;
-	margin: 0px !important;
+	padding: 0px!important;
+	margin: 0px!important;
+	background-image: url("/toms/images/bg-dood.jpg")!important;
+	background-repeat: repeat;
 }
 
 z-button {
@@ -97,11 +99,15 @@ body:hover::-webkit-scrollbar-thumb {
 }
 
 .head-color{
-	background-color:#5ea1b8;
+	background-color:#795182f5;
 	border:0px; 
 	border-bottom:1px solid #fff; 
 	color:white; 
 	font-weight:bold; 
 	font-size:11px;
 	font-family:arial;
+}
+
+.bg-white {
+    background-color: #39c0ed!important;
 }

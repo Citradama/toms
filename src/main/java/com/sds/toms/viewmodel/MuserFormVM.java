@@ -1,5 +1,6 @@
 package com.sds.toms.viewmodel;
 
+import java.net.ConnectException;
 import java.util.Date;
 import java.util.List;
 
@@ -10,24 +11,36 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.util.resource.Labels;
+import org.zkoss.zhtml.Input;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WebApps;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Comboitem;
+import org.zkoss.zul.Div;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sds.toms.handler.RespHandler;
+import com.sds.toms.model.Mmenu;
 import com.sds.toms.model.Muser;
 import com.sds.toms.model.Musergroup;
+import com.sds.toms.model.Musergroupmenu;
+import com.sds.toms.pojo.ObjectResp;
 import com.sds.utils.StringUtils;
+import com.sds.utils.config.ConfigUtil;
 
 public class MuserFormVM {
 
@@ -41,13 +54,40 @@ public class MuserFormVM {
 	@Wire
 	private Window winUser;
 	@Wire
+	private Div divFooter;
+	@Wire
 	private Combobox cbUsergroup;
+	@Wire
+	private Input txUserid, txUsername, txPassword;
 
 	@AfterCompose
-	public void afterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("obj") Muser obj) {
+	public void afterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("obj") Muser obj,
+			@ExecutionArgParam("isEdit") String isEdit, @ExecutionArgParam("isDetail") String isDetail) {
 		try {
 			Selectors.wireComponents(view, this, false);
 			oUser = (Muser) zkSession.getAttribute("oUser");
+			doReset();
+			String url = "";
+			ObjectResp rsp = new ObjectResp();
+
+//			-------Get Combobox Musergroup-------
+			url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_musergroup();
+			rsp = RespHandler.getObject(url);
+
+			ObjectMapper mapper = new ObjectMapper();
+			List<Musergroup> objList = mapper.convertValue(rsp.getData(), new TypeReference<List<Musergroup>>() {
+			});
+
+			if (rsp.getCode() == 200) {
+				Comboitem comboitem = null;
+				for (Musergroup musergroup : objList) {
+					comboitem = new Comboitem();
+					comboitem.setLabel(musergroup.getUsergroupname());
+					comboitem.setValue(musergroup);
+					cbUsergroup.appendChild(comboitem);
+				}
+			}
+
 			if (obj != null) {
 				objForm = obj;
 				isInsert = false;
@@ -55,41 +95,103 @@ public class MuserFormVM {
 			} else {
 				objForm = new Muser();
 			}
+
+			if (isDetail != null && isDetail.equals("Y")) {
+				cbUsergroup.setButtonVisible(false);
+				cbUsergroup.setReadonly(true);
+				txPassword.setReadonly(true);
+				txUserid.setReadonly(true);
+				txUsername.setReadonly(true);
+				divFooter.setVisible(false);
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	public void doReset() {
+		objForm = new Muser();
+		isInsert = true;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Command
+	@NotifyChange("*")
 	public void doSave() {
-		try {
-//			List<Muser> muser_ = new MuserDao().filterBy("USERID = '" + muser.getUserid() + "'");
-//
-//			if (muser_.size() > 0) {
-//				Clients.evalJavaScript("" + "Swal.fire(\r\n" + "  'Gagal',\r\n" + "  'Userid telah terdaftar',\r\n"
-//						+ "  'error'\r\n" + ")" + "");
-//				return;
-//			}
+		Messagebox.show(
+				isInsert == true ? Labels.getLabel("common.add.confirm") : Labels.getLabel("common.update.confirm"),
+				"Confirm Dialog", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new EventListener() {
 
-			if (isInsert) {
-				objForm.setCreatedby(oUser.getUserid());
-				objForm.setPassword("");
-			} else {
-				objForm.setLastupdated(new Date());
-				objForm.setUpdatedby(oUser.getUserid());
-			}
+					public void onEvent(Event event) throws Exception {
+						if (event.getName().equals("onOK")) {
+							Muser oUser = (Muser) zkSession.getAttribute("oUser");
+							try {
+								String url = "";
+								if (isInsert) {
+									ObjectResp rsp = new ObjectResp();
+									objForm.setUpdatedby(oUser.getUserid());
 
+									url = ConfigUtil.getConfig().getUrl_base()
+											+ ConfigUtil.getConfig().getEndpoint_muser();
+									System.out.println("save : " + url);
+									rsp = RespHandler.postObject(url, objForm);
+									if (rsp.getCode() == 201) {
 
-			if (isInsert) {
-				Clients.showNotification(Labels.getLabel("common.add.success"), "info", null, "middle_center", 3000);
-			} else {
-				Clients.showNotification(Labels.getLabel("common.update.success"), "info", null, "middle_center", 3000);
-			}
+										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
+												+ "  title: 'Berhasil',\r\n" + "  text: '"
+												+ Labels.getLabel("common.add.success") + "'," + "})");
 
-			doClose();
-		} catch (Exception e) {
-			e.printStackTrace();
-			Messagebox.show(e.getMessage(), WebApps.getCurrent().getAppName(), Messagebox.OK, Messagebox.ERROR);
-		} 
+									} else {
+										if (rsp.getCode() != 201
+												&& (rsp.getMessage().contains("ConstraintViolationException")
+														|| rsp.getMessage().contains("duplicate"))) {
+											Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n"
+													+ "  title: 'Informasi',\r\n"
+													+ "  text: 'Data gagal disimpan, kode role sudah terdaftar',"
+													+ "})");
+										} else {
+											Clients.evalJavaScript(
+													"swal.fire({" + "icon: 'warning',\r\n" + "  title: 'Informasi',\r\n"
+															+ "  text: 'Data gagal disimpan'," + "})");
+										}
+									}
+
+								} else {
+									objForm.setUpdatedby(oUser.getUserid());
+									objForm.setLastupdated(null);
+									objForm.setCreatetime(null);
+
+									url = ConfigUtil.getConfig().getUrl_base()
+											+ ConfigUtil.getConfig().getEndpoint_muser();
+									System.out.println("update : " + url);
+
+									ObjectResp respobj = new ObjectResp();
+									respobj = RespHandler.putObject(url, objForm);
+
+									if (respobj.getCode() == 200) {
+										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
+												+ "  title: 'Berhasil',\r\n" + "  text: '"
+												+ Labels.getLabel("common.update.success") + "'," + "})");
+									}
+								}
+
+								doClose();
+
+							} catch (Exception e) {
+								if (isInsert)
+									Messagebox.show("Error : " + e.getMessage(), WebApps.getCurrent().getAppName(),
+											Messagebox.OK, Messagebox.ERROR);
+								if (e.getCause() instanceof ConnectException) {
+									Messagebox.show(e.getMessage(), WebApps.getCurrent().getAppName(), Messagebox.OK,
+											Messagebox.ERROR);
+								}
+								e.printStackTrace();
+							}
+						}
+					}
+				});
+
 	}
 
 	public void doClose() {
@@ -106,7 +208,6 @@ public class MuserFormVM {
 				String userid = (String) ctx.getProperties("userid")[0].getValue();
 				String username = (String) ctx.getProperties("username")[0].getValue();
 				String password = (String) ctx.getProperties("password")[0].getValue();
-				String email = (String) ctx.getProperties("email")[0].getValue();
 				Musergroup musergroup = (Musergroup) ctx.getProperties("musergroup")[0].getValue();
 
 				if (userid == null || userid.isEmpty()) {
@@ -118,11 +219,6 @@ public class MuserFormVM {
 				if (password == null || password.isEmpty()) {
 					this.addInvalidMessage(ctx, "password", Labels.getLabel("common.validator.empty"));
 				}
-				if (email == null || email.isEmpty()) {
-					this.addInvalidMessage(ctx, "email", Labels.getLabel("common.validator.empty"));
-				} else if (!StringUtils.emailValidator(email)) {
-					this.addInvalidMessage(ctx, "email", "Invalid e-mail format");
-				}
 				if (musergroup == null) {
 					this.addInvalidMessage(ctx, "musergroup", Labels.getLabel("common.validator.empty"));
 				}
@@ -130,7 +226,6 @@ public class MuserFormVM {
 			}
 		};
 	}
-
 
 	public Muser getObjForm() {
 		return objForm;

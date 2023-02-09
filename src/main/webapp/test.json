@@ -1,60 +1,10 @@
-[
-	{
-		"musergroupmenupk": null,
-		"musergroup": {
-			"musergrouppk": null,
-			"usergroupcode": "aa",
-			"usergroupname": "aa",
-			"usergroupdesc": "aa",
-			"rolecode": null,
-			"rowstat": null,
-			"rowedit": null,
-			"createtime": null,
-			"createdby": null,
-			"lastupdated": null,
-			"updatedby": "ADMIN"
-		},
-		"mmenu": {
-			"mmenupk": 1,
-			"menugroup": "User Manajemen",
-			"menuname": "User",
-			"menuorderno": 1,
-			"menuparamname": null,
-			"menuparamvalue": null,
-			"menupath": "/view/admin/userlist.zul",
-			"menusubgroup": "User Manajemen",
-			"menugroupicon": null,
-			"menusubgroupicon": null,
-			"menuicon": null
-		}
-	},
-	{
-		"musergroupmenupk": null,
-		"musergroup": {
-			"musergrouppk": null,
-			"usergroupcode": "aa",
-			"usergroupname": "aa",
-			"usergroupdesc": "aa",
-			"rolecode": null,
-			"rowstat": null,
-			"rowedit": null,
-			"createtime": null,
-			"createdby": null,
-			"lastupdated": null,
-			"updatedby": "ADMIN"
-		},
-		"mmenu": {
-			"mmenupk": 2,
-			"menugroup": "User Manajemen",
-			"menuname": "Grup User",
-			"menuorderno": 2,
-			"menuparamname": "",
-			"menuparamvalue": "",
-			"menupath": "/view/admin/usergrouplist.zul",
-			"menusubgroup": "User Manajemen",
-			"menugroupicon": null,
-			"menusubgroupicon": null,
-			"menuicon": null
-		}
-	}
-]
+{
+	"muniversitypk": 2,
+	"universityname": "UNIVERSITAS PANCASILA 1",
+	"rowstat": null,
+	"rowedit": null,
+	"createtime": null,
+	"createdby": "ADMIN",
+	"lastupdated": null,
+	"updatedby": "ADMIN"
+}

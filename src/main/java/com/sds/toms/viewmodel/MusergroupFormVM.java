@@ -10,12 +10,15 @@ import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 
+import org.zkoss.bind.ValidationContext;
+import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Sessions;
@@ -297,155 +300,137 @@ public class MusergroupFormVM {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Command
-	@NotifyChange("*")
 	public void doSave() {
-		try {
-			System.out.println("listMenu : " + listMmenu.size());
-			System.out.println("map : " + map.size());
-			if (listMmenu.size() > 0) {
-				String url = "";
-				ObjectResp rsp = new ObjectResp();
 
-				Client client = Client.create();
-				client.setConnectTimeout(40 * 1000);
-				client.setReadTimeout(40 * 1000);
-				if (isInsert) {
-					System.out.println("createdby : " + oUser.getUserid());
-//					req.set(obj);
-//					req.setUserid(oUser.getUserid());
-					obj.setUpdatedby(oUser.getUserid());
+		Messagebox.show(
+				isInsert == true ? Labels.getLabel("common.add.confirm") : Labels.getLabel("common.update.confirm"),
+				"Confirm Dialog", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new EventListener() {
 
-					url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_musergroup();
-					System.out.println("save : " + url);
+					public void onEvent(Event event) throws Exception {
+						if (event.getName().equals("onOK")) {
+							Muser oUser = (Muser) zkSession.getAttribute("oUser");
+							try {
+								if (listMmenu.size() > 0) {
+									String url = "";
+									if (isInsert) {
+										ObjectResp rsp = new ObjectResp();
+										obj.setUpdatedby(oUser.getUserid());
 
-					WebResource webResource = client.resource(url.trim());
+										url = ConfigUtil.getConfig().getUrl_base()
+												+ ConfigUtil.getConfig().getEndpoint_musergroup();
+										System.out.println("save : " + url);
+										rsp = RespHandler.postObject(url, obj);
+										if (rsp.getCode() == 201) {
+											url = ConfigUtil.getConfig().getUrl_base()
+													+ ConfigUtil.getConfig().getEndpoint_musergroupmenu();
+											System.out.println(url);
 
-					ObjectMapper mapper = new ObjectMapper();
-					System.out.println("ReqSave : " + mapper.writeValueAsString(obj));
-					ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
-							mapper.writeValueAsString(obj));
+											for (Mmenu data : listMmenu) {
+												Musergroupmenu objMenu = new Musergroupmenu();
+												objMenu.setMmenu(data);
+												objMenu.setMusergroup(obj);
+												listGroup.add(objMenu);
+											}
 
-					String output = response.getEntity(String.class);
-					System.out.println(output);
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-					mapper.setDateFormat(df);
-					mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-					ObjectResp rspgroup = mapper.readValue(output, ObjectResp.class);
+											rsp = RespHandler.postObject(url, listGroup);
+											if (rsp.getCode() == 201) {
+												Clients.evalJavaScript("swal.fire({" + "icon: 'info',\r\n"
+														+ "  title: 'Informasi',\r\n" + "  text: '"
+														+ Labels.getLabel("common.add.success") + "'," + "})");
+											} else {
+												Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n"
+														+ "  title: 'Informasi',\r\n" + "  text: 'Data gagal disimpan',"
+														+ "})");
+											}
+										} else {
+											if (rsp.getCode() != 201
+													&& (rsp.getMessage().contains("ConstraintViolationException")
+															|| rsp.getMessage().contains("duplicate"))) {
+												Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n"
+														+ "  title: 'Informasi',\r\n"
+														+ "  text: 'Data gagal disimpan, kode role sudah terdaftar',"
+														+ "})");
+											}
+										}
 
-					if (rspgroup.getCode() == 201) {
-						url = ConfigUtil.getConfig().getUrl_base()
-								+ ConfigUtil.getConfig().getEndpoint_musergroupmenu();
-						System.out.println(url);
+									} else {
+										obj.setUpdatedby(oUser.getUserid());
+										obj.setLastupdated(null);
+										obj.setCreatetime(null);
 
-						for (Mmenu data : listMmenu) {
-							Musergroupmenu objMenu = new Musergroupmenu();
-							objMenu.setMmenu(data);
-							objMenu.setMusergroup(obj);
-							listGroup.add(objMenu);
-						}
+										url = ConfigUtil.getConfig().getUrl_base()
+												+ ConfigUtil.getConfig().getEndpoint_musergroup() + "/"
+												+ obj.getMusergrouppk();
+										System.out.println("update : " + url);
 
-//
-						ObjectResp rsps = RespHandler.postObjectList(url, listGroup);
-						if (rsps.getCode() == 200) {
-							Clients.evalJavaScript("swal.fire({" + "icon: 'info',\r\n" + "  title: 'Informasi',\r\n"
-									+ "  text: '"+ Labels.getLabel("common.add.success") +"'," + "})");
-						} else {
-							Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n" + "  title: 'Informasi',\r\n"
-									+ "  text: 'Data gagal disimpan'," + "})");
-						}
-					} else {
-						if (rspgroup.getCode() != 200
-								&& (rspgroup.getMessage().contains("ConstraintViolationException")
-										|| rspgroup.getMessage().contains("duplicate"))) {
-							Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n" + "  title: 'Informasi',\r\n"
-									+ "  text: 'Data gagal disimpan, kode role sudah terdaftar'," + "})");
+										ObjectResp respobj = new ObjectResp();
+										respobj = RespHandler.putObject(url, obj);
+
+										if (respobj.getCode() == 200) {
+											url = ConfigUtil.getConfig().getUrl_base()
+													+ ConfigUtil.getConfig().getEndpoint_musergroupmenu()
+													+ "/usergroup/" + obj.getMusergrouppk();
+
+											for (Musergroupmenu data : listGroupmenu) {
+												respobj = RespHandler.delObject(url, data);
+											}
+
+											if (respobj.getCode() == 200) {
+												url = ConfigUtil.getConfig().getUrl_base()
+														+ ConfigUtil.getConfig().getEndpoint_musergroupmenu();
+												System.out.println(url);
+
+												for (Mmenu data : listMmenu) {
+													Musergroupmenu objMenu = new Musergroupmenu();
+													objMenu.setMmenu(data);
+													objMenu.setMusergroup(obj);
+													listGroup.add(objMenu);
+												}
+
+												ObjectResp rsps = RespHandler.postObject(url, listGroup);
+
+												if (rsps.getCode() == 200) {
+													Clients.evalJavaScript("swal.fire({" + "icon: 'info',\r\n"
+															+ "  title: 'Informasi',\r\n" + "  text: '"
+															+ Labels.getLabel("common.update.success") + "'," + "})");
+												}
+											}
+										}
+									}
+
+									doClose();
+								} else {
+									Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n"
+											+ "  title: 'Informasi',\r\n" + "  text: 'Menu harus dipilih'," + "})");
+								}
+
+							} catch (Exception e) {
+								if (isInsert)
+									Messagebox.show("Error : " + e.getMessage(), WebApps.getCurrent().getAppName(),
+											Messagebox.OK, Messagebox.ERROR);
+								if (e.getCause() instanceof ConnectException) {
+									Messagebox.show(e.getMessage(), WebApps.getCurrent().getAppName(), Messagebox.OK,
+											Messagebox.ERROR);
+								}
+								e.printStackTrace();
+							}
 						}
 					}
+				});
 
-				} else {
-					obj.setUpdatedby(oUser.getUserid());
-					obj.setLastupdated(null);
-					obj.setCreatetime(null);
-
-//					ObjectResp reqgroup = new ObjectResp();
-//					reqgroup.setUserid(oUser.getUserid());
-//					reqgroup.setData(obj);
-					url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_musergroup() + "/"
-							+ this.obj.getMusergrouppk();
-					System.out.println("update : " + url);
-
-					ObjectResp respobj = new ObjectResp();
-					respobj = RespHandler.putObject(url, obj);
-
-					if (respobj.getCode() == 200) {
-						url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_musergroupmenu()
-								+ "/usergroup/" + obj.getMusergrouppk();
-
-//						RespObject rspdel = RespHandler.delObject(url);
-
-						for (Musergroupmenu data : listGroupmenu) {
-							respobj = RespHandler.delObject(url, data);
-						}
-
-						if (respobj.getCode() == 200) {
-							url = ConfigUtil.getConfig().getUrl_base()
-									+ ConfigUtil.getConfig().getEndpoint_musergroupmenu();
-							System.out.println(url);
-
-							for (Mmenu data : listMmenu) {
-								Musergroupmenu objMenu = new Musergroupmenu();
-								objMenu.setMmenu(data);
-								objMenu.setMusergroup(obj);
-								listGroup.add(objMenu);
-//								if (mapMenu.get(data.getMmenupk()) == null) {
-//									menufkList.add(data.getMmenupk());
-//								}
-							}
-
-//							reqs.setUserid(oUser.getUserid());
-//							reqs.setListusergroupmenu(listGroup);
-
-							ObjectResp rsps = RespHandler.postObjectList(url, listGroup);
-
-							if (rsps.getCode() == 200) {
-								Clients.evalJavaScript("swal.fire({" + "icon: 'info',\r\n" + "  title: 'Informasi',\r\n"
-										+ "  text: '"+ Labels.getLabel("common.update.success") +"'," + "})");
-							}
-
-						}
-					}
-
-				}
-
-				doClose();
-			} else {
-				Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n" + "  title: 'Informasi',\r\n"
-						+ "  text: 'Menu harus dipilih'," + "})");
-			}
-
-		} catch (Exception e) {
-			if (isInsert)
-				Messagebox.show("Error : " + e.getMessage(), WebApps.getCurrent().getAppName(), Messagebox.OK,
-						Messagebox.ERROR);
-			if (e.getCause() instanceof ConnectException) {
-				Messagebox.show(e.getMessage(), WebApps.getCurrent().getAppName(), Messagebox.OK, Messagebox.ERROR);
-			}
-			e.printStackTrace();
-		}
-//		doReset();
+		doReset();
 	}
 
 	@Command
 	@NotifyChange("*")
 	public void doReset() {
 		obj = new Musergroup();
-//		isReset = true;
 		isInsert = true;
 		btnSave.setDisabled(true);
 		System.out.println("mapsize : " + map.size());
 		map.clear();
-		System.out.println("map clear : " + map.size());
 		doListMenu();
 	}
 
@@ -454,25 +439,21 @@ public class MusergroupFormVM {
 		Events.postEvent(closeEvent);
 	}
 
-	/*
-	 * public Validator getValidator() { return new AbstractValidator() {
-	 * 
-	 * @Override public void validate(ValidationContext ctx) { String usergroupcode
-	 * = (String) ctx.getProperties("usergroupcode")[0].getValue(); String
-	 * usergroupname = (String) ctx.getProperties("usergroupname")[0].getValue();
-	 * String role = (String) ctx.getProperties("role")[0].getValue(); String
-	 * usergroupdesc = (String) ctx.getProperties("usergroupdesc")[0].getValue();
-	 * 
-	 * if (usergroupcode == null || "".equals(usergroupcode.trim()))
-	 * this.addInvalidMessage(ctx, "usergroupcode",
-	 * Labels.getLabel("common.validator.empty")); if (usergroupname == null ||
-	 * "".equals(usergroupname.trim())) this.addInvalidMessage(ctx, "usergroupname",
-	 * Labels.getLabel("common.validator.empty")); if (role == null ||
-	 * "".equals(role.trim())) this.addInvalidMessage(ctx, "role",
-	 * Labels.getLabel("common.validator.empty")); if (usergroupdesc == null ||
-	 * "".equals(usergroupdesc.trim())) this.addInvalidMessage(ctx, "usergroupdesc",
-	 * Labels.getLabel("common.validator.empty")); } }; }
-	 */
+	public Validator getValidator() {
+		return new AbstractValidator() {
+
+			@Override
+			public void validate(ValidationContext ctx) {
+				String usergroupcode = (String) ctx.getProperties("usergroupcode")[0].getValue();
+				String usergroupname = (String) ctx.getProperties("usergroupname")[0].getValue();
+
+				if (usergroupcode == null || "".equals(usergroupcode.trim()))
+					this.addInvalidMessage(ctx, "usergroupcode", Labels.getLabel("common.validator.empty"));
+				if (usergroupname == null || "".equals(usergroupname.trim()))
+					this.addInvalidMessage(ctx, "usergroupname", Labels.getLabel("common.validator.empty"));
+			}
+		};
+	}
 
 	public Muser getoUser() {
 		return oUser;

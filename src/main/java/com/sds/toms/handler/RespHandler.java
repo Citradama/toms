@@ -37,7 +37,7 @@ public class RespHandler {
 		return rsp;
 	}
 
-	public static ObjectResp postObjectList(String url, Object obj) throws Exception {
+	public static ObjectResp postObject(String url, Object obj) throws Exception {
 		ObjectResp rsp = null;
 		try {
 			Client client = Client.create();
@@ -51,6 +51,30 @@ public class RespHandler {
 
 			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
 					mapper.writeValueAsString(obj));
+
+			String output = response.getEntity(String.class);
+			System.out.println(output);
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			mapper.setDateFormat(df);
+			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			rsp = mapper.readValue(output, ObjectResp.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rsp;
+	}
+
+	public static ObjectResp postOtherObject(String url, Object obj) throws Exception {
+		ObjectResp rsp = null;
+		try {
+			Client client = Client.create();
+			client.setConnectTimeout(40 * 1000);
+			client.setReadTimeout(40 * 1000);
+
+			ObjectMapper mapper = new ObjectMapper();
+			WebResource webResource = client.resource(url.trim());
+
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, obj);
 
 			String output = response.getEntity(String.class);
 			System.out.println(output);
@@ -88,7 +112,7 @@ public class RespHandler {
 		}
 		return rsp;
 	}
-	
+
 	public static ObjectResp delObject(String url, Object obj) {
 		ObjectResp rsp = null;
 		try {
@@ -115,5 +139,5 @@ public class RespHandler {
 		}
 		return rsp;
 	}
-	
+
 }

@@ -124,15 +124,17 @@ public class UserInitializationVM {
 					span.appendChild(label);
 					a.appendChild(i);
 					a.appendChild(span);
+					
 					a.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
 						@Override
 						public void onEvent(Event event) throws Exception {
 							A aPrev = (A) divAccord.getAttribute("active");
-							if (aPrev != null)
+							if (aPrev != null) 
 								aPrev.setSclass("list-group-item list-group-item-action py-2");
-
+							
 							a.setSclass("list-group-item list-group-item-action py-2 active");
+//							a.setStyle("background-color:#795182f5");
 							divAccord.setAttribute("active", a);
 
 							Clients.evalJavaScript("hidenavbar()");

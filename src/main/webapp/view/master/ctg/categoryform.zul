@@ -1,0 +1,49 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12213" ?>
+
+<zk xmlns:w="client" xmlns:n="native"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
+	<window id="winCategory" width="60%"
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.McategoryFormVM')"
+		validationMessages="@id('vmsgs')" border="normal" closable="true"
+		action="hide: slideUp" position="center,center">
+		<caption />
+		<div class="card">
+			<div class="card-header">
+				<n:h6>Form Kategori</n:h6>
+			</div>
+
+			<div class="card-body pt-1 pb-1 pl-1 pr-1"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+				<h:form>
+					<hlayout>
+						<label class="form-label">
+							Nama Kategory
+						</label>
+						<label class="text-danger"
+							value="@load(vmsgs['category'])">
+						</label>
+					</hlayout>
+					<h:input id="txCategory" type="text"
+						class="form-control" value="@bind(e.category)" />
+					<n:br />
+					<div id="divFooter">
+						<button onClick="@command('doSave')"
+							width="100%" class="btn btn-primary"
+							style="background-color: #481449;">
+							${labels.common.save}
+						</button>
+						<button onClick="@command('doClose')"
+							width="100%" class="btn btn-warning">
+							Batal
+						</button>
+					</div>
+				</h:form>
+			</div>
+
+		</div>
+		<separator />
+	</window>
+</zk>

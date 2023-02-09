@@ -77,11 +77,13 @@
 					<columns>
 						<column label="${labels.common.no}" width="40px"
 							align="right" class="head-color " />
-						<column label="${labels.lecturer.id}"
+						<column label="ID Customer"
 							width="150px" class="head-color " />
-						<column label="${labels.lecturer.name}"
+						<column label="Nama Customer"
 							class="head-color " />
-						<column label="${labels.lecturer.university}"
+						<column label="Jurusan"
+							class="head-color " />
+						<column label="Universitas"
 							width="230px" class="head-color " />
 						<column label="${labels.common.action}"
 							width="250px" align="center" class="head-color" />

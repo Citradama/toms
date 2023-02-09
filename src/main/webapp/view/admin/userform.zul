@@ -4,7 +4,7 @@
 <zk xmlns:w="client" xmlns:n="native"
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
-	<window id="winUser"
+	<window id="winUser" width="50%"
 		viewModel="@id('vm') @init('com.sds.toms.viewmodel.MuserFormVM')"
 		validationMessages="@id('vmsgs')" border="normal" closable="true"
 		action="hide: slideUp" position="center,center">
@@ -27,8 +27,8 @@
 					<label class="form-label">
 						${labels.user.userid}
 					</label>
-					<h:input type="text" class="form-control"
-						value="@bind(e.userid)" />
+					<h:input id="txUserid" type="text"
+						class="form-control" value="@bind(e.userid)" />
 					<label class="text-danger"
 						value="@load(vmsgs['userid'])">
 					</label>
@@ -36,29 +36,18 @@
 						<label class="form-label">
 							${labels.user.username}
 						</label>
-						<h:input type="text" class="form-control"
-							value="@bind(e.username)" />
+						<h:input id="txUsername" type="text"
+							class="form-control" value="@bind(e.username)" />
 						<label class="text-danger"
 							value="@load(vmsgs['username'])">
 						</label>
 					</div>
 					<div class="lg-3">
-						<label class="form-label">
-							${labels.user.password}
-						</label>
-						<h:input type="password" class="form-control"
-							value="@bind(e.password)" />
+						<label class="form-label">Password</label>
+						<h:input id="txPassword" type="password"
+							class="form-control" value="@bind(e.password)" />
 						<label class="text-danger"
 							value="@load(vmsgs['password'])">
-						</label>
-					</div>
-					<div class="lg-3">
-						<label class="form-label">
-							${labels.user.email}
-						</label>
-						<textbox class="form-control" value="@bind(e.email)" />
-						<label class="text-danger"
-							value="@load(vmsgs['email'])">
 						</label>
 					</div>
 				</div>
@@ -67,22 +56,23 @@
 						${labels.usergroup.usergroupname}
 					</label>
 					<div class="col">
-						<combobox id="cbUsergroup"
-							model="@load(vm.musergroup)" cols="30"
-							selectedItem="@bind(e.musergroup)">
-							<template name="model" var="musergroup">
-								<comboitem
-									label="@load(musergroup.usergroupname)" />
-							</template>
-						</combobox>
+						<combobox id="cbUsergroup" width="100%"
+							selectedItem="@bind(e.musergroup)" />
 						<label style="color:red"
 							value="@load(vmsgs['musergroup'])" />
 					</div>
 				</div>
-				<button onClick="@command('doSave')" width="100%"
-					class="btn btn-primary">
-					${labels.common.save}
-				</button>
+				<div id="divFooter">
+					<button onClick="@command('doSave')" width="100%"
+						class="btn btn-primary" style="background-color: #481449;">
+						${labels.common.save}
+					</button>
+					<button onClick="@command('doReset')" width="100%"
+						class="btn btn-warning">
+						Batal
+					</button>
+				</div>
+
 			</h:form>
 		</div>
 

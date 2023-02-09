@@ -4,7 +4,7 @@
 <?link rel="stylesheet" href="/mdb2/css/mdb.min.css" ?>
 <!-- Custom styles -->
 <?link rel="stylesheet" href="/mdb2/css/admin.css" ?>
-<?link rel="stylesheet" type="text/css"	href="/assets2/css/custom.css?v=3411" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets2/css/custom.css?v=341111" ?>
 
 <?meta charset="UTF-8" ?>
 <?meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" ?>
@@ -17,34 +17,34 @@
 		Executions.sendRedirect("/timeout.zul");
 </zscript> -->
 	<div
-		viewModel="@id('vm')@init('com.sds.toms.viewmodel.UserInitializationVM')">
-		<n:header>
+		viewModel="@id('vm')@init('com.sds.toms.viewmodel.UserInitializationVM')" >
+		<n:header >
 			<!-- Sidebar -->
 			<n:nav id="sidebarMenu"
 				class="collapse d-lg-block sidebar collapse bg-white">
 
-				<div class="accordion mt-2" id="divAccord" />
+				<div class="accordion mt-2" id="divAccord" style="background-color:white"/>
 
 			</n:nav>
 			<!-- Sidebar -->
 
 			<!-- Navbar -->
 			<n:nav id="main-navbar"
-				class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+				class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:#c3b1c6">
 				<!-- Container wrapper -->
-				<n:div class="container-fluid">
+				<n:div class="container-fluid" >
 					<!-- Toggle button -->
-					<n:button class="navbar-toggler tombolmenu"
+					<n:button class="navbar-toggler tombolmenu" style="background-color:#c3b1c6"
 						type="button" data-mdb-toggle="collapse"
 						data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu"
-						aria-expanded="false" aria-label="Toggle navigation">
+						aria-expanded="false" aria-label="Toggle navigation" >
 						<n:i class="fas fa-bars"></n:i>
 					</n:button>
 
 					<!-- Brand -->
 					<n:a class="navbar-brand"
 						href="/toms/view/indexbo.zul">
-						<image src="/images/logo-01.png" height="40px" />
+						<image src="/images/logo-notagline.png" height="40px" />
 					</n:a>
 
 					<!-- Right links -->
