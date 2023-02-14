@@ -81,7 +81,7 @@
 							class="head-color " />
 						<column label="Dosen"
 							width="230px" class="head-color " />
-						<column label="Frekuensi"
+						<column label="Harga"
 							width="100px" class="head-color " align="center"/>
 						<column label="Status"
 							width="200px" class="head-color " align="center"/>

@@ -43,10 +43,10 @@ public class DashboardCustomerVM {
 	public void doFav() {
 		if (imgheart1 != null && imgfav1 == false) {
 			imgfav1 = true;
-			imgheart1.setSrc("../images/heartred.png");
+			imgheart1.setSrc("/images/heartred.png");
 		} else {
 			imgfav1 = false;
-			imgheart1.setSrc("../images/heartblank.png");
+			imgheart1.setSrc("/images/heartblank.png");
 		}
 	}
 

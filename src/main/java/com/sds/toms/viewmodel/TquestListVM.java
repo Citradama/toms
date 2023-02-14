@@ -1,11 +1,15 @@
 package com.sds.toms.viewmodel;
 
+import java.text.NumberFormat;
 import java.util.List;
 
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.AfterCompose;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
@@ -18,6 +22,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
+import org.zkoss.zul.Window;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,12 +30,13 @@ import com.sds.toms.handler.RespHandler;
 import com.sds.toms.model.Mcategory;
 import com.sds.toms.model.Tquest;
 import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.util.AppData;
 import com.sds.utils.config.ConfigUtil;
 
 public class TquestListVM {
 
 	private Integer totalrecord;
-	
+
 	@Wire
 	private Grid grid;
 
@@ -50,8 +56,9 @@ public class TquestListVM {
 					row.getChildren()
 							.add(new Label(data.getMcategory() != null ? data.getMcategory().getCategory() : ""));
 					row.getChildren().add(new Label(data.getMdosen() != null ? data.getMdosen().getDosenname() : ""));
-					row.getChildren().add(new Label(data.getRowstat() != null ? data.getRowstat() : ""));
-					row.getChildren().add(new Label(data.getStatus() != null ? data.getStatus() : ""));
+					row.getChildren().add(new Label(data.getFee() != null ? "Rp. " + NumberFormat.getInstance().format(data.getFee()) : "Rp. 0"));
+					row.getChildren()
+							.add(new Label(data.getStatus() != null ? AppData.getStatusLabel(data.getStatus()) : ""));
 
 					Button btnDetail = new Button();
 					btnDetail.setClass("btn btn-sm btn-info");
@@ -65,7 +72,7 @@ public class TquestListVM {
 						}
 
 					});
-					
+
 					Button btnEdit = new Button();
 					btnEdit.setClass("btn btn-sm btn-success");
 					btnEdit.setIconSclass("z-icon-edit");
@@ -78,7 +85,7 @@ public class TquestListVM {
 						}
 
 					});
-					
+
 					Button btnDelete = new Button();
 					btnDelete.setClass("btn btn-sm btn-danger");
 					btnDelete.setIconSclass("z-icon-trash");
@@ -114,7 +121,7 @@ public class TquestListVM {
 
 		if (Resp.getCode() == 200) {
 			ObjectMapper mapper = new ObjectMapper();
-			List<Mcategory> objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Mcategory>>() {
+			List<Tquest> objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Tquest>>() {
 			});
 
 			System.out.println(objList.size());
@@ -123,6 +130,21 @@ public class TquestListVM {
 		} else {
 			System.out.println("nulll");
 		}
+	}
+
+	@Command
+	public void doAddnew() {
+		Window win = (Window) Executions.createComponents("/view/bank/banksoalform.zul", null, null);
+		win.setClosable(true);
+		win.doModal();
+		win.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				doReset();
+				BindUtils.postNotifyChange(null, null, TquestListVM.this, "*");
+			}
+		});
 	}
 
 	public Integer getTotalrecord() {
