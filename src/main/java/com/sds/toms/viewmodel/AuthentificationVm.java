@@ -49,7 +49,6 @@ public class AuthentificationVm {
 
 				jsonReq.put("password", password.trim());
 				jsonReq.put("userid", userid.trim());
-				jsonReq.put("token", null);
 
 				WebResource webResource = client.resource(url.trim());
 

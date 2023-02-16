@@ -57,9 +57,9 @@
 					</label>
 					<div class="col">
 						<combobox id="cbUsergroup" width="100%"
-							selectedItem="@bind(e.musergroup)" />
+							selectedItem="@bind(e.usergroup)" />
 						<label style="color:red"
-							value="@load(vmsgs['musergroup'])" />
+							value="@load(vmsgs['usergroup'])" />
 					</div>
 				</div>
 				<div id="divFooter">

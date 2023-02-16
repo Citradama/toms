@@ -28,6 +28,7 @@ import com.sds.toms.model.Muser;
 import com.sds.toms.model.Musergroup;
 import com.sds.toms.model.Musergroupmenu;
 import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 
 public class UserInitializationVM {
@@ -65,16 +66,16 @@ public class UserInitializationVM {
 
 			String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_musergroupmenu()
 					+ "/usergroup/1";
-			Resp = RespHandler.getObject(url);
+			Resp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 
 			if (Resp.getCode() == 200) {
 				ObjectMapper mapper = new ObjectMapper();
 				List<Musergroupmenu> oList = mapper.convertValue(Resp.getData(),
 						new TypeReference<List<Musergroupmenu>>() {
 						});
-				
+
 				for (final Musergroupmenu obj : oList) {
-					if (!menugroup.equals(obj.getMmenu().getMenugroup())) {
+					if (!menugroup.equals(obj.getMenu().getMenugroup())) {
 						idx++;
 
 						divAccordItem = new Div();
@@ -93,7 +94,7 @@ public class UserInitializationVM {
 						buttonHeader.setClientAttribute("data-mdb-target", ".collapseOne" + idx);
 						buttonHeader.setClientAttribute("aria-expanded", "false");
 						buttonHeader.setClientAttribute("aria-controls", "collapseOne" + idx);
-						Label label = new Label(obj.getMmenu().getMenugroup());
+						Label label = new Label(obj.getMenu().getMenugroup());
 						label.setStyle("font-size:14px");
 						buttonHeader.appendChild(label);
 						buttonHeader.setParent(h2);
@@ -109,7 +110,7 @@ public class UserInitializationVM {
 						divAccordBody.setParent(divCollapse);
 
 					}
-					menugroup = obj.getMmenu().getMenugroup();
+					menugroup = obj.getMenu().getMenugroup();
 
 					A a = new A();
 					a.setHref("");
@@ -119,20 +120,20 @@ public class UserInitializationVM {
 					HtmlNativeComponent i = new HtmlNativeComponent("i");
 					i.setClientAttribute("class", "fas fa-circle fa-fw me-3");
 					HtmlNativeComponent span = new HtmlNativeComponent("span");
-					Label label = new Label(obj.getMmenu().getMenuname());
+					Label label = new Label(obj.getMenu().getMenuname());
 					label.setStyle("font-size:14px");
 					span.appendChild(label);
 					a.appendChild(i);
 					a.appendChild(span);
-					
+
 					a.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
 						@Override
 						public void onEvent(Event event) throws Exception {
 							A aPrev = (A) divAccord.getAttribute("active");
-							if (aPrev != null) 
+							if (aPrev != null)
 								aPrev.setSclass("list-group-item list-group-item-action py-2");
-							
+
 							a.setSclass("list-group-item list-group-item-action py-2 active");
 //							a.setStyle("background-color:#795182f5");
 							divAccord.setAttribute("active", a);
@@ -140,13 +141,12 @@ public class UserInitializationVM {
 							Clients.evalJavaScript("hidenavbar()");
 
 							divContent.getChildren().clear();
-							Executions.createComponents(obj.getMmenu().getMenupath(), divContent, null);
+							Executions.createComponents(obj.getMenu().getMenupath(), divContent, null);
 						}
 					});
 				}
 			}
 
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

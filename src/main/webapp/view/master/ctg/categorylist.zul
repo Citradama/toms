@@ -13,7 +13,7 @@
 				Daftar Kategori
 			</n:h5>
 		</div>
-		<div class="card-body">
+		<div class="card">
 			<groupbox id="gbSearch">
 				<caption label="${labels.common.searching}"
 					image="/images/search.png" />

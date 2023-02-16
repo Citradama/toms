@@ -2,40 +2,15 @@ package com.sds.toms.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Mcategory {
 
-	private Integer mcategorypk;
+	private Integer id;
 	private String category;
-	private String rowstat;
-	private Integer rowedit;
 	private Date createtime;
 	private String createdby;
 	private Date lastupdated;
-	private String updatedby;
-
-	public Integer getMcategorypk() {
-		return mcategorypk;
-	}
-
-	public void setMcategorypk(Integer mcategorypk) {
-		this.mcategorypk = mcategorypk;
-	}
-
-	public String getRowstat() {
-		return rowstat;
-	}
-
-	public void setRowstat(String rowstat) {
-		this.rowstat = rowstat;
-	}
-
-	public Integer getRowedit() {
-		return rowedit;
-	}
-
-	public void setRowedit(Integer rowedit) {
-		this.rowedit = rowedit;
-	}
 
 	public Date getCreatetime() {
 		return createtime;
@@ -53,6 +28,7 @@ public class Mcategory {
 		this.createdby = createdby;
 	}
 
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	public Date getLastupdated() {
 		return lastupdated;
 	}
@@ -61,20 +37,20 @@ public class Mcategory {
 		this.lastupdated = lastupdated;
 	}
 
-	public String getUpdatedby() {
-		return updatedby;
-	}
-
-	public void setUpdatedby(String updatedby) {
-		this.updatedby = updatedby;
-	}
-
 	public String getCategory() {
 		return category;
 	}
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }

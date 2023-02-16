@@ -39,6 +39,7 @@ import com.sds.toms.model.Muser;
 import com.sds.toms.model.Musergroup;
 import com.sds.toms.pojo.DosenReq;
 import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 
 public class MdosenFormVM {
@@ -75,13 +76,12 @@ public class MdosenFormVM {
 
 //			-------Get Combobox Musergroup-------
 			url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_muniversity();
-			rsp = RespHandler.getObject(url);
-
-			ObjectMapper mapper = new ObjectMapper();
-			List<Muniversity> objList = mapper.convertValue(rsp.getData(), new TypeReference<List<Muniversity>>() {
-			});
-
+			rsp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 			if (rsp.getCode() == 200) {
+				ObjectMapper mapper = new ObjectMapper();
+				List<Muniversity> objList = mapper.convertValue(rsp.getData(), new TypeReference<List<Muniversity>>() {
+				});
+
 				Comboitem comboitem = null;
 				for (Muniversity university : objList) {
 					comboitem = new Comboitem();
@@ -93,7 +93,7 @@ public class MdosenFormVM {
 
 			if (objForm != null) {
 				this.objForm = objForm;
-				cbUniv.setValue(objForm.getMuniversity().getUniversityname());
+				cbUniv.setValue(objForm.getUniversity().getUniversityname());
 			}
 
 			if (isEdit != null && isEdit.equals("Y")) {

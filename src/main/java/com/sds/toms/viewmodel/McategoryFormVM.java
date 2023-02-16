@@ -2,6 +2,8 @@ package com.sds.toms.viewmodel;
 
 import java.net.ConnectException;
 
+import javax.ws.rs.core.MediaType;
+
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.AfterCompose;
@@ -11,6 +13,7 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
+import org.zkoss.json.JSONObject;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zhtml.Input;
 import org.zkoss.zk.ui.Component;
@@ -26,11 +29,17 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
 import com.sds.toms.model.Mcategory;
 import com.sds.toms.model.Muser;
+import com.sds.toms.pojo.LoginResp;
 import com.sds.toms.pojo.ObjectResp;
 import com.sds.utils.config.ConfigUtil;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
 public class McategoryFormVM {
 	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
@@ -94,14 +103,18 @@ public class McategoryFormVM {
 								String url = "";
 								if (isInsert) {
 									ObjectResp rsp = new ObjectResp();
-									objForm.setCreatedby(oUser.getUserid());
+//									objForm.setCreatedby(oUser.getUserid());
 
 									url = ConfigUtil.getConfig().getUrl_base()
 											+ ConfigUtil.getConfig().getEndpoint_mcategory();
-									System.out.println("save : " + url);
-									rsp = RespHandler.postObject(url, objForm);
-									if (rsp.getCode() == 201) {
+									
+									JSONObject jsonReq = new JSONObject();
 
+									jsonReq.put("id", null);
+									jsonReq.put("category", objForm.getCategory());
+
+									rsp = RespHandler.handlerObj(url, jsonReq, "POST");
+									if (rsp.getCode() == 200) {
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
 												+ "  title: 'Berhasil',\r\n" + "  text: '"
 												+ Labels.getLabel("common.add.success") + "'," + "})");
@@ -122,7 +135,7 @@ public class McategoryFormVM {
 									}
 
 								} else {
-									objForm.setUpdatedby(oUser.getUserid());
+//									objForm.setUpdatedby(oUser.getUserid());
 									objForm.setLastupdated(null);
 									objForm.setCreatetime(null);
 
@@ -131,8 +144,16 @@ public class McategoryFormVM {
 									System.out.println("update : " + url);
 
 									ObjectResp respobj = new ObjectResp();
-									respobj = RespHandler.putObject(url, objForm);
+									
+//									respobj = RespHandler.putObject(url, objForm);
 
+									JSONObject jsonReq = new JSONObject();
+
+									jsonReq.put("id", objForm.getId());
+									jsonReq.put("category", objForm.getCategory());
+
+									respobj = RespHandler.handlerObj(url, jsonReq, "PUT");
+									
 									if (respobj.getCode() == 200) {
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
 												+ "  title: 'Berhasil',\r\n" + "  text: '"

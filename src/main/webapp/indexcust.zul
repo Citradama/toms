@@ -22,7 +22,7 @@
 	</h:meta>	
 	<script src="/assets/js/plugins.js"></script>
 	
-	<div class="avio page-body" viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.DashboardCustomerVM')">
+	<div class="avio page-body">
 
 		<!-- Page Header -->
 	 <div class="body-header sticky-md-top" style="background-color: #2a91b6;">

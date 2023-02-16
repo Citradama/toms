@@ -3,7 +3,7 @@ package com.sds.toms.model;
 import java.util.Date;
 
 public class Mcust {
-	private Integer mcustpk;
+	private Integer id;
 	private String custid;
 	private String custname;
 	private String major;
@@ -15,110 +15,110 @@ public class Mcust {
 	private String createdby;
 	private Date lastupdated;
 	private String updatedby;
-	private Muniversity muniversity;
+	private Muniversity university;
 
-	public Integer getMcustpk() {
-		return mcustpk;
-	}
-
-	public void setMcustpk(Integer mcustpk) {
-		this.mcustpk = mcustpk;
+	public Integer getId() {
+		return id;
 	}
 
 	public String getCustid() {
 		return custid;
 	}
 
-	public void setCustid(String custid) {
-		this.custid = custid;
-	}
-
 	public String getCustname() {
 		return custname;
-	}
-
-	public void setCustname(String custname) {
-		this.custname = custname;
 	}
 
 	public String getMajor() {
 		return major;
 	}
 
-	public void setMajor(String major) {
-		this.major = major;
-	}
-
 	public String getHp() {
 		return hp;
-	}
-
-	public void setHp(String hp) {
-		this.hp = hp;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getRowstat() {
 		return rowstat;
-	}
-
-	public void setRowstat(String rowstat) {
-		this.rowstat = rowstat;
 	}
 
 	public Integer getRowedit() {
 		return rowedit;
 	}
 
-	public void setRowedit(Integer rowedit) {
-		this.rowedit = rowedit;
-	}
-
 	public Date getCreatetime() {
 		return createtime;
-	}
-
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
 	}
 
 	public String getCreatedby() {
 		return createdby;
 	}
 
-	public void setCreatedby(String createdby) {
-		this.createdby = createdby;
-	}
-
 	public Date getLastupdated() {
 		return lastupdated;
-	}
-
-	public void setLastupdated(Date lastupdated) {
-		this.lastupdated = lastupdated;
 	}
 
 	public String getUpdatedby() {
 		return updatedby;
 	}
 
+	public Muniversity getUniversity() {
+		return university;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setCustid(String custid) {
+		this.custid = custid;
+	}
+
+	public void setCustname(String custname) {
+		this.custname = custname;
+	}
+
+	public void setMajor(String major) {
+		this.major = major;
+	}
+
+	public void setHp(String hp) {
+		this.hp = hp;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setRowstat(String rowstat) {
+		this.rowstat = rowstat;
+	}
+
+	public void setRowedit(Integer rowedit) {
+		this.rowedit = rowedit;
+	}
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+
+	public void setCreatedby(String createdby) {
+		this.createdby = createdby;
+	}
+
+	public void setLastupdated(Date lastupdated) {
+		this.lastupdated = lastupdated;
+	}
+
 	public void setUpdatedby(String updatedby) {
 		this.updatedby = updatedby;
 	}
 
-	public Muniversity getMuniversity() {
-		return muniversity;
-	}
-
-	public void setMuniversity(Muniversity muniversity) {
-		this.muniversity = muniversity;
+	public void setUniversity(Muniversity university) {
+		this.university = university;
 	}
 
 }

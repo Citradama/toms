@@ -12,6 +12,7 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WebApps;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -32,22 +33,26 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
 import com.sds.toms.model.Muniversity;
+import com.sds.toms.model.Muser;
 import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 
 public class MuniversityListVM {
 
+	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
 	private Integer totalrecord;
-	
+	private Muser oUser;
+
 	@Wire
 	private Grid grid;
-	
+
 	@AfterCompose
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		Selectors.wireComponents(view, this, false);
-		
+		oUser = (Muser) zkSession.getAttribute("oUser");
 		doReset();
-		
+
 		if (grid != null) {
 			grid.setRowRenderer(new RowRenderer<Muniversity>() {
 
@@ -68,8 +73,8 @@ public class MuniversityListVM {
 							Map<String, Object> map = new HashMap<String, Object>();
 							map.put("objForm", data);
 							map.put("isDetail", "Y");
-							Window win = (Window) Executions.createComponents("/view/master/univ/universityform.zul", null,
-									map);
+							Window win = (Window) Executions.createComponents("/view/master/univ/universityform.zul",
+									null, map);
 							win.setWidth("60%");
 							win.setClosable(true);
 							win.doModal();
@@ -85,7 +90,7 @@ public class MuniversityListVM {
 						}
 
 					});
-					
+
 					Button btnEdit = new Button();
 					btnEdit.setClass("btn btn-sm btn-success");
 					btnEdit.setIconSclass("z-icon-edit");
@@ -98,8 +103,8 @@ public class MuniversityListVM {
 							Map<String, Object> map = new HashMap<String, Object>();
 							map.put("objForm", data);
 							map.put("isEdit", "Y");
-							Window win = (Window) Executions.createComponents("/view/master/univ/universityform.zul", null,
-									map);
+							Window win = (Window) Executions.createComponents("/view/master/univ/universityform.zul",
+									null, map);
 							win.setWidth("60%");
 							win.setClosable(true);
 							win.doModal();
@@ -115,7 +120,7 @@ public class MuniversityListVM {
 						}
 
 					});
-					
+
 					Button btnDelete = new Button();
 					btnDelete.setClass("btn btn-sm btn-danger");
 					btnDelete.setIconSclass("z-icon-trash");
@@ -135,11 +140,12 @@ public class MuniversityListVM {
 													try {
 														String url = ConfigUtil.getConfig().getUrl_base()
 																+ ConfigUtil.getConfig().getEndpoint_muniversity() + "/"
-																+ data.getMuniversitypk();
+																+ data.getId();
 														System.out.println(url);
 														data.setLastupdated(null);
 														data.setCreatetime(null);
-														ObjectResp rsp = RespHandler.delObject(url, data);
+														ObjectMapper mapper = new ObjectMapper();
+														ObjectResp rsp = RespHandler.responObj(url, mapper.writeValueAsString(data), AppUtil.METHOD_DEL, oUser);
 
 														if (rsp.getCode() == 200) {
 															Messagebox.show(Labels.getLabel("common.delete.success"),
@@ -172,27 +178,30 @@ public class MuniversityListVM {
 
 			});
 		}
-		
+
 	}
-	
+
 	public void doReset() {
 		totalrecord = 0;
 		ObjectResp Resp = null;
 
 		String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_muniversity();
-		Resp = RespHandler.getObject(url);
+		try {
+			Resp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 
-		if (Resp.getCode() == 200) {
-			ObjectMapper mapper = new ObjectMapper();
-			List<Muniversity> objList = mapper.convertValue(Resp.getData(),
-					new TypeReference<List<Muniversity>>() {
-					});
+			if (Resp.getCode() == 200) {
+				ObjectMapper mapper = new ObjectMapper();
+				List<Muniversity> objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Muniversity>>() {
+				});
 
-			System.out.println(objList.size());
-			grid.setModel(new ListModelList<>(objList));
-			totalrecord = objList.size();
-		} else {
-			System.out.println("nulll");
+				System.out.println(objList.size());
+				grid.setModel(new ListModelList<>(objList));
+				totalrecord = objList.size();
+			} else {
+				System.out.println("nulll");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -210,7 +219,7 @@ public class MuniversityListVM {
 			}
 		});
 	}
-	
+
 	public Integer getTotalrecord() {
 		return totalrecord;
 	}
@@ -218,5 +227,5 @@ public class MuniversityListVM {
 	public void setTotalrecord(Integer totalrecord) {
 		this.totalrecord = totalrecord;
 	}
-	
+
 }

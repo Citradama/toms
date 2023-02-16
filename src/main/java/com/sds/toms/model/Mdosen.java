@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Mdosen {
 
-	private Integer mdosenpk;
+	private Integer id;
 	private String dosenid;
 	private String dosenname;
 	private String title;
@@ -18,14 +18,14 @@ public class Mdosen {
 	private String createdby;
 	private Date lastupdated;
 	private String updatedby;
-	private Muniversity muniversity;
+	private Muniversity university;
 
-	public Integer getMdosenpk() {
-		return mdosenpk;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setMdosenpk(Integer mdosenpk) {
-		this.mdosenpk = mdosenpk;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getDosenid() {
@@ -132,12 +132,12 @@ public class Mdosen {
 		this.updatedby = updatedby;
 	}
 
-	public Muniversity getMuniversity() {
-		return muniversity;
+	public Muniversity getUniversity() {
+		return university;
 	}
 
-	public void setMuniversity(Muniversity muniversity) {
-		this.muniversity = muniversity;
+	public void setUniversity(Muniversity university) {
+		this.university = university;
 	}
 
 }

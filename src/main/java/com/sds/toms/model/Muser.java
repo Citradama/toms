@@ -2,42 +2,95 @@ package com.sds.toms.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Muser {
-	private Integer muserpk;
+	private Integer id;
 	private String userid;
 	private String username;
-	private String password;
 	private Date lastlogin;
-	private String rowstat;
-	private Integer rowedit;
-	private Date createtime;
 	private String createdby;
 	private Date lastupdated;
 	private String updatedby;
-	private Musergroup musergroup;
+	private String password;
+	private Musergroup usergroup;
+	private String token;
+	private Date createtime;
 
-	public Integer getMuserpk() {
-		return muserpk;
-	}
-
-	public void setMuserpk(Integer muserpk) {
-		this.muserpk = muserpk;
+	public Integer getId() {
+		return id;
 	}
 
 	public String getUserid() {
 		return userid;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-
 	public String getUsername() {
 		return username;
 	}
 
+
+    @JsonFormat(pattern="yyyy-MM-dd")
+	public Date getLastlogin() {
+		return lastlogin;
+	}
+
+	public String getCreatedby() {
+		return createdby;
+	}
+
+
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+	public Date getLastupdated() {
+		return lastupdated;
+	}
+
+	public String getUpdatedby() {
+		return updatedby;
+	}
+
+	public Musergroup getUsergroup() {
+		return usergroup;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public void setLastlogin(Date lastlogin) {
+		this.lastlogin = lastlogin;
+	}
+
+	public void setCreatedby(String createdby) {
+		this.createdby = createdby;
+	}
+
+	public void setLastupdated(Date lastupdated) {
+		this.lastupdated = lastupdated;
+	}
+
+	public void setUpdatedby(String updatedby) {
+		this.updatedby = updatedby;
+	}
+
+	public void setUsergroup(Musergroup usergroup) {
+		this.usergroup = usergroup;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public String getPassword() {
@@ -48,68 +101,13 @@ public class Muser {
 		this.password = password;
 	}
 
-	public Date getLastlogin() {
-		return lastlogin;
-	}
-
-	public void setLastlogin(Date lastlogin) {
-		this.lastlogin = lastlogin;
-	}
-
-	public String getRowstat() {
-		return rowstat;
-	}
-
-	public void setRowstat(String rowstat) {
-		this.rowstat = rowstat;
-	}
-
-	public Integer getRowedit() {
-		return rowedit;
-	}
-
-	public void setRowedit(Integer rowedit) {
-		this.rowedit = rowedit;
-	}
-
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	public Date getCreatetime() {
 		return createtime;
 	}
 
 	public void setCreatetime(Date createtime) {
 		this.createtime = createtime;
-	}
-
-	public String getCreatedby() {
-		return createdby;
-	}
-
-	public void setCreatedby(String createdby) {
-		this.createdby = createdby;
-	}
-
-	public Date getLastupdated() {
-		return lastupdated;
-	}
-
-	public void setLastupdated(Date lastupdated) {
-		this.lastupdated = lastupdated;
-	}
-
-	public String getUpdatedby() {
-		return updatedby;
-	}
-
-	public void setUpdatedby(String updatedby) {
-		this.updatedby = updatedby;
-	}
-
-	public Musergroup getMusergroup() {
-		return musergroup;
-	}
-
-	public void setMusergroup(Musergroup musergroup) {
-		this.musergroup = musergroup;
 	}
 
 }

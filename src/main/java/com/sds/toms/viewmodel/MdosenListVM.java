@@ -12,6 +12,7 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WebApps;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -32,12 +33,16 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
 import com.sds.toms.model.Mdosen;
+import com.sds.toms.model.Muser;
 import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 
 public class MdosenListVM {
 
+	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
 	private Integer totalrecord;
+	private Muser oUser;
 
 	@Wire
 	private Grid grid;
@@ -45,7 +50,7 @@ public class MdosenListVM {
 	@AfterCompose
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		Selectors.wireComponents(view, this, false);
-
+		oUser = (Muser) zkSession.getAttribute("oUser");
 		doReset();
 
 		if (grid != null) {
@@ -57,7 +62,7 @@ public class MdosenListVM {
 					row.getChildren().add(new Label(data.getDosenid() != null ? data.getDosenid() : ""));
 					row.getChildren().add(new Label(data.getDosenname() != null ? data.getDosenname() : ""));
 					row.getChildren().add(
-							new Label(data.getMuniversity() != null ? data.getMuniversity().getUniversityname() : ""));
+							new Label(data.getUniversity() != null ? data.getUniversity().getUniversityname() : ""));
 
 					Button btnDetail = new Button();
 					btnDetail.setClass("btn btn-sm btn-info");
@@ -137,11 +142,12 @@ public class MdosenListVM {
 													try {
 														String url = ConfigUtil.getConfig().getUrl_base()
 																+ ConfigUtil.getConfig().getEndpoint_mdosen() + "/"
-																+ data.getMdosenpk();
+																+ data.getId();
 														System.out.println(url);
 														data.setLastupdated(null);
 														data.setCreatetime(null);
-														ObjectResp rsp = RespHandler.delObject(url, data);
+														ObjectMapper mapper = new ObjectMapper();
+														ObjectResp rsp = RespHandler.responObj(url, mapper.writeValueAsString(data), AppUtil.METHOD_DEL, oUser);
 
 														if (rsp.getCode() == 200) {
 															Messagebox.show(Labels.getLabel("common.delete.success"),
@@ -149,8 +155,7 @@ public class MdosenListVM {
 																	Messagebox.INFORMATION);
 														}
 														doReset();
-														BindUtils.postNotifyChange(null, null, MdosenListVM.this,
-																"*");
+														BindUtils.postNotifyChange(null, null, MdosenListVM.this, "*");
 													} catch (Exception e) {
 														e.printStackTrace();
 													}
@@ -198,19 +203,24 @@ public class MdosenListVM {
 		ObjectResp Resp = null;
 
 		String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mdosen();
-		Resp = RespHandler.getObject(url);
+		try {
+			Resp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 
-		if (Resp.getCode() == 200) {
-			ObjectMapper mapper = new ObjectMapper();
-			List<Mdosen> objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Mdosen>>() {
-			});
+			if (Resp.getCode() == 200) {
+				ObjectMapper mapper = new ObjectMapper();
+				List<Mdosen> objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Mdosen>>() {
+				});
 
-			System.out.println(objList.size());
-			grid.setModel(new ListModelList<>(objList));
-			totalrecord = objList.size();
-		} else {
-			System.out.println("nulll");
+				System.out.println(objList.size());
+				grid.setModel(new ListModelList<>(objList));
+				totalrecord = objList.size();
+			} else {
+				System.out.println("nulll");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 	}
 
 	public Integer getTotalrecord() {

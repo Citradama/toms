@@ -12,6 +12,7 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WebApps;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -33,12 +34,16 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
 import com.sds.toms.model.Mcategory;
+import com.sds.toms.model.Muser;
 import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 
 public class McategoryListVM {
 
+	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
 	private Integer totalrecord;
+	private Muser oUser;
 
 	@Wire
 	private Grid grid;
@@ -46,7 +51,7 @@ public class McategoryListVM {
 	@AfterCompose
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		Selectors.wireComponents(view, this, false);
-
+		oUser = (Muser) zkSession.getAttribute("oUser");
 		doReset();
 
 		if (grid != null) {
@@ -69,7 +74,7 @@ public class McategoryListVM {
 							Map<String, Object> map = new HashMap<String, Object>();
 							map.put("objForm", data);
 							map.put("isDetail", "Y");
-							Window win = (Window) Executions.createComponents("/view/master/univ/universityform.zul", null,
+							Window win = (Window) Executions.createComponents("/view/master/ctg/categoryform.zul", null,
 									map);
 							win.setWidth("60%");
 							win.setClosable(true);
@@ -99,7 +104,7 @@ public class McategoryListVM {
 							Map<String, Object> map = new HashMap<String, Object>();
 							map.put("objForm", data);
 							map.put("isEdit", "Y");
-							Window win = (Window) Executions.createComponents("/view/master/univ/universityform.zul", null,
+							Window win = (Window) Executions.createComponents("/view/master/ctg/categoryform.zul", null,
 									map);
 							win.setWidth("60%");
 							win.setClosable(true);
@@ -136,16 +141,19 @@ public class McategoryListVM {
 													try {
 														String url = ConfigUtil.getConfig().getUrl_base()
 																+ ConfigUtil.getConfig().getEndpoint_mcategory() + "/"
-																+ data.getMcategorypk();
+																+ data.getId();
 														System.out.println(url);
 														data.setLastupdated(null);
 														data.setCreatetime(null);
-														ObjectResp rsp = RespHandler.delObject(url, data);
+														ObjectMapper mapper = new ObjectMapper();
+														ObjectResp rsp = RespHandler.responObj(url, mapper.writeValueAsString(data), AppUtil.METHOD_DEL, oUser);
 
 														if (rsp.getCode() == 200) {
-															Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
-																	+ "  title: 'Berhasil',\r\n" + "  text: '"
-																	+ Labels.getLabel("common.delete.success") + "'," + "})");
+															Clients.evalJavaScript(
+																	"swal.fire({" + "icon: 'success',\r\n"
+																			+ "  title: 'Berhasil',\r\n" + "  text: '"
+																			+ Labels.getLabel("common.delete.success")
+																			+ "'," + "})");
 														}
 														doReset();
 														BindUtils.postNotifyChange(null, null, McategoryListVM.this,
@@ -182,20 +190,24 @@ public class McategoryListVM {
 		ObjectResp Resp = null;
 
 		String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mcategory();
-		Resp = RespHandler.getObject(url);
+		try {
+			Resp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
+			if (Resp.getCode() == 200) {
+				ObjectMapper mapper = new ObjectMapper();
+				List<Mcategory> objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Mcategory>>() {
+				});
 
-		if (Resp.getCode() == 200) {
-			ObjectMapper mapper = new ObjectMapper();
-			List<Mcategory> objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Mcategory>>() {
-			});
+				System.out.println(objList.size());
+				grid.setModel(new ListModelList<>(objList));
 
-			System.out.println(objList.size());
-			grid.setModel(new ListModelList<>(objList));
-
-			totalrecord = objList.size();
-		} else {
-			System.out.println("nulll");
+				totalrecord = objList.size();
+			} else {
+				System.out.println("nulll");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 	}
 
 	@Command

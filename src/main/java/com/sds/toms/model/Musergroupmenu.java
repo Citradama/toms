@@ -2,32 +2,32 @@ package com.sds.toms.model;
 
 public class Musergroupmenu {
 
-	private Integer musergroupmenupk;
-	private Musergroup musergroup;
-	private Mmenu mmenu;
+	private Integer id;
+	private Musergroup usergroup;
+	private Mmenu menu;
 
-	public Integer getMusergroupmenupk() {
-		return musergroupmenupk;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setMusergroupmenupk(Integer musergroupmenupk) {
-		this.musergroupmenupk = musergroupmenupk;
+	public Musergroup getUsergroup() {
+		return usergroup;
 	}
 
-	public Musergroup getMusergroup() {
-		return musergroup;
+	public Mmenu getMenu() {
+		return menu;
 	}
 
-	public void setMusergroup(Musergroup musergroup) {
-		this.musergroup = musergroup;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public Mmenu getMmenu() {
-		return mmenu;
+	public void setUsergroup(Musergroup usergroup) {
+		this.usergroup = usergroup;
 	}
 
-	public void setMmenu(Mmenu mmenu) {
-		this.mmenu = mmenu;
+	public void setMenu(Mmenu menu) {
+		this.menu = menu;
 	}
 
 }

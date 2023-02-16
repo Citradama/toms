@@ -39,6 +39,7 @@ import com.sds.toms.model.Muser;
 import com.sds.toms.model.Musergroup;
 import com.sds.toms.model.Musergroupmenu;
 import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.util.AppUtil;
 import com.sds.utils.StringUtils;
 import com.sds.utils.config.ConfigUtil;
 
@@ -72,13 +73,13 @@ public class MuserFormVM {
 
 //			-------Get Combobox Musergroup-------
 			url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_musergroup();
-			rsp = RespHandler.getObject(url);
-
-			ObjectMapper mapper = new ObjectMapper();
-			List<Musergroup> objList = mapper.convertValue(rsp.getData(), new TypeReference<List<Musergroup>>() {
-			});
+			rsp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 
 			if (rsp.getCode() == 200) {
+				ObjectMapper mapper = new ObjectMapper();
+				List<Musergroup> objList = mapper.convertValue(rsp.getData(), new TypeReference<List<Musergroup>>() {
+				});
+
 				Comboitem comboitem = null;
 				for (Musergroup musergroup : objList) {
 					comboitem = new Comboitem();
@@ -91,7 +92,7 @@ public class MuserFormVM {
 			if (obj != null) {
 				objForm = obj;
 				isInsert = false;
-				cbUsergroup.setValue(obj.getMusergroup().getUsergroupname());
+				cbUsergroup.setValue(obj.getUsergroup().getUsergroupname());
 			} else {
 				objForm = new Muser();
 			}
@@ -125,17 +126,18 @@ public class MuserFormVM {
 
 					public void onEvent(Event event) throws Exception {
 						if (event.getName().equals("onOK")) {
-							Muser oUser = (Muser) zkSession.getAttribute("oUser");
 							try {
 								String url = "";
+								ObjectMapper mapper = new ObjectMapper();
 								if (isInsert) {
 									ObjectResp rsp = new ObjectResp();
 									objForm.setUpdatedby(oUser.getUserid());
 
 									url = ConfigUtil.getConfig().getUrl_base()
 											+ ConfigUtil.getConfig().getEndpoint_muser();
-									System.out.println("save : " + url);
-									rsp = RespHandler.postObject(url, objForm);
+
+									rsp = RespHandler.responObj(url, mapper.writeValueAsString(objForm),
+											AppUtil.METHOD_POST, oUser);
 									if (rsp.getCode() == 201) {
 
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
@@ -159,15 +161,11 @@ public class MuserFormVM {
 
 								} else {
 									objForm.setUpdatedby(oUser.getUserid());
-									objForm.setLastupdated(null);
-									objForm.setCreatetime(null);
-
 									url = ConfigUtil.getConfig().getUrl_base()
 											+ ConfigUtil.getConfig().getEndpoint_muser();
-									System.out.println("update : " + url);
-
 									ObjectResp respobj = new ObjectResp();
-									respobj = RespHandler.putObject(url, objForm);
+									respobj = RespHandler.responObj(url, mapper.writeValueAsString(objForm),
+											AppUtil.METHOD_PUT, oUser);
 
 									if (respobj.getCode() == 200) {
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
@@ -208,7 +206,7 @@ public class MuserFormVM {
 				String userid = (String) ctx.getProperties("userid")[0].getValue();
 				String username = (String) ctx.getProperties("username")[0].getValue();
 				String password = (String) ctx.getProperties("password")[0].getValue();
-				Musergroup musergroup = (Musergroup) ctx.getProperties("musergroup")[0].getValue();
+				Musergroup usergroup = (Musergroup) ctx.getProperties("usergroup")[0].getValue();
 
 				if (userid == null || userid.isEmpty()) {
 					this.addInvalidMessage(ctx, "userid", Labels.getLabel("common.validator.empty"));
@@ -219,8 +217,8 @@ public class MuserFormVM {
 				if (password == null || password.isEmpty()) {
 					this.addInvalidMessage(ctx, "password", Labels.getLabel("common.validator.empty"));
 				}
-				if (musergroup == null) {
-					this.addInvalidMessage(ctx, "musergroup", Labels.getLabel("common.validator.empty"));
+				if (usergroup == null) {
+					this.addInvalidMessage(ctx, "usergroup", Labels.getLabel("common.validator.empty"));
 				}
 
 			}

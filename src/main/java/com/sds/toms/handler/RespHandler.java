@@ -3,9 +3,14 @@ package com.sds.toms.handler;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.ws.rs.core.MediaType;
+
+import org.zkoss.json.JSONObject;
+
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sds.toms.model.Muser;
 import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.util.AppUtil;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -51,30 +56,6 @@ public class RespHandler {
 
 			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
 					mapper.writeValueAsString(obj));
-
-			String output = response.getEntity(String.class);
-			System.out.println(output);
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-			mapper.setDateFormat(df);
-			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-			rsp = mapper.readValue(output, ObjectResp.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return rsp;
-	}
-
-	public static ObjectResp postOtherObject(String url, Object obj) throws Exception {
-		ObjectResp rsp = null;
-		try {
-			Client client = Client.create();
-			client.setConnectTimeout(40 * 1000);
-			client.setReadTimeout(40 * 1000);
-
-			ObjectMapper mapper = new ObjectMapper();
-			WebResource webResource = client.resource(url.trim());
-
-			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, obj);
 
 			String output = response.getEntity(String.class);
 			System.out.println(output);
@@ -134,6 +115,44 @@ public class RespHandler {
 			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			rsp = mapper.readValue(output, ObjectResp.class);
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rsp;
+	}
+
+	public static ObjectResp responObj(String url, Object obj, String method, Muser user) throws Exception {
+		ObjectResp rsp = null;
+		try {
+			Client client = Client.create();
+			client.setConnectTimeout(40 * 1000);
+			client.setReadTimeout(40 * 1000);
+
+			ObjectMapper mapper = new ObjectMapper();
+			WebResource webResource = client.resource(url.trim());
+			System.out.println("url : " + url);
+
+			ClientResponse response = null;
+			if (method.equals(AppUtil.METHOD_GET)) {
+				response = webResource.header("Authorization", "Bearer " + user.getToken())
+						.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+			} else if (method.equals(AppUtil.METHOD_POST)) {
+				System.out.println("Req post : " + mapper.writeValueAsString(obj));
+				response = webResource.header("Authorization", "Bearer " + user.getToken())
+						.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, obj);
+			} else if (method.equals(AppUtil.METHOD_PUT)) {
+				System.out.println("Req put : " + obj);
+				response = webResource.header("Authorization", "Bearer " + user.getToken())
+						.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, obj);
+			} else if (method.equals(AppUtil.METHOD_DEL)) {
+				response = webResource.header("Authorization", "Bearer " + user.getToken())
+						.type(MediaType.APPLICATION_JSON).delete(ClientResponse.class, obj);
+			}
+
+			String output = response.getEntity(String.class);
+			System.out.println(output);
+			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			rsp = mapper.readValue(output, ObjectResp.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

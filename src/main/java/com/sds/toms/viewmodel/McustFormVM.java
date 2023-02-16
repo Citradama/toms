@@ -93,7 +93,7 @@ public class McustFormVM {
 
 			if (objForm != null) {
 				this.objForm = objForm;
-				cbUniv.setValue(objForm.getMuniversity().getUniversityname());
+				cbUniv.setValue(objForm.getUniversity().getUniversityname());
 			}
 
 			if (isEdit != null && isEdit.equals("Y")) {

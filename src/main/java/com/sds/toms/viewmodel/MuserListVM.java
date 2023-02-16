@@ -35,12 +35,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
 import com.sds.toms.model.Muser;
 import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 
 public class MuserListVM {
 
 	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
 	private Integer totalrecord;
+	private Muser oUser;
 
 	@Wire
 	private Grid grid;
@@ -48,7 +50,7 @@ public class MuserListVM {
 	@AfterCompose
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		Selectors.wireComponents(view, this, false);
-
+		oUser = (Muser) zkSession.getAttribute("oUser");
 		doReset();
 
 		if (grid != null) {
@@ -59,8 +61,8 @@ public class MuserListVM {
 					row.getChildren().add(new Label(String.valueOf(index + 1)));
 					row.getChildren().add(new Label(data.getUserid() != null ? data.getUserid() : ""));
 					row.getChildren().add(new Label(data.getUsername() != null ? data.getUsername() : ""));
-					row.getChildren().add(
-							new Label(data.getMusergroup() != null ? data.getMusergroup().getUsergroupname() : ""));
+					row.getChildren()
+							.add(new Label(data.getUsergroup() != null ? data.getUsergroup().getUsergroupname() : ""));
 
 					Button btnDetail = new Button();
 					btnDetail.setClass("btn btn-sm btn-info");
@@ -139,20 +141,22 @@ public class MuserListVM {
 													try {
 														String url = ConfigUtil.getConfig().getUrl_base()
 																+ ConfigUtil.getConfig().getEndpoint_muser() + "/"
-																+ data.getMuserpk();
-														System.out.println(url);
+																+ data.getId();
+														ObjectMapper mapper = new ObjectMapper();
 														data.setLastupdated(null);
-														data.setCreatetime(null);
-														ObjectResp rsp = RespHandler.delObject(url, data);
+														ObjectResp rsp = RespHandler.responObj(url,
+																mapper.writeValueAsString(data), AppUtil.METHOD_DEL,
+																oUser);
 
 														if (rsp.getCode() == 200) {
-															Messagebox.show(Labels.getLabel("common.delete.success"),
-																	WebApps.getCurrent().getAppName(), Messagebox.OK,
-																	Messagebox.INFORMATION);
+															Clients.evalJavaScript(
+																	"swal.fire({" + "icon: 'success',\r\n"
+																			+ "  title: 'Berhasil',\r\n" + "  text: '"
+																			+ Labels.getLabel("common.delete.success")
+																			+ "'," + "})");
 														}
 														doReset();
-														BindUtils.postNotifyChange(null, null, MuserListVM.this,
-																"*");
+														BindUtils.postNotifyChange(null, null, MuserListVM.this, "*");
 													} catch (Exception e) {
 														e.printStackTrace();
 													}
@@ -196,22 +200,31 @@ public class MuserListVM {
 
 	public void doReset() {
 		totalrecord = 0;
-		ObjectResp Resp = null;
 
-		String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_muser();
-		Resp = RespHandler.getObject(url);
+		try {
+			ObjectResp Resp = null;
+			String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_muser();
 
-		if (Resp.getCode() == 200) {
-			ObjectMapper mapper = new ObjectMapper();
-			List<Muser> objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Muser>>() {
-			});
+			Resp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 
-			System.out.println(objList.size());
-			grid.setModel(new ListModelList<>(objList));
-			totalrecord = objList.size();
-		} else {
-			System.out.println("nulll");
+			if (Resp.getCode() == 200) {
+				ObjectMapper mapper = new ObjectMapper();
+				List<Muser> objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Muser>>() {
+				});
+
+				System.out.println(objList.size());
+				grid.setModel(new ListModelList<>(objList));
+				totalrecord = objList.size();
+			} else {
+				System.out.println("nulll");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
+	
+	public void doSearch() {
+		
 	}
 
 	public Integer getTotalrecord() {
