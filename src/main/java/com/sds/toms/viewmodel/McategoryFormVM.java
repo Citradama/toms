@@ -36,6 +36,7 @@ import com.sds.toms.model.Mcategory;
 import com.sds.toms.model.Muser;
 import com.sds.toms.pojo.LoginResp;
 import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -101,6 +102,7 @@ public class McategoryFormVM {
 							Muser oUser = (Muser) zkSession.getAttribute("oUser");
 							try {
 								String url = "";
+								ObjectMapper mapper = new ObjectMapper();
 								if (isInsert) {
 									ObjectResp rsp = new ObjectResp();
 //									objForm.setCreatedby(oUser.getUserid());
@@ -113,7 +115,8 @@ public class McategoryFormVM {
 									jsonReq.put("id", null);
 									jsonReq.put("category", objForm.getCategory());
 
-									rsp = RespHandler.handlerObj(url, jsonReq, "POST");
+									rsp = RespHandler.responObj(url, jsonReq,
+											AppUtil.METHOD_POST, oUser);
 									if (rsp.getCode() == 200) {
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
 												+ "  title: 'Berhasil',\r\n" + "  text: '"
@@ -152,7 +155,8 @@ public class McategoryFormVM {
 									jsonReq.put("id", objForm.getId());
 									jsonReq.put("category", objForm.getCategory());
 
-									respobj = RespHandler.handlerObj(url, jsonReq, "PUT");
+									respobj = RespHandler.responObj(url, jsonReq,
+											AppUtil.METHOD_PUT, oUser);
 									
 									if (respobj.getCode() == 200) {
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
