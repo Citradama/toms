@@ -64,7 +64,7 @@ public class McategoryFormVM {
 		try {
 			oUser = (Muser) zkSession.getAttribute("oUser");
 			doReset();
-			
+
 			if (objForm != null) {
 				this.objForm = objForm;
 				isInsert = false;
@@ -102,21 +102,19 @@ public class McategoryFormVM {
 							Muser oUser = (Muser) zkSession.getAttribute("oUser");
 							try {
 								String url = "";
-								ObjectMapper mapper = new ObjectMapper();
 								if (isInsert) {
 									ObjectResp rsp = new ObjectResp();
 //									objForm.setCreatedby(oUser.getUserid());
 
 									url = ConfigUtil.getConfig().getUrl_base()
 											+ ConfigUtil.getConfig().getEndpoint_mcategory();
-									
+
 									JSONObject jsonReq = new JSONObject();
 
 									jsonReq.put("id", null);
 									jsonReq.put("category", objForm.getCategory());
 
-									rsp = RespHandler.responObj(url, jsonReq,
-											AppUtil.METHOD_POST, oUser);
+									rsp = RespHandler.responObj(url, jsonReq, AppUtil.METHOD_POST, oUser);
 									if (rsp.getCode() == 200) {
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
 												+ "  title: 'Berhasil',\r\n" + "  text: '"
@@ -147,7 +145,7 @@ public class McategoryFormVM {
 									System.out.println("update : " + url);
 
 									ObjectResp respobj = new ObjectResp();
-									
+
 //									respobj = RespHandler.putObject(url, objForm);
 
 									JSONObject jsonReq = new JSONObject();
@@ -155,9 +153,8 @@ public class McategoryFormVM {
 									jsonReq.put("id", objForm.getId());
 									jsonReq.put("category", objForm.getCategory());
 
-									respobj = RespHandler.responObj(url, jsonReq,
-											AppUtil.METHOD_PUT, oUser);
-									
+									respobj = RespHandler.responObj(url, jsonReq, AppUtil.METHOD_PUT, oUser);
+
 									if (respobj.getCode() == 200) {
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
 												+ "  title: 'Berhasil',\r\n" + "  text: '"
@@ -203,7 +200,7 @@ public class McategoryFormVM {
 			}
 		};
 	}
-	
+
 	public Mcategory getObjForm() {
 		return objForm;
 	}

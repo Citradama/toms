@@ -11,11 +11,11 @@
 <?meta http-equiv="x-ua-compatible" content="ie=edge" ?>
 
 <zk xmlns:n="native">
-<!-- 	<zscript>
-	com.sdd.feecoll.domain.Muser oUser = (com.sdd.feecoll.domain.Muser) session.getAttribute("oUser");
+<zscript>
+	com.sds.toms.model.Muser oUser = (com.sds.toms.model.Muser) session.getAttribute("oUser");
 	if (oUser == null)
-		Executions.sendRedirect("/timeout.zul");
-</zscript> -->
+		Executions.sendRedirect("/login.zul");
+</zscript>
 	<div
 		viewModel="@id('vm')@init('com.sds.toms.viewmodel.UserInitializationVM')" >
 		<n:header >

@@ -19,6 +19,7 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
+import org.zkoss.json.JSONObject;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Sessions;
@@ -55,6 +56,7 @@ import com.sds.toms.model.Muser;
 import com.sds.toms.model.Musergroup;
 import com.sds.toms.model.Musergroupmenu;
 import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -115,16 +117,16 @@ public class MusergroupFormVM {
 		if (isEdit != null && isEdit.equals("Y")) {
 			btnSave.setLabel(Labels.getLabel("common.update"));
 			String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_musergroupmenu()
-					+ "/usergroup/" + obj.getMusergrouppk();
+					+ "/usergroup/" + obj.getId();
 			System.out.println(url);
-			ObjectResp rsp = RespHandler.getObject(url);
+			ObjectResp rsp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 			if (rsp.getCode() == 200) {
 				ObjectMapper mapper = new ObjectMapper();
 				listGroupmenu = mapper.convertValue(rsp.getData(), new TypeReference<List<Musergroupmenu>>() {
 				});
 
 				for (Musergroupmenu data : listGroupmenu) {
-					map.put(data.getMmenu().getMmenupk(), data.getMmenu());
+					map.put(data.getMenu().getMmenupk(), data.getMenu());
 				}
 
 				System.out.println("mapsizeee : " + map.size());
@@ -146,9 +148,9 @@ public class MusergroupFormVM {
 			gbSetup.setVisible(false);
 
 			String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_musergroupmenu()
-					+ "/usergroup/" + obj.getMusergrouppk();
+					+ "/usergroup/" + obj.getId();
 			System.out.println(url);
-			ObjectResp rsp = RespHandler.getObject(url);
+			ObjectResp rsp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 			if (rsp.getCode() == 200) {
 				ObjectMapper mapper = new ObjectMapper();
 				listGroupmenu = mapper.convertValue(rsp.getData(), new TypeReference<List<Musergroupmenu>>() {
@@ -165,7 +167,7 @@ public class MusergroupFormVM {
 				public void render(Row row, final Musergroupmenu data, int index) throws Exception {
 					row.getChildren().add(new Label(String.valueOf(index + 1)));
 					row.getChildren()
-							.add(new Label(data.getMmenu().getMenugroup() + " - " + data.getMmenu().getMenuname()));
+							.add(new Label(data.getMenu().getMenugroup() + " - " + data.getMenu().getMenuname()));
 				}
 			});
 		}
@@ -188,7 +190,7 @@ public class MusergroupFormVM {
 			divListMenu.getChildren().clear();
 			String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mmenu();
 			System.out.println(url);
-			ObjectResp rsp = RespHandler.getObject(url);
+			ObjectResp rsp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 			if (rsp.getCode() == 200) {
 				ObjectMapper mapper = new ObjectMapper();
 				objList = mapper.convertValue(rsp.getData(), new TypeReference<List<Mmenu>>() {
@@ -302,6 +304,7 @@ public class MusergroupFormVM {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Command
+	@NotifyChange("*")
 	public void doSave() {
 
 		Messagebox.show(
@@ -314,6 +317,7 @@ public class MusergroupFormVM {
 							try {
 								if (listMmenu.size() > 0) {
 									String url = "";
+									ObjectMapper mapper = new ObjectMapper();
 									if (isInsert) {
 										ObjectResp rsp = new ObjectResp();
 										obj.setUpdatedby(oUser.getUserid());
@@ -321,20 +325,25 @@ public class MusergroupFormVM {
 										url = ConfigUtil.getConfig().getUrl_base()
 												+ ConfigUtil.getConfig().getEndpoint_musergroup();
 										System.out.println("save : " + url);
-										rsp = RespHandler.postObject(url, obj);
+										rsp = RespHandler.responObj(url, mapper.writeValueAsString(obj),
+												AppUtil.METHOD_POST, oUser);
 										if (rsp.getCode() == 201) {
 											url = ConfigUtil.getConfig().getUrl_base()
 													+ ConfigUtil.getConfig().getEndpoint_musergroupmenu();
 											System.out.println(url);
 
+											obj = mapper.convertValue(rsp.getData(), new TypeReference<Musergroup>() {
+											});
+
 											for (Mmenu data : listMmenu) {
 												Musergroupmenu objMenu = new Musergroupmenu();
-												objMenu.setMmenu(data);
-												objMenu.setMusergroup(obj);
+												objMenu.setMenu(data);
+												objMenu.setUsergroup(obj);
 												listGroup.add(objMenu);
 											}
 
-											rsp = RespHandler.postObject(url, listGroup);
+											rsp = RespHandler.responObj(url, mapper.writeValueAsString(listGroup),
+													AppUtil.METHOD_POST, oUser);
 											if (rsp.getCode() == 201) {
 												Clients.evalJavaScript("swal.fire({" + "icon: 'info',\r\n"
 														+ "  title: 'Informasi',\r\n" + "  text: '"
@@ -361,21 +370,19 @@ public class MusergroupFormVM {
 										obj.setCreatetime(null);
 
 										url = ConfigUtil.getConfig().getUrl_base()
-												+ ConfigUtil.getConfig().getEndpoint_musergroup() + "/"
-												+ obj.getMusergrouppk();
+												+ ConfigUtil.getConfig().getEndpoint_musergroup();
 										System.out.println("update : " + url);
 
 										ObjectResp respobj = new ObjectResp();
-										respobj = RespHandler.putObject(url, obj);
+										respobj = RespHandler.responObj(url, mapper.writeValueAsString(obj),
+												AppUtil.METHOD_PUT, oUser);
 
 										if (respobj.getCode() == 200) {
 											url = ConfigUtil.getConfig().getUrl_base()
 													+ ConfigUtil.getConfig().getEndpoint_musergroupmenu()
-													+ "/usergroup/" + obj.getMusergrouppk();
+													+ "/usergroup/" + obj.getId();
 
-											for (Musergroupmenu data : listGroupmenu) {
-												respobj = RespHandler.delObject(url, data);
-											}
+											respobj = RespHandler.responObj(url, null, AppUtil.METHOD_DEL, oUser);
 
 											if (respobj.getCode() == 200) {
 												url = ConfigUtil.getConfig().getUrl_base()
@@ -384,12 +391,14 @@ public class MusergroupFormVM {
 
 												for (Mmenu data : listMmenu) {
 													Musergroupmenu objMenu = new Musergroupmenu();
-													objMenu.setMmenu(data);
-													objMenu.setMusergroup(obj);
+													objMenu.setMenu(data);
+													objMenu.setUsergroup(obj);
 													listGroup.add(objMenu);
 												}
 
-												ObjectResp rsps = RespHandler.postObject(url, listGroup);
+												ObjectResp rsps = RespHandler.responObj(url,
+														mapper.writeValueAsString(listGroup), AppUtil.METHOD_POST,
+														oUser);
 
 												if (rsps.getCode() == 200) {
 													Clients.evalJavaScript("swal.fire({" + "icon: 'info',\r\n"
@@ -399,7 +408,7 @@ public class MusergroupFormVM {
 											}
 										}
 									}
-
+									doReset();
 									doClose();
 								} else {
 									Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n"
@@ -420,7 +429,6 @@ public class MusergroupFormVM {
 					}
 				});
 
-		doReset();
 	}
 
 	@Command
