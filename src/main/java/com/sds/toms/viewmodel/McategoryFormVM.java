@@ -115,7 +115,7 @@ public class McategoryFormVM {
 									jsonReq.put("category", objForm.getCategory());
 
 									rsp = RespHandler.responObj(url, jsonReq, AppUtil.METHOD_POST, oUser);
-									if (rsp.getCode() == 200) {
+									if (rsp.getCode() == 201) {
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
 												+ "  title: 'Berhasil',\r\n" + "  text: '"
 												+ Labels.getLabel("common.add.success") + "'," + "})");
