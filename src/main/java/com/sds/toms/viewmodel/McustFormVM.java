@@ -39,6 +39,7 @@ import com.sds.toms.model.Muser;
 import com.sds.toms.pojo.CustReq;
 import com.sds.toms.pojo.DosenReq;
 import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 
 public class McustFormVM {
@@ -75,7 +76,7 @@ public class McustFormVM {
 
 //			-------Get Combobox Musergroup-------
 			url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_muniversity();
-			rsp = RespHandler.getObject(url);
+			rsp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 
 			ObjectMapper mapper = new ObjectMapper();
 			List<Muniversity> objList = mapper.convertValue(rsp.getData(), new TypeReference<List<Muniversity>>() {
@@ -94,6 +95,7 @@ public class McustFormVM {
 			if (objForm != null) {
 				this.objForm = objForm;
 				cbUniv.setValue(objForm.getUniversity().getUniversityname());
+				isInsert = false;
 			}
 
 			if (isEdit != null && isEdit.equals("Y")) {
@@ -108,7 +110,7 @@ public class McustFormVM {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void doReadonly() {
 		txCustid.setReadonly(true);
 		txCustname.setReadonly(true);
@@ -126,7 +128,7 @@ public class McustFormVM {
 		password = "";
 		confpass = "";
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Command
 	@NotifyChange("*")
@@ -140,6 +142,8 @@ public class McustFormVM {
 							Muser oUser = (Muser) zkSession.getAttribute("oUser");
 							try {
 								String url = "";
+								ObjectMapper mapper = new ObjectMapper();
+
 								if (isInsert) {
 									ObjectResp rsp = new ObjectResp();
 									objForm.setCreatedby(oUser.getUserid());
@@ -152,7 +156,8 @@ public class McustFormVM {
 									req.setPassword(password);
 									req.setUsergroupcode("CST");
 
-									rsp = RespHandler.postObject(url, req);
+									rsp = RespHandler.responObj(url, mapper.writeValueAsString(req),
+											AppUtil.METHOD_POST, oUser);
 									if (rsp.getCode() == 201) {
 
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
@@ -184,7 +189,8 @@ public class McustFormVM {
 									System.out.println("update : " + url);
 
 									ObjectResp respobj = new ObjectResp();
-									respobj = RespHandler.putObject(url, objForm);
+									respobj = RespHandler.responObj(url, mapper.writeValueAsString(objForm),
+											AppUtil.METHOD_PUT, oUser);
 
 									if (respobj.getCode() == 200) {
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
@@ -221,35 +227,27 @@ public class McustFormVM {
 			@Override
 			public void validate(ValidationContext ctx) {
 
-				String dosenid = (String) ctx.getProperties("dosenid")[0].getValue();
-				String nik = (String) ctx.getProperties("nik")[0].getValue();
-				String dosenname = (String) ctx.getProperties("dosenname")[0].getValue();
-				String email = (String) ctx.getProperties("email")[0].getValue();
-				String title = (String) ctx.getProperties("title")[0].getValue();
+				String custid = (String) ctx.getProperties("custid")[0].getValue();
 				String hp = (String) ctx.getProperties("hp")[0].getValue();
-				String position = (String) ctx.getProperties("position")[0].getValue();
-//				Muniversity muniversity = (Muniversity) ctx.getProperties("musergroup")[0].getValue();
+				String custname = (String) ctx.getProperties("custname")[0].getValue();
+				String email = (String) ctx.getProperties("email")[0].getValue();
+				String major = (String) ctx.getProperties("major")[0].getValue();
+				Muniversity university = (Muniversity) ctx.getProperties("university")[0].getValue();
 
-				if (dosenid == null || dosenid.isEmpty()) {
-					this.addInvalidMessage(ctx, "dosenid", Labels.getLabel("common.validator.empty"));
+				if (custid == null || custid.isEmpty()) {
+					this.addInvalidMessage(ctx, "custid", Labels.getLabel("common.validator.empty"));
 				}
-				if (nik == null || nik.isEmpty()) {
-					this.addInvalidMessage(ctx, "nik", Labels.getLabel("common.validator.empty"));
-				}
-				if (dosenname == null || dosenname.isEmpty()) {
-					this.addInvalidMessage(ctx, "dosenname", Labels.getLabel("common.validator.empty"));
+				if (custname == null || custname.isEmpty()) {
+					this.addInvalidMessage(ctx, "custname", Labels.getLabel("common.validator.empty"));
 				}
 				if (email == null || email.isEmpty()) {
 					this.addInvalidMessage(ctx, "email", Labels.getLabel("common.validator.empty"));
 				}
-				if (title == null || title.isEmpty()) {
-					this.addInvalidMessage(ctx, "title", Labels.getLabel("common.validator.empty"));
+				if (major == null || major.isEmpty()) {
+					this.addInvalidMessage(ctx, "major", Labels.getLabel("common.validator.empty"));
 				}
 				if (hp == null || hp.isEmpty()) {
 					this.addInvalidMessage(ctx, "hp", Labels.getLabel("common.validator.empty"));
-				}
-				if (position == null || position.isEmpty()) {
-					this.addInvalidMessage(ctx, "position", Labels.getLabel("common.validator.empty"));
 				}
 
 				if (password != null || password.equals("")) {
@@ -264,15 +262,13 @@ public class McustFormVM {
 					}
 				}
 
-//				if (muniversity == null) {
-//					this.addInvalidMessage(ctx, "muniversity", Labels.getLabel("common.validator.empty"));
-//				}
+				if (university == null) {
+					this.addInvalidMessage(ctx, "university", Labels.getLabel("common.validator.empty"));
+				}
 
 			}
 		};
 	}
-	
-	
 
 	public Mcust getObjForm() {
 		return objForm;
@@ -313,5 +309,5 @@ public class McustFormVM {
 	public void setValConfpass(String valConfpass) {
 		this.valConfpass = valConfpass;
 	}
-	
+
 }

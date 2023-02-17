@@ -37,6 +37,7 @@ import com.sds.toms.model.Muniversity;
 import com.sds.toms.model.Muser;
 import com.sds.toms.pojo.CustReq;
 import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 
 public class MuniversityFormVM {
@@ -63,7 +64,7 @@ public class MuniversityFormVM {
 		try {
 			oUser = (Muser) zkSession.getAttribute("oUser");
 			doReset();
-			
+
 			if (objForm != null) {
 				this.objForm = objForm;
 				isInsert = false;
@@ -100,15 +101,17 @@ public class MuniversityFormVM {
 						if (event.getName().equals("onOK")) {
 							Muser oUser = (Muser) zkSession.getAttribute("oUser");
 							try {
-								String url = "";
+								String url = ConfigUtil.getConfig().getUrl_base()
+										+ ConfigUtil.getConfig().getEndpoint_muniversity();
+
+								ObjectMapper mapper = new ObjectMapper();
+								ObjectResp rsp = new ObjectResp();
 								if (isInsert) {
-									ObjectResp rsp = new ObjectResp();
 									objForm.setCreatedby(oUser.getUserid());
 
-									url = ConfigUtil.getConfig().getUrl_base()
-											+ ConfigUtil.getConfig().getEndpoint_muniversity();
 									System.out.println("save : " + url);
-									rsp = RespHandler.postObject(url, objForm);
+									rsp = RespHandler.responObj(url, mapper.writeValueAsString(objForm),
+											AppUtil.METHOD_POST, oUser);
 									if (rsp.getCode() == 201) {
 
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
@@ -139,10 +142,11 @@ public class MuniversityFormVM {
 											+ ConfigUtil.getConfig().getEndpoint_muniversity();
 									System.out.println("update : " + url);
 
-									ObjectResp respobj = new ObjectResp();
-									respobj = RespHandler.putObject(url, objForm);
+									rsp = new ObjectResp();
+									rsp = RespHandler.responObj(url, mapper.writeValueAsString(objForm),
+											AppUtil.METHOD_PUT, oUser);
 
-									if (respobj.getCode() == 200) {
+									if (rsp.getCode() == 200) {
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
 												+ "  title: 'Berhasil',\r\n" + "  text: '"
 												+ Labels.getLabel("common.update.success") + "'," + "})");

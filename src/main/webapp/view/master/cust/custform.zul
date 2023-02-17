@@ -76,11 +76,11 @@
 								<label class="form-label">
 									Universitas
 								</label>
-								<label style="color:red"
-									value="@load(vmsgs['muniversity'])" />
+								<!-- <label style="color:red"
+									value="@load(vmsgs['university'])" /> -->
 							</hlayout>
 							<combobox id="cbUniv" width="100%" height="100%" style="font-size:14px"
-								selectedItem="@bind(e.muniversity)" />
+								selectedItem="@bind(e.university)" />
 						</div>
 						<div class="col">
 							<hlayout>

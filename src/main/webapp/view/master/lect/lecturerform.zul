@@ -101,10 +101,10 @@
 									Universitas
 								</label>
 								<label style="color:red"
-									value="@load(vmsgs['muniversity'])" />
+									value="@load(vmsgs['university'])" />
 							</hlayout>
 							<combobox id="cbUniv" width="100%"
-								selectedItem="@bind(e.muniversity)" />
+								selectedItem="@bind(e.university)" />
 						</div>
 						<div class="col">
 							<hlayout>

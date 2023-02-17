@@ -19,6 +19,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Grid;
@@ -147,12 +148,16 @@ public class MdosenListVM {
 														data.setLastupdated(null);
 														data.setCreatetime(null);
 														ObjectMapper mapper = new ObjectMapper();
-														ObjectResp rsp = RespHandler.responObj(url, mapper.writeValueAsString(data), AppUtil.METHOD_DEL, oUser);
+														ObjectResp rsp = RespHandler.responObj(url,
+																mapper.writeValueAsString(data), AppUtil.METHOD_DEL,
+																oUser);
 
 														if (rsp.getCode() == 200) {
-															Messagebox.show(Labels.getLabel("common.delete.success"),
-																	WebApps.getCurrent().getAppName(), Messagebox.OK,
-																	Messagebox.INFORMATION);
+															Clients.evalJavaScript(
+																	"swal.fire({" + "icon: 'success',\r\n"
+																			+ "  title: 'Berhasil',\r\n" + "  text: '"
+																			+ Labels.getLabel("common.delete.success")
+																			+ "'," + "})");
 														}
 														doReset();
 														BindUtils.postNotifyChange(null, null, MdosenListVM.this, "*");
