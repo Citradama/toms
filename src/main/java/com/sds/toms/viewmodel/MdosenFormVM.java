@@ -94,6 +94,7 @@ public class MdosenFormVM {
 			if (objForm != null) {
 				this.objForm = objForm;
 				cbUniv.setValue(objForm.getUniversity().getUniversityname());
+				isInsert = false;
 			}
 
 			if (isEdit != null && isEdit.equals("Y")) {
@@ -143,19 +144,19 @@ public class MdosenFormVM {
 							Muser oUser = (Muser) zkSession.getAttribute("oUser");
 							try {
 								String url = "";
+								ObjectMapper mapper = new ObjectMapper();
 								if (isInsert) {
 									ObjectResp rsp = new ObjectResp();
 									objForm.setCreatedby(oUser.getUserid());
 
 									url = ConfigUtil.getConfig().getUrl_base()
 											+ ConfigUtil.getConfig().getEndpoint_mdosen();
-									System.out.println("save : " + url);
 									DosenReq req = new DosenReq();
 									req.setMdosen(objForm);
 									req.setPassword(password);
 									req.setUsergroupcode("DSN");
 
-									rsp = RespHandler.postObject(url, req);
+									rsp = RespHandler.responObj(url, mapper.writeValueAsString(req), AppUtil.METHOD_POST, oUser);
 									if (rsp.getCode() == 201) {
 
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
@@ -187,9 +188,9 @@ public class MdosenFormVM {
 									System.out.println("update : " + url);
 
 									ObjectResp respobj = new ObjectResp();
-									respobj = RespHandler.putObject(url, objForm);
+									respobj = RespHandler.responObj(url, mapper.writeValueAsString(objForm), AppUtil.METHOD_PUT, oUser);
 
-									if (respobj.getCode() == 201) {
+									if (respobj.getCode() == 200) {
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
 												+ "  title: 'Berhasil',\r\n" + "  text: '"
 												+ Labels.getLabel("common.update.success") + "'," + "})");
@@ -231,7 +232,7 @@ public class MdosenFormVM {
 				String title = (String) ctx.getProperties("title")[0].getValue();
 				String hp = (String) ctx.getProperties("hp")[0].getValue();
 				String position = (String) ctx.getProperties("position")[0].getValue();
-//				Muniversity muniversity = (Muniversity) ctx.getProperties("musergroup")[0].getValue();
+				Muniversity university = (Muniversity) ctx.getProperties("university")[0].getValue();
 
 				if (dosenid == null || dosenid.isEmpty()) {
 					this.addInvalidMessage(ctx, "dosenid", Labels.getLabel("common.validator.empty"));
@@ -267,9 +268,9 @@ public class MdosenFormVM {
 					}
 				}
 
-//				if (muniversity == null) {
-//					this.addInvalidMessage(ctx, "muniversity", Labels.getLabel("common.validator.empty"));
-//				}
+				if (university == null) {
+					this.addInvalidMessage(ctx, "university", Labels.getLabel("common.validator.empty"));
+				}
 
 			}
 		};
