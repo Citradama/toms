@@ -50,9 +50,15 @@
 										value="@load(vmsgs['mcategory'])">
 									</label>
 								</hlayout>
-								<combobox id="cbCategory" width="100%"
-									height="100%" style="font-size:14px"
-									selectedItem="@bind(e.mcategory)" />
+								<combobox id="cbCategory"
+									placeholder="Pilih Kategori..." model="@load(vm.mcategorymodel)" cols="26"
+									selectedItem="@bind(vm.mcategory)">
+									<template name="model"
+										var="mcategory">
+										<comboitem
+											label="@load(mcategory.category)" />
+									</template>
+								</combobox>
 							</div>
 							<div class="col">
 								<label class="form-label">Status</label>
@@ -111,7 +117,7 @@
 							</div>
 						</div>
 						<n:br />
-						<div class="row" id="divAnswers"/>
+						<div class="row" id="divAnswers" />
 					</h:form>
 				</groupbox>
 				<n:br />

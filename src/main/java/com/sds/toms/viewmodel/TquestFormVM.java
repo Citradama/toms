@@ -38,6 +38,7 @@ import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
@@ -52,7 +53,9 @@ import com.sds.toms.model.Tquest;
 import com.sds.toms.model.Tquestanswer;
 import com.sds.toms.pojo.BanksoalReq;
 import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.pojo.QuestAnswerModel;
 import com.sds.toms.pojo.SearchReq;
+import com.sds.toms.util.AppData;
 import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 
@@ -69,6 +72,10 @@ public class TquestFormVM {
 	private List<Tquestanswer> listAnswers = new ArrayList<Tquestanswer>();
 	private Boolean isSetRight;
 	private Div divRowEdit;
+
+	private Mcategory mcategory;
+	private Media media;
+	private String questimgname;
 
 	@Wire
 	private Window winCategory;
@@ -253,33 +260,13 @@ public class TquestFormVM {
 		objForm = new Tquest();
 		objAnswer = new Tquestanswer();
 		isInsert = true;
-		String url = "";
 		divAnswers.getChildren().clear();
-//		chkRight.setDisabled(false);
+		cbCategory.setValue(null);
 		img.setSrc(null);
 
 		dosenid = oUser.getUserid();
 		dosenname = oUser.getUsername();
 
-		ObjectResp rsp = new ObjectResp();
-
-//		-------Get Combobox Mcategory-------
-		url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mcategory();
-		rsp = RespHandler.getObject(url);
-
-		ObjectMapper mapper = new ObjectMapper();
-		List<Mcategory> objList = mapper.convertValue(rsp.getData(), new TypeReference<List<Mcategory>>() {
-		});
-
-		if (rsp.getCode() == 200) {
-			Comboitem comboitem = null;
-			for (Mcategory category : objList) {
-				comboitem = new Comboitem();
-				comboitem.setLabel(category.getCategory());
-				comboitem.setValue(category);
-				cbCategory.appendChild(comboitem);
-			}
-		}
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -296,84 +283,73 @@ public class TquestFormVM {
 								Muser oUser = (Muser) zkSession.getAttribute("oUser");
 								try {
 									String url = "";
+									ObjectMapper mapper = new ObjectMapper();
 									if (isInsert) {
 										ObjectResp rsp = null;
 										BanksoalReq req = new BanksoalReq();
+										req.setCategory(mcategory.getCategory());
+										req.setCategoryid(mcategory.getId());
+										req.setQuesttext(objForm.getQuesttext());
+										req.setDosenid(oUser.getUserid());
+										req.setDosenname(oUser.getUsername());
+										req.setFee(objForm.getFee());
+										req.setQuestid(new SimpleDateFormat("YYMMDDHHMMSS").format(new Date()));
 
-										objForm.setCreatedby(oUser.getUserid());
-										objForm.setQuestid(new SimpleDateFormat("YYMMDDHHMMSS").format(new Date()));
-										SearchReq searchreq = new SearchReq();
-										System.out.println("userid : " + oUser.getUserid());
-										searchreq.setGeneral(oUser.getUserid());
-										url = ConfigUtil.getConfig().getUrl_base()
-												+ ConfigUtil.getConfig().getEndpoint_mdosen() + "/search";
-										rsp = RespHandler.postObject(url, req);
-										if (rsp.getCode() == 200) {
-											ObjectMapper mapper = new ObjectMapper();
-											List<Mdosen> objList = mapper.convertValue(rsp.getData(),
-													new TypeReference<List<Mdosen>>() {
-													});
-											objForm.setMdosen(objList.get(0));
-											req.setData(objForm);
+										List<QuestAnswerModel> list = new ArrayList<QuestAnswerModel>();
+										Integer no = 0;
+										for (Tquestanswer data : listAnswers) {
+											data.setAnswerno(AppUtil.ALPHABETS[no]);
+											data.setUpdatedby(oUser.getUserid());
+											if (data.getIsright().equals("Y"))
+												objForm.setRightanswer(AppUtil.ALPHABETS[no]);
 
-											List<Tquestanswer> list = new ArrayList<Tquestanswer>();
-											Integer no = 0;
-											for (Tquestanswer data : listAnswers) {
-												data.setAnswerno(AppUtil.ALPHABETS[no]);
-												data.setUpdatedby(oUser.getUserid());
-												if (data.getIsright().equals("Y"))
-													objForm.setRightanswer(AppUtil.ALPHABETS[no]);
-												list.add(data);
+											QuestAnswerModel qam = new QuestAnswerModel();
+											qam.setAnswerno(data.getAnswerno());
+											qam.setAnswertext(data.getAnswertext());
+											qam.setIsright(data.getIsright());
+											list.add(qam);
 
-												no++;
-											}
-
-											req.setDataList(list);
-
-											url = ConfigUtil.getConfig().getUrl_base()
-													+ ConfigUtil.getConfig().getEndpoint_tquest();
-											System.out.println("save : " + url);
-
-											rsp = RespHandler.postObject(url, req);
-											if (rsp.getCode() == 201) {
-
-												Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
-														+ "  title: 'Berhasil',\r\n" + "  text: '"
-														+ Labels.getLabel("common.add.success") + "'," + "})");
-
-											} else {
-												if (rsp.getCode() != 201
-														&& (rsp.getMessage().contains("ConstraintViolationException")
-																|| rsp.getMessage().contains("duplicate"))) {
-													Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n"
-															+ "  title: 'Informasi',\r\n"
-															+ "  text: 'Data gagal disimpan, kode role sudah terdaftar',"
-															+ "})");
-												} else {
-													Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n"
-															+ "  title: 'Informasi',\r\n"
-															+ "  text: 'Data gagal disimpan'," + "})");
-												}
-											}
-
-										} else {
-											objForm.setUpdatedby(oUser.getUserid());
-											objForm.setLastupdated(null);
-											objForm.setCreatetime(null);
-
-											url = ConfigUtil.getConfig().getUrl_base()
-													+ ConfigUtil.getConfig().getEndpoint_mcategory();
-											System.out.println("update : " + url);
-
-											ObjectResp respobj = new ObjectResp();
-											respobj = RespHandler.putObject(url, objForm);
-
-											if (respobj.getCode() == 200) {
-												Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
-														+ "  title: 'Berhasil',\r\n" + "  text: '"
-														+ Labels.getLabel("common.update.success") + "'," + "})");
-											}
+											if (data.getIsright().equals("Y"))
+												req.setRightanswer(AppUtil.ALPHABETS[no]);
+											no++;
 										}
+
+										req.setAnswers(list);
+										url = ConfigUtil.getConfig().getUrl_base()
+												+ ConfigUtil.getConfig().getEndpoint_tquest();
+										System.out.println("save : " + url);
+										rsp = RespHandler.responObj(url, mapper.writeValueAsString(req),
+												AppUtil.METHOD_POST, oUser);
+										if (rsp.getCode() == 201) {
+											Clients.evalJavaScript("swal.fire({" + "icon: 'info',\r\n"
+													+ "  title: 'Informasi',\r\n" + "  text: '"
+													+ Labels.getLabel("common.add.success") + "'," + "})");
+										} else {
+											Clients.evalJavaScript(
+													"swal.fire({" + "icon: 'warning',\r\n" + "  title: 'Informasi',\r\n"
+															+ "  text: 'Data gagal disimpan'," + "})");
+										}
+										doClose();
+
+									} else {
+										objForm.setUpdatedby(oUser.getUserid());
+										objForm.setLastupdated(null);
+										objForm.setCreatetime(null);
+
+										url = ConfigUtil.getConfig().getUrl_base()
+												+ ConfigUtil.getConfig().getEndpoint_mcategory();
+										System.out.println("update : " + url);
+
+										ObjectResp respobj = new ObjectResp();
+										respobj = RespHandler.responObj(url, mapper.writeValueAsString(objForm),
+												AppUtil.METHOD_PUT, oUser);
+
+										if (respobj.getCode() == 200) {
+											Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
+													+ "  title: 'Berhasil',\r\n" + "  text: '"
+													+ Labels.getLabel("common.update.success") + "'," + "})");
+										}
+										doClose();
 									}
 
 								} catch (Exception e) {
@@ -396,12 +372,13 @@ public class TquestFormVM {
 	}
 
 	@Command
+	@NotifyChange("*")
 	public void doUpload(@ContextParam(ContextType.BIND_CONTEXT) BindContext ctx) {
 		try {
 			UploadEvent event = (UploadEvent) ctx.getTriggerEvent();
 			Media media = event.getMedia();
 			if (media instanceof org.zkoss.image.Image) {
-//				objForm.set(media.getByteData());
+				objForm.setQuestimgname(media.getName());
 				img.setContent((org.zkoss.image.Image) media);
 			} else {
 				media = null;
@@ -432,6 +409,16 @@ public class TquestFormVM {
 
 			}
 		};
+	}
+
+	public ListModelList<Mcategory> getMcategorymodel() {
+		ListModelList<Mcategory> lm = null;
+		try {
+			lm = new ListModelList<Mcategory>(AppData.getMcategory());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lm;
 	}
 
 	public Tquest getObjForm() {
@@ -472,6 +459,14 @@ public class TquestFormVM {
 
 	public void setObjAnswerEdit(Tquestanswer objAnswerEdit) {
 		this.objAnswerEdit = objAnswerEdit;
+	}
+
+	public Mcategory getMcategory() {
+		return mcategory;
+	}
+
+	public void setMcategory(Mcategory mcategory) {
+		this.mcategory = mcategory;
 	}
 
 }

@@ -10,7 +10,7 @@
 		<div class="card-header" style="background-color:white;">
 			<n:h5>
 				<n:i class="fas fa-list"></n:i>
-				Daftar Bank Soal
+				Daftar Draft Soal
 			</n:h5>
 		</div>
 		<div class="card-body">
@@ -28,17 +28,6 @@
 							<textbox cols="30" value=""
 								placeholder="Search..." />
 						</row>
-						<!-- <row>
-							<label value="Dosen"/>
-							<combobox id="cbDosen" placeholder="Dosen"
-								model="@load(vm.mdosenmodel)" cols="26"
-								selectedItem="@bind(vm.mdosen)">
-								<template name="model" var="mdosen">
-									<comboitem
-										label="@load(mdosen.dosenname)" />
-								</template>
-							</combobox>
-						</row> -->
 					</rows>
 					<foot>
 						<footer />
@@ -62,14 +51,6 @@
 			<separator />
 			<separator />
 			<div class="row">
-				<div class="col-md-12" align="right">
-					<button autodisable="self" label=" Buat Baru"
-						sclass="btn btn-primary btn-sm" iconSclass="z-icon-plus"
-						onClick="@command('doAddnew')">
-					</button>
-				</div>
-			</div>
-			<div class="row">
 				<div class="col-md">
 					<paging id="paging" autohide="true"
 						style="margin-bottom:-20px" />
@@ -88,8 +69,12 @@
 					<columns>
 						<column label="${labels.common.no}" width="5%"
 							align="right" class="head-color " />
-						<column label="Kategori" class="head-color " />
-						<column label="Total Soal" class="head-color " align="right" />
+						<column align="center" width="5%"
+							style="background-color: #8B0000 !important; border-color: #f1f2f2 !important;">
+							<checkbox id="chkAll"
+								onCheck="@command('doCheckedall', checked=self.checked)" />
+						</column>
+						<column label="Soal" class="head-color " />
 						<column label="${labels.common.action}"
 							width="250px" align="center" class="head-color" />
 					</columns>
