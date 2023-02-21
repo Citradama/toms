@@ -63,7 +63,7 @@ public class TquestFormVM {
 	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
 
 	private Muser oUser;
-	private Tquest objForm;
+	private BanksoalReq objForm;
 	private Tquestanswer objAnswer;
 	private Tquestanswer objAnswerEdit;
 	private boolean isInsert;
@@ -92,20 +92,36 @@ public class TquestFormVM {
 
 	@AfterCompose
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("objForm") Tquest objForm, @ExecutionArgParam("isEdit") String isEdit,
+			@ExecutionArgParam("obj") BanksoalReq objReq, @ExecutionArgParam("isEdit") String isEdit,
 			@ExecutionArgParam("isDetail") String isDetail) {
 		Selectors.wireComponents(view, this, false);
 		try {
 			oUser = (Muser) zkSession.getAttribute("oUser");
 			doReset();
 
-			if (objForm != null) {
-				this.objForm = objForm;
+			if (objReq != null) {
+				objForm = objReq;
 				isInsert = false;
 			}
 
 			if (isEdit != null && isEdit.equals("Y")) {
+				ObjectResp Resp = null;
+				String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mcategory() + "/" + objReq.getCategoryid();
 
+				Resp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
+
+				if (Resp.getCode() == 200) {
+					ObjectMapper mapper = new ObjectMapper();
+					mcategory = mapper.convertValue(Resp.getData(), new TypeReference<Mcategory>() {
+					});
+
+					cbCategory.setValue(mcategory.getCategory());
+					for(QuestAnswerModel data : objReq.getAnswers()) {
+						objAnswer.setAnswertext(data.getAnswertext());
+						System.out.println(data.getAnswertext());
+						doSaveAnswer();
+					}
+				}
 			}
 
 			if (isDetail != null && isDetail.equals("Y")) {
@@ -257,7 +273,7 @@ public class TquestFormVM {
 	@NotifyChange("*")
 	public void doReset() {
 		oUser = (Muser) zkSession.getAttribute("oUser");
-		objForm = new Tquest();
+		objForm = new BanksoalReq();
 		objAnswer = new Tquestanswer();
 		isInsert = true;
 		divAnswers.getChildren().clear();
@@ -286,14 +302,12 @@ public class TquestFormVM {
 									ObjectMapper mapper = new ObjectMapper();
 									if (isInsert) {
 										ObjectResp rsp = null;
-										BanksoalReq req = new BanksoalReq();
-										req.setCategory(mcategory.getCategory());
-										req.setCategoryid(mcategory.getId());
-										req.setQuesttext(objForm.getQuesttext());
-										req.setDosenid(oUser.getUserid());
-										req.setDosenname(oUser.getUsername());
-										req.setFee(objForm.getFee());
-										req.setQuestid(new SimpleDateFormat("YYMMDDHHMMSS").format(new Date()));
+										objForm = new BanksoalReq();
+										objForm.setCategory(mcategory.getCategory());
+										objForm.setCategoryid(mcategory.getId());
+										objForm.setDosenid(oUser.getUserid());
+										objForm.setDosenname(oUser.getUsername());
+										objForm.setQuestid(new SimpleDateFormat("YYMMDDHHMMSS").format(new Date()));
 
 										List<QuestAnswerModel> list = new ArrayList<QuestAnswerModel>();
 										Integer no = 0;
@@ -309,19 +323,17 @@ public class TquestFormVM {
 											qam.setIsright(data.getIsright());
 											list.add(qam);
 
-											if (data.getIsright().equals("Y"))
-												req.setRightanswer(AppUtil.ALPHABETS[no]);
 											no++;
 										}
 
-										req.setAnswers(list);
+										objForm.setAnswers(list);
 										url = ConfigUtil.getConfig().getUrl_base()
 												+ ConfigUtil.getConfig().getEndpoint_tquest();
 										System.out.println("save : " + url);
-										rsp = RespHandler.responObj(url, mapper.writeValueAsString(req),
+										rsp = RespHandler.responObj(url, mapper.writeValueAsString(objForm),
 												AppUtil.METHOD_POST, oUser);
 										if (rsp.getCode() == 201) {
-											Clients.evalJavaScript("swal.fire({" + "icon: 'info',\r\n"
+											Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
 													+ "  title: 'Informasi',\r\n" + "  text: '"
 													+ Labels.getLabel("common.add.success") + "'," + "})");
 										} else {
@@ -337,7 +349,7 @@ public class TquestFormVM {
 										objForm.setCreatetime(null);
 
 										url = ConfigUtil.getConfig().getUrl_base()
-												+ ConfigUtil.getConfig().getEndpoint_mcategory();
+												+ ConfigUtil.getConfig().getEndpoint_tquest();
 										System.out.println("update : " + url);
 
 										ObjectResp respobj = new ObjectResp();
@@ -378,7 +390,6 @@ public class TquestFormVM {
 			UploadEvent event = (UploadEvent) ctx.getTriggerEvent();
 			Media media = event.getMedia();
 			if (media instanceof org.zkoss.image.Image) {
-				objForm.setQuestimgname(media.getName());
 				img.setContent((org.zkoss.image.Image) media);
 			} else {
 				media = null;
@@ -421,13 +432,6 @@ public class TquestFormVM {
 		return lm;
 	}
 
-	public Tquest getObjForm() {
-		return objForm;
-	}
-
-	public void setObjForm(Tquest objForm) {
-		this.objForm = objForm;
-	}
 
 	public String getDosenid() {
 		return dosenid;
@@ -467,6 +471,14 @@ public class TquestFormVM {
 
 	public void setMcategory(Mcategory mcategory) {
 		this.mcategory = mcategory;
+	}
+
+	public BanksoalReq getObjForm() {
+		return objForm;
+	}
+
+	public void setObjForm(BanksoalReq objForm) {
+		this.objForm = objForm;
 	}
 
 }
