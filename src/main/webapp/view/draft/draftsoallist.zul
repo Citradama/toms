@@ -64,8 +64,8 @@
 			</div>
 			<div style="max-width:1400px; overflow:auto">
 				<timer id="timer" />
-				<grid id="grid"
-					emptyMessage="${labels.common.emptymsg}">
+				<grid id="grid" mold="paging" pagingPosition="top"
+					pageSize="10" emptyMessage="${labels.common.emptymsg}">
 					<columns>
 						<column label="${labels.common.no}" width="5%"
 							align="right" class="head-color " />

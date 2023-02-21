@@ -31,7 +31,7 @@
 					class="border border-2 z-depth-1-half pl-4 pr-4" >
 					<div>
 					<separator/>
-						<label sclass="text-danger" />
+						<label sclass="text-danger" value="@bind(vm.lblMessage)"/>
 						<textbox id="tbUsername" maxlength="15"
 							focus="true"
 							style="background-color: #f1f2f2 !important;border-radius:10px"
