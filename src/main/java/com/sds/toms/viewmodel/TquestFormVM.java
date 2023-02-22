@@ -189,6 +189,7 @@ public class TquestFormVM {
 			Div divGroup = new Div();
 			divGroup.setAttribute("obj", objAnswer);
 			divGroup.setClass("btn-group");
+			divGroup.setAlign("right");
 			Button btEdit = new Button("Edit");
 			btEdit.setAutodisable("self");
 			btEdit.setSclass("btn btn-default btn-sm");

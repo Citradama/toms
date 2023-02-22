@@ -100,7 +100,7 @@ public class DraftSoalListVm {
 						public void onEvent(Event event) throws Exception {
 							Map<String, Object> map = new HashMap<String, Object>();
 							map.put("obj", data);
-							map.put("isDetail", "Y");
+							map.put("isDetail", "Y"); 
 							Window win = (Window) Executions.createComponents("/view/bank/banksoalform.zul", null, map);
 							win.setWidth("60%");
 							win.setClosable(true);
