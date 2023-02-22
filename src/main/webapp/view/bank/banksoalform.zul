@@ -75,12 +75,12 @@
 									value="@load(vmsgs['questtext'])" />
 							</hlayout>
 							<vlayout>
-								<button label="Upload Gambar"
+								<button label="Upload Gambar" id="btnImage"
 									sclass="btn btn-default btn-sm" upload="true,maxsize=2048"
 									onUpload="@command('doUpload', upEvent=event)"
 									autodisable="self" />
 								<image id="img" />
-								<textbox rows="3"
+								<textbox id="tbQuest" rows="3"
 									value="@bind(e.questtext)" placeholder="Soal"
 									sclass="form-control" />
 							</vlayout>
@@ -88,11 +88,11 @@
 						<separator />
 						<div>
 							<label class="form-label">Jawaban</label>
-							<textbox rows="3"
+							<textbox id="tbAnswer" rows="3"
 								value="@bind(vm.objAnswer.answertext)" sclass="form-control" />
 						</div>
 						<n:br />
-						<div class="row">
+						<div id="divSetright" class="row">
 							<div class="col">
 								<hlayout>
 									<checkbox id="chkRight"

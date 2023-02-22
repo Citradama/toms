@@ -84,7 +84,7 @@
 			<div align="right">
 				<grid width="20%">
 					<columns>
-						<column label="Jumlah Dipilih" class="head-color " align="center"/>
+						<column label="Jumlah Soal Dipilih" class="head-color " align="center"/>
 					</columns>
 					<rows>
 						<row>

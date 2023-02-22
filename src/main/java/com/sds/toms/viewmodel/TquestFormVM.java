@@ -40,6 +40,7 @@ import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -72,6 +73,7 @@ public class TquestFormVM {
 	private List<Tquestanswer> listAnswers = new ArrayList<Tquestanswer>();
 	private Boolean isSetRight;
 	private Div divRowEdit;
+	private boolean isDetail;
 
 	private Mcategory mcategory;
 	private Media media;
@@ -80,15 +82,17 @@ public class TquestFormVM {
 	@Wire
 	private Window winCategory;
 	@Wire
-	private Div divFooter, divPassword, divAnswers;
-	@Wire
-	private Input txUnivname;
+	private Div divFooter, divPassword, divAnswers, divSetright;
 	@Wire
 	private Combobox cbCategory;
 	@Wire
 	private Checkbox chkRight;
 	@Wire
 	private Image img;
+	@Wire
+	private Textbox tbQuest, tbAnswer;
+	@Wire
+	private Button btnImage;
 
 	@AfterCompose
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view,
@@ -103,8 +107,19 @@ public class TquestFormVM {
 				objForm = objReq;
 				isInsert = false;
 			}
+			
+			if (isDetail != null && isDetail.equals("Y")) {
+				divFooter.setVisible(false);
+				cbCategory.setReadonly(true);
+				cbCategory.setButtonVisible(false);
+				divSetright.setVisible(false);
+				tbQuest.setDisabled(true);
+				tbAnswer.setVisible(false);
+				btnImage.setVisible(false);
+				this.isDetail = true;
+			}
 
-			if (isEdit != null && isEdit.equals("Y")) {
+			if ((isEdit != null && isEdit.equals("Y")) || (isDetail != null && isDetail.equals("Y"))) {
 				ObjectResp Resp = null;
 				String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mcategory() + "/" + objReq.getCategoryid();
 
@@ -122,11 +137,6 @@ public class TquestFormVM {
 						doSaveAnswer();
 					}
 				}
-			}
-
-			if (isDetail != null && isDetail.equals("Y")) {
-				divFooter.setVisible(false);
-				txUnivname.setReadonly(true);
 			}
 
 		} catch (Exception e) {
@@ -242,12 +252,14 @@ public class TquestFormVM {
 				}
 			});
 			divGroup.appendChild(btDelete);
-
 			divCol2.appendChild(divGroup);
+			
+			if(isDetail)
+				divCol2.setVisible(false);
+			
 			divRow.appendChild(divCol2);
 
 			divAnswers.appendChild(divRow);
-
 			divAnswers.appendChild(new HtmlNativeComponent("hr"));
 			doResetAnswer();
 		} catch (Exception e) {
@@ -279,7 +291,8 @@ public class TquestFormVM {
 		divAnswers.getChildren().clear();
 		cbCategory.setValue(null);
 		img.setSrc(null);
-
+		isDetail = false;
+		
 		dosenid = oUser.getUserid();
 		dosenname = oUser.getUsername();
 

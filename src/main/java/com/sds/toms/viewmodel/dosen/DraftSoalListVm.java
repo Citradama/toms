@@ -98,6 +98,13 @@ public class DraftSoalListVm {
 
 						@Override
 						public void onEvent(Event event) throws Exception {
+							Map<String, Object> map = new HashMap<String, Object>();
+							map.put("obj", data);
+							map.put("isDetail", "Y");
+							Window win = (Window) Executions.createComponents("/view/bank/banksoalform.zul", null, map);
+							win.setWidth("60%");
+							win.setClosable(true);
+							win.doModal();
 						}
 
 					});
