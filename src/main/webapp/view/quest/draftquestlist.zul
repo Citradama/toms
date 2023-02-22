@@ -6,7 +6,7 @@
 
 <zk xmlns:w="client" xmlns:n="native">
 	<div class="card"
-		viewModel="@id('vm') @init('com.sds.toms.viewmodel.dosen.DraftSoalListVm')">
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.dosen.DraftQuestListVm')">
 		<div class="card-header" style="background-color:white;">
 			<n:h5>
 				<n:i class="fas fa-list"></n:i>

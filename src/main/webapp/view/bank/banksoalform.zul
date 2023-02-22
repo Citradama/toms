@@ -27,7 +27,6 @@
 								</label>
 								<h:input id="txDosenid" type="text"
 									class="form-control" value="@bind(vm.dosenid)" readonly="true" />
-
 							</div>
 							<div class="col">
 								<label class="form-label">

@@ -38,14 +38,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
 import com.sds.toms.model.Muser;
-import com.sds.toms.model.Vquestcategory;
 import com.sds.toms.pojo.BanksoalReq;
 import com.sds.toms.pojo.ObjectResp;
 import com.sds.toms.util.AppUtil;
-import com.sds.toms.viewmodel.MuserListVM;
 import com.sds.utils.config.ConfigUtil;
 
-public class DraftSoalListVm {
+public class DraftQuestListVm {
 
 	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
 	private Muser oUser;
@@ -82,7 +80,7 @@ public class DraftSoalListVm {
 								map.remove(data.getId());
 							}
 							totalselected = map.size();
-							BindUtils.postNotifyChange(null, null, DraftSoalListVm.this, "totalselected");
+							BindUtils.postNotifyChange(null, null, DraftQuestListVm.this, "totalselected");
 						}
 					});
 					if (map.get(data.getId()) != null)
@@ -131,7 +129,7 @@ public class DraftSoalListVm {
 
 								public void onEvent(Event event) throws Exception {
 									doReset();
-									BindUtils.postNotifyChange(null, null, DraftSoalListVm.this, "*");
+									BindUtils.postNotifyChange(null, null, DraftQuestListVm.this, "*");
 								}
 							});
 						}
@@ -171,7 +169,7 @@ public class DraftSoalListVm {
 																		+ "'," + "})");
 													}
 													doReset();
-													BindUtils.postNotifyChange(null, null, DraftSoalListVm.this, "*");
+													BindUtils.postNotifyChange(null, null, DraftQuestListVm.this, "*");
 												} catch (Exception e) {
 													e.printStackTrace();
 												}
