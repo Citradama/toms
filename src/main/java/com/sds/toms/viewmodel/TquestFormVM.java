@@ -1,5 +1,8 @@
 package com.sds.toms.viewmodel;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.net.ConnectException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,10 +20,11 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
+import org.zkoss.io.Files;
 import org.zkoss.util.media.Media;
 import org.zkoss.util.resource.Labels;
-import org.zkoss.zhtml.Input;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.HtmlNativeComponent;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WebApps;
@@ -34,7 +38,6 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
@@ -47,15 +50,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
 import com.sds.toms.model.Mcategory;
-import com.sds.toms.model.Mcust;
-import com.sds.toms.model.Mdosen;
 import com.sds.toms.model.Muser;
-import com.sds.toms.model.Tquest;
-import com.sds.toms.model.Tquestanswer;
 import com.sds.toms.pojo.BanksoalReq;
 import com.sds.toms.pojo.ObjectResp;
 import com.sds.toms.pojo.QuestAnswerModel;
-import com.sds.toms.pojo.SearchReq;
 import com.sds.toms.util.AppData;
 import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
@@ -65,19 +63,19 @@ public class TquestFormVM {
 
 	private Muser oUser;
 	private BanksoalReq objForm;
-	private Tquestanswer objAnswer;
-	private Tquestanswer objAnswerEdit;
+	private QuestAnswerModel objAnswer;
+	private QuestAnswerModel objAnswerEdit;
 	private boolean isInsert;
 	private String dosenid;
 	private String dosenname;
-	private List<Tquestanswer> listAnswers = new ArrayList<Tquestanswer>();
+	private List<QuestAnswerModel> listAnswers = new ArrayList<QuestAnswerModel>();
+	private List<QuestAnswerModel> objAnswerList = new ArrayList<QuestAnswerModel>();
 	private Boolean isSetRight;
 	private Div divRowEdit;
 	private boolean isDetail;
 
 	private Mcategory mcategory;
 	private Media media;
-	private String questimgname;
 
 	@Wire
 	private Window winCategory;
@@ -107,7 +105,7 @@ public class TquestFormVM {
 				objForm = objReq;
 				isInsert = false;
 			}
-			
+
 			if (isDetail != null && isDetail.equals("Y")) {
 				divFooter.setVisible(false);
 				cbCategory.setReadonly(true);
@@ -121,7 +119,8 @@ public class TquestFormVM {
 
 			if ((isEdit != null && isEdit.equals("Y")) || (isDetail != null && isDetail.equals("Y"))) {
 				ObjectResp Resp = null;
-				String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mcategory() + "/" + objReq.getCategoryid();
+				String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mcategory() + "/"
+						+ objReq.getCategoryid();
 
 				Resp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 
@@ -130,11 +129,18 @@ public class TquestFormVM {
 					mcategory = mapper.convertValue(Resp.getData(), new TypeReference<Mcategory>() {
 					});
 
+					if (objForm.getQuestimglink() != null) {
+						String linkimg = objForm.getQuestimglink().replace("\\", "/");
+						System.out.println("LINK IMG : " + linkimg);
+						img.setSrc(linkimg);
+						img.setWidth("300px");
+					}
+
 					cbCategory.setValue(mcategory.getCategory());
-					for(QuestAnswerModel data : objReq.getAnswers()) {
-						objAnswer.setAnswertext(data.getAnswertext());
-						System.out.println(data.getAnswertext());
+					for (QuestAnswerModel data : objReq.getAnswers()) {
+						objAnswer = data;
 						doSaveAnswer();
+						objAnswerList.add(data);
 					}
 				}
 			}
@@ -153,6 +159,7 @@ public class TquestFormVM {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Command
 	@NotifyChange("objAnswer")
 	public void doSaveAnswer() {
@@ -167,7 +174,7 @@ public class TquestFormVM {
 				}
 			}
 			Label lblAnswer = new Label(objAnswer.getAnswertext());
-			if (chkRight.isChecked()) {
+			if (chkRight.isChecked() || (objAnswer.getIsright() != null && objAnswer.getIsright().equals("Y"))) {
 				isSetRight = true;
 				objAnswer.setIsright("Y");
 				lblAnswer.setStyle("font-weight: bold");
@@ -198,7 +205,7 @@ public class TquestFormVM {
 				@Override
 				public void onEvent(Event event) throws Exception {
 					divRowEdit = divRow;
-					objAnswerEdit = (Tquestanswer) divGroup.getAttribute("obj");
+					objAnswerEdit = (QuestAnswerModel) divGroup.getAttribute("obj");
 					objAnswer = objAnswerEdit;
 					if (objAnswerEdit.getIsright() != null && objAnswerEdit.getIsright().equals("Y")) {
 						chkRight.setDisabled(false);
@@ -230,7 +237,7 @@ public class TquestFormVM {
 								public void onEvent(Event event) throws Exception {
 									if (event.getName().equals("onOK")) {
 										try {
-											Tquestanswer objDel = (Tquestanswer) divGroup.getAttribute("obj");
+											QuestAnswerModel objDel = (QuestAnswerModel) divGroup.getAttribute("obj");
 											listAnswers.remove(objDel);
 											divAnswers.removeChild(divRow.getNextSibling());
 											divAnswers.removeChild(divRow);
@@ -254,10 +261,10 @@ public class TquestFormVM {
 			});
 			divGroup.appendChild(btDelete);
 			divCol2.appendChild(divGroup);
-			
-			if(isDetail)
+
+			if (isDetail)
 				divCol2.setVisible(false);
-			
+
 			divRow.appendChild(divCol2);
 
 			divAnswers.appendChild(divRow);
@@ -269,7 +276,7 @@ public class TquestFormVM {
 	}
 
 	public void doResetAnswer() {
-		objAnswer = new Tquestanswer();
+		objAnswer = new QuestAnswerModel();
 		chkRight.setChecked(false);
 		if (isSetRight != null && isSetRight)
 			chkRight.setDisabled(true);
@@ -287,13 +294,14 @@ public class TquestFormVM {
 	public void doReset() {
 		oUser = (Muser) zkSession.getAttribute("oUser");
 		objForm = new BanksoalReq();
-		objAnswer = new Tquestanswer();
+		objAnswer = new QuestAnswerModel();
 		isInsert = true;
 		divAnswers.getChildren().clear();
 		cbCategory.setValue(null);
 		img.setSrc(null);
 		isDetail = false;
-		
+		media = null;
+
 		dosenid = oUser.getUserid();
 		dosenname = oUser.getUsername();
 
@@ -314,69 +322,95 @@ public class TquestFormVM {
 								try {
 									String url = "";
 									ObjectMapper mapper = new ObjectMapper();
-									if (isInsert) {
-										ObjectResp rsp = null;
-										objForm = new BanksoalReq();
-										objForm.setCategory(mcategory.getCategory());
-										objForm.setCategoryid(mcategory.getId());
-										objForm.setDosenid(oUser.getUserid());
-										objForm.setDosenname(oUser.getUsername());
+
+									ObjectResp rsp = null;
+									objForm.setCategory(mcategory.getCategory());
+									objForm.setCategoryid(mcategory.getId());
+									objForm.setDosenid(oUser.getUserid());
+									objForm.setDosenname(oUser.getUsername());
+									if (isInsert)
 										objForm.setQuestid(new SimpleDateFormat("YYMMDDHHMMSS").format(new Date()));
 
-										List<QuestAnswerModel> list = new ArrayList<QuestAnswerModel>();
-										Integer no = 0;
-										for (Tquestanswer data : listAnswers) {
-											data.setAnswerno(AppUtil.ALPHABETS[no]);
-											data.setUpdatedby(oUser.getUserid());
-											if (data.getIsright().equals("Y"))
-												objForm.setRightanswer(AppUtil.ALPHABETS[no]);
+									Integer no = 0;
+									for (QuestAnswerModel data : listAnswers) {
+										data.setAnswerno(AppUtil.ALPHABETS[no]);
+										if (data.getIsright().equals("Y"))
+											objForm.setRightanswer(AppUtil.ALPHABETS[no]);
+										no++;
+									}
 
-											QuestAnswerModel qam = new QuestAnswerModel();
-											qam.setAnswerno(data.getAnswerno());
-											qam.setAnswertext(data.getAnswertext());
-											qam.setIsright(data.getIsright());
-											list.add(qam);
-
-											no++;
+									if (!isInsert) {
+										for (QuestAnswerModel data : objAnswerList) {
+											url = ConfigUtil.getConfig().getUrl_base()
+													+ ConfigUtil.getConfig().getEndpoint_tquest() + "answer/"
+													+ data.getId();
+											rsp = RespHandler.responObj(url, mapper.writeValueAsString(data),
+													AppUtil.METHOD_DEL, oUser);
+											if (rsp.getCode() == 200) {
+												System.out.println("UPDATE JAWABAN");
+											}
 										}
+									}
 
-										objForm.setAnswers(list);
-										url = ConfigUtil.getConfig().getUrl_base()
-												+ ConfigUtil.getConfig().getEndpoint_tquest();
-										System.out.println("save : " + url);
+									objForm.setAnswers(listAnswers);
+									url = ConfigUtil.getConfig().getUrl_base()
+											+ ConfigUtil.getConfig().getEndpoint_tquest();
+									System.out.println("save : " + url);
+									if (isInsert) {
 										rsp = RespHandler.responObj(url, mapper.writeValueAsString(objForm),
 												AppUtil.METHOD_POST, oUser);
-										if (rsp.getCode() == 201) {
-											Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
-													+ "  title: 'Informasi',\r\n" + "  text: '"
-													+ Labels.getLabel("common.add.success") + "'," + "})");
-										} else {
-											Clients.evalJavaScript(
-													"swal.fire({" + "icon: 'warning',\r\n" + "  title: 'Informasi',\r\n"
-															+ "  text: 'Data gagal disimpan'," + "})");
-										}
-										doClose();
-
 									} else {
-										objForm.setUpdatedby(oUser.getUserid());
-										objForm.setLastupdated(null);
-										objForm.setCreatetime(null);
-
-										url = ConfigUtil.getConfig().getUrl_base()
-												+ ConfigUtil.getConfig().getEndpoint_tquest();
-										System.out.println("update : " + url);
-
-										ObjectResp respobj = new ObjectResp();
-										respobj = RespHandler.responObj(url, mapper.writeValueAsString(objForm),
+										rsp = RespHandler.responObj(url, mapper.writeValueAsString(objForm),
 												AppUtil.METHOD_PUT, oUser);
-
-										if (respobj.getCode() == 200) {
-											Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
-													+ "  title: 'Berhasil',\r\n" + "  text: '"
-													+ Labels.getLabel("common.update.success") + "'," + "})");
-										}
-										doClose();
 									}
+									String label = "";
+									if (rsp.getCode() == 201 || rsp.getCode() == 200) {
+										if (media != null) {
+											objForm = mapper.convertValue(rsp.getData(),
+													new TypeReference<BanksoalReq>() {
+													});
+											if (media.isBinary()) {
+												Files.copy(new File(objForm.getQuestimglink()), media.getStreamData());
+											} else {
+												BufferedWriter writer = new BufferedWriter(
+														new FileWriter(objForm.getQuestimglink()));
+												Files.copy(writer, media.getReaderData());
+												writer.close();
+											}
+
+											url = ConfigUtil.getConfig().getUrl_base()
+													+ ConfigUtil.getConfig().getEndpoint_tquest() + "/uploadimg/"
+													+ objForm.getId();
+											rsp = RespHandler.postMedia(url, objForm.getQuestimglink(), media.getName(),
+													oUser);
+											if (rsp.getCode() == 201 || rsp.getCode() == 200) {
+												if (rsp.getCode() == 201)
+													label = "common.add.success";
+												else
+													label = "common.update.success";
+												Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
+														+ "  title: 'Informasi',\r\n" + "  text: '"
+														+ Labels.getLabel(label) + "'," + "})");
+											} else {
+												Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n"
+														+ "  title: 'Informasi',\r\n" + "  text: 'Data gagal disimpan',"
+														+ "})");
+											}
+										} else {
+											if (rsp.getCode() == 201)
+												label = "common.add.success";
+											else
+												label = "common.update.success";
+											Clients.evalJavaScript(
+													"swal.fire({" + "icon: 'success',\r\n" + "  title: 'Informasi',\r\n"
+															+ "  text: '" + Labels.getLabel(label) + "'," + "})");
+										}
+									} else {
+										Clients.evalJavaScript(
+												"swal.fire({" + "icon: 'warning',\r\n" + "  title: 'Informasi',\r\n"
+														+ "  text: 'Data gagal disimpan'," + "})");
+									}
+									doClose();
 
 								} catch (Exception e) {
 									if (isInsert)
@@ -402,11 +436,16 @@ public class TquestFormVM {
 	public void doUpload(@ContextParam(ContextType.BIND_CONTEXT) BindContext ctx) {
 		try {
 			UploadEvent event = (UploadEvent) ctx.getTriggerEvent();
-			Media media = event.getMedia();
+			media = event.getMedia();
+			String path = Executions.getCurrent().getDesktop().getWebApp()
+					.getRealPath(AppUtil.FILES_ROOT_PATH + AppUtil.IMAGE_PATH);
 			if (media instanceof org.zkoss.image.Image) {
 				img.setContent((org.zkoss.image.Image) media);
+				img.setWidth("300px");
+				objForm.setQuestimglink(path + media.getName());
 			} else {
 				media = null;
+				img.setWidth(null);
 				Messagebox.show("Not an image: " + media, "Error", Messagebox.OK, Messagebox.ERROR);
 			}
 		} catch (Exception e) {
@@ -446,7 +485,6 @@ public class TquestFormVM {
 		return lm;
 	}
 
-
 	public String getDosenid() {
 		return dosenid;
 	}
@@ -463,19 +501,19 @@ public class TquestFormVM {
 		this.dosenname = dosenname;
 	}
 
-	public Tquestanswer getObjAnswer() {
+	public QuestAnswerModel getObjAnswer() {
 		return objAnswer;
 	}
 
-	public void setObjAnswer(Tquestanswer objAnswer) {
+	public void setObjAnswer(QuestAnswerModel objAnswer) {
 		this.objAnswer = objAnswer;
 	}
 
-	public Tquestanswer getObjAnswerEdit() {
+	public QuestAnswerModel getObjAnswerEdit() {
 		return objAnswerEdit;
 	}
 
-	public void setObjAnswerEdit(Tquestanswer objAnswerEdit) {
+	public void setObjAnswerEdit(QuestAnswerModel objAnswerEdit) {
 		this.objAnswerEdit = objAnswerEdit;
 	}
 

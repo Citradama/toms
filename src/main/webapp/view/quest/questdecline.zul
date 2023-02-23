@@ -9,11 +9,11 @@
 		position="center,center">
 		<caption id="caption" visible="false" />
 		<div class="card"
-			viewModel="@id('vm') @init('com.sds.toms.viewmodel.TquestListVM')">
+			viewModel="@id('vm') @init('com.sds.toms.viewmodel.dosen.QuestDeclineVm')">
 			<div class="card-header" style="background-color:white;">
 				<n:h5>
 					<n:i class="fas fa-list"></n:i>
-					Daftar Bank Soal
+					Daftar Soal Ditolak
 				</n:h5>
 			</div>
 			<div class="card-body">
@@ -31,17 +31,6 @@
 								<textbox cols="30" value=""
 									placeholder="Search..." />
 							</row>
-							<!-- <row>
-								<label value="Dosen"/>
-								<combobox id="cbDosen" placeholder="Dosen"
-								model="@load(vm.mdosenmodel)" cols="26"
-								selectedItem="@bind(vm.mdosen)">
-								<template name="model" var="mdosen">
-								<comboitem
-								label="@load(mdosen.dosenname)" />
-								</template>
-								</combobox>
-								</row> -->
 						</rows>
 						<foot>
 							<footer />
@@ -65,14 +54,6 @@
 				<separator />
 				<separator />
 				<div class="row">
-					<div class="col-md-12" align="right">
-						<button autodisable="self" label=" Buat Baru"
-							sclass="btn btn-primary btn-sm" iconSclass="z-icon-plus"
-							onClick="@command('doAddnew')">
-						</button>
-					</div>
-				</div>
-				<div class="row">
 					<div class="col-md">
 						<paging id="paging" autohide="true"
 							style="margin-bottom:-20px" />
@@ -86,20 +67,18 @@
 				</div>
 				<div style="max-width:1400px; overflow:auto">
 					<timer id="timer" />
-					<grid id="grid"
-						emptyMessage="${labels.common.emptymsg}">
+					<grid id="grid" mold="paging" pagingPosition="top"
+						pageSize="10" emptyMessage="${labels.common.emptymsg}">
 						<columns>
 							<column label="${labels.common.no}"
 								width="5%" align="right" class="head-color " />
-							<column label="Kategori"
-								class="head-color " />
-							<column label="Total Soal"
-								class="head-color " align="right" />
+							<column label="Soal" class="head-color " />
 							<column label="${labels.common.action}"
 								width="5%" align="center" class="head-color" />
 						</columns>
 					</grid>
 				</div>
+				<separator />
 			</div>
 		</div>
 	</window>

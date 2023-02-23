@@ -1,0 +1,140 @@
+<zk xmlns:w="client" xmlns:n="native"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
+	<n:h3 class="card-title">
+		<n:b>DASHBOARD SUMMARY</n:b>
+	</n:h3>
+	<n:hr />
+	<window>
+		<div class="row"
+			viewModel="@id('vm') @init('com.sds.toms.viewmodel.dosen.DashboardDosenVm')">
+			<div class="col-3">
+				<div class="card text-white bg-success mb-3">
+					<div class="card-header">
+						<div class="row">
+							<div class="col-4" align="right">
+								<image src="/images/approve.png"
+									width="32px" />
+							</div>
+							<div class="col-8">
+								<n:h6>
+									<n:b>SOAL DISETUJUI</n:b>
+								</n:h6>
+							</div>
+						</div>
+					</div>
+					<div class="card-body"
+						style="cursor:hand;cursor:pointer"
+						onClick="@command('doView', arg='approve')">
+						<div class="row">
+							<div class="col-5">
+								<label value="TOTAL SOAL"
+									style="font-size: 14px; font-weight: bold" />
+							</div>
+							<div class="col-7" align="right">
+								<label style="font-weight: bold"
+									value="@load(vm.obj.approvalquest) @converter('formatedNumber', format='#,###')" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-3">
+				<div class="card text-white bg-secondary mb-3">
+					<div class="card-header">
+						<div class="row">
+							<div class="col-4" align="right">
+								<image src="/images/reject2.png"
+									width="32px" />
+							</div>
+							<div class="col-8">
+								<n:h6 class="card-title">
+									<n:b>SOAL DITOLAK</n:b>
+								</n:h6>
+							</div>
+						</div>
+					</div>
+					<div class="card-body"
+						style="cursor:hand;cursor:pointer"
+						onClick="@command('doView', arg='decline')">
+						<div class="row">
+							<div class="col-5">
+								<label value="TOTAL SOAL"
+									style="font-size: 14px; font-weight: bold" />
+							</div>
+							<div class="col-7" align="right">
+								<label style="font-weight: bold"
+									value="@load(vm.obj.declinequest) @converter('formatedNumber', format='#,###')" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-3">
+				<div class="card text-white bg-warning mb-3">
+					<div class="card-header">
+						<div class="row">
+							<div class="col-4" align="right">
+								<image src="/images/pending2.png"
+									width="32px" />
+							</div>
+							<div class="col-8">
+								<n:h6 class="card-title">
+									<n:b>DRAFT SOAL</n:b>
+								</n:h6>
+							</div>
+						</div>
+					</div>
+					<div class="card-body"
+						style="cursor:hand;cursor:pointer"
+						onClick="@command('doView', arg='draft')">
+						<div class="row">
+							<div class="col-5">
+								<label value="TOTAL SOAL"
+									style="font-size: 14px; font-weight: bold" />
+							</div>
+							<div class="col-7" align="right">
+								<label style="font-weight: bold"
+									value="@load(vm.obj.draftquest) @converter('formatedNumber', format='#,###')" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-3">
+				<div class="card text-white bg-info mb-3">
+					<div class="card-header">
+						<div class="row">
+							<div class="col-4" align="right">
+								<image src="/images/download2.png"
+									width="32px" />
+							</div>
+							<div class="col-8">
+								<n:h6 class="card-title">
+									<n:b>SOAL KESELURUHAN</n:b>
+								</n:h6>
+							</div>
+						</div>
+					</div>
+					<div class="card-body"
+						style="cursor:hand;cursor:pointer"
+						onClick="@command('doView', arg='total')">
+						<div class="row">
+							<div class="col-5">
+								<label value="TOTAL SOAL"
+									style="font-size: 14px; font-weight: bold" />
+							</div>
+							<div class="col-7" align="right">
+								<label style="font-weight: bold"
+									value="@load(vm.obj.totalquest) @converter('formatedNumber', format='#,###')" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

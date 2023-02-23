@@ -47,7 +47,7 @@ public class UserInitializationVM {
 		try {
 			oUser = (Muser) zkSession.getAttribute("oUser");
 			doRenderMenu();
-			Executions.createComponents("/view/dashboard.zul", divContent, null);
+			Executions.createComponents("/view/dashboarddosen.zul", divContent, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

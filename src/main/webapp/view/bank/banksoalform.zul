@@ -78,7 +78,7 @@
 									sclass="btn btn-default btn-sm" upload="true,maxsize=2048"
 									onUpload="@command('doUpload', upEvent=event)"
 									autodisable="self" />
-								<image id="img" />
+								<image id="img"/>
 								<textbox id="tbQuest" rows="3"
 									value="@bind(e.questtext)" placeholder="Soal"
 									sclass="form-control" />
