@@ -133,7 +133,7 @@ public class TquestFormVM {
 						String linkimg = objForm.getQuestimglink().replace("\\", "/");
 						System.out.println("LINK IMG : " + linkimg);
 						img.setSrc(linkimg);
-						img.setWidth("300px");
+						img.setWidth("30%");
 					}
 
 					cbCategory.setValue(mcategory.getCategory());
@@ -441,7 +441,7 @@ public class TquestFormVM {
 					.getRealPath(AppUtil.FILES_ROOT_PATH + AppUtil.IMAGE_PATH);
 			if (media instanceof org.zkoss.image.Image) {
 				img.setContent((org.zkoss.image.Image) media);
-				img.setWidth("300px");
+				img.setWidth("30%");
 				objForm.setQuestimglink(path + media.getName());
 			} else {
 				media = null;

@@ -77,7 +77,10 @@
 								<checkbox id="chkAll"
 									onCheck="@command('doCheckedall', checked=self.checked)" />
 							</column>
+							<column label="ID Soal" width="15%" class="head-color " />
+							<column label="Kategori" width="20%" class="head-color " />
 							<column label="Soal" class="head-color " />
+							<column label="Waktu Dibuat" width="15%" class="head-color " align="center" />
 							<column label="${labels.common.action}"
 								width="15%" align="center" class="head-color" />
 						</columns>

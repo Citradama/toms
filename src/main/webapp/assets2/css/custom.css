@@ -29,16 +29,9 @@ img {
 	position: fixed !important;
 	left: 50% !important;
 	top: 50% !important;
-	z-index: 292929292929292929292 !important;
 }
 
-.z-window-modal {
-	position: fixed !important;
-	max-height: 90% !important;
-	z-index: 1800 !important;
-	overflow-x: hidden !important;
-	overflow-y: scroll !important;
-}
+
 
 .z-window-content{
 	position: relative;

@@ -1,5 +1,6 @@
 package com.sds.toms.viewmodel.dosen;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +14,10 @@ import org.zkoss.zk.ui.HtmlNativeComponent;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Div;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Groupbox;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Row;
@@ -61,6 +64,7 @@ public class QuestSummaryDetailVm {
 		doRender();
 	}
 
+	@SuppressWarnings("deprecation")
 	@NotifyChange("*")
 	public void doRender() {
 		try {
@@ -83,6 +87,12 @@ public class QuestSummaryDetailVm {
 					row.appendChild(labelno);
 
 					Vlayout vlayout = new Vlayout();
+					if(data.getQuestimglink() != null) {
+						Image img = new Image();
+						img.setSrc(data.getQuestimglink());
+						img.setWidth("30%");
+						vlayout.appendChild(img);
+					}
 					Label label = new Label(data.getQuesttext());
 					vlayout.appendChild(label);
 					Separator separator = new Separator();
@@ -93,6 +103,12 @@ public class QuestSummaryDetailVm {
 							label.setStyle("font-weight: bold");
 						vlayout.appendChild(label);
 					}
+					Div div = new Div();
+					div.setAlign("right");
+					div.setStyle("padding-right:40px");
+					label = new Label(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(data.getCreatetime()));
+					div.appendChild(label);
+					vlayout.appendChild(div);
 					HtmlNativeComponent hr = new HtmlNativeComponent("hr");
 					vlayout.appendChild(hr);
 					row.appendChild(vlayout);

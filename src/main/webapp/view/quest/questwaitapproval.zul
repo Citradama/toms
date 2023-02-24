@@ -7,6 +7,7 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<window border="normal" closable="true" action="hide: slideUp"
 		position="center,center">
+		<caption id="caption" visible="false" />
 		<div class="card"
 			viewModel="@id('vm') @init('com.sds.toms.viewmodel.dosen.QuestWaitApprovalVm')">
 			<div class="card-header" style="background-color:white;">
@@ -71,7 +72,10 @@
 						<columns>
 							<column label="${labels.common.no}"
 								width="5%" align="right" class="head-color " />
+							<column label="ID Soal" width="15%" class="head-color " />
+							<column label="Kategori" width="20%" class="head-color " />
 							<column label="Soal" class="head-color " />
+							<column label="Waktu Dibuat" width="15%" class="head-color " align="center" />
 							<column label="${labels.common.action}"
 								width="5%" align="center" class="head-color" />
 						</columns>

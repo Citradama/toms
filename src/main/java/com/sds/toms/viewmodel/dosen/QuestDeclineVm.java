@@ -1,5 +1,6 @@
 package com.sds.toms.viewmodel.dosen;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +64,10 @@ public class QuestDeclineVm {
 				@Override
 				public void render(Row row, BanksoalReq data, int index) throws Exception {
 					row.getChildren().add(new Label(String.valueOf(index + 1)));
+					row.getChildren().add(new Label(data.getQuestid()));
+					row.getChildren().add(new Label(data.getCategory()));
 					row.getChildren().add(new Label(data.getQuesttext()));
+					row.getChildren().add(new Label(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(data.getCreatetime())));
 					
 					Button btnDetail = new Button();
 					btnDetail.setClass("btn btn-sm btn-info");
@@ -109,6 +113,9 @@ public class QuestDeclineVm {
 				objList = mapper.convertValue(Resp.getData(), new TypeReference<List<BanksoalReq>>() {
 				});
 
+				if(objList == null)
+					objList = new ArrayList<>();
+				
 				grid.setModel(new ListModelList<>(objList));
 				totalrecord = objList.size();
 			} else {

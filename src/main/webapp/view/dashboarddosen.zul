@@ -8,18 +8,43 @@
 	<window>
 		<div class="row"
 			viewModel="@id('vm') @init('com.sds.toms.viewmodel.dosen.DashboardDosenVm')">
-			<div class="col-3">
+			<div class="col-6">
+				<div class="card text-white bg-info mb-3">
+					<div class="card-header">
+						<div class="row">
+							<div class="col-12" align="center">
+								<image src="/images/download2.png"
+									style="padding-right:12px; width:13%" />
+								<label value="BANK SOAL"
+									style="font-size: 24px; font-weight: bold" />
+							</div>
+						</div>
+					</div>
+					<div class="card-body"
+						style="cursor:hand;cursor:pointer"
+						onClick="@command('doView', arg='JUMLAH')">
+						<div class="row">
+							<div class="col-5">
+								<label value="JUMLAH SOAL"
+									style="font-size: 24px; font-weight: bold" />
+							</div>
+							<div class="col-7" align="right">
+								<label style="font-size: 26px; font-weight: bold"
+									value="@load(vm.obj.totalquest) @converter('formatedNumber', format='#,###')" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-6">
 				<div class="card text-white bg-success mb-3">
 					<div class="card-header">
 						<div class="row">
-							<div class="col-4" align="right">
+							<div class="col-12" align="center">
 								<image src="/images/approve.png"
-									width="32px" />
-							</div>
-							<div class="col-8">
-								<n:h6>
-									<n:b>SOAL DISETUJUI</n:b>
-								</n:h6>
+									style="padding-right:12px; width:13%" />
+								<label value="MENUNGGU PERSETUJUAN"
+									style="font-size: 24px; font-weight: bold" />
 							</div>
 						</div>
 					</div>
@@ -28,62 +53,26 @@
 						onClick="@command('doView', arg='approve')">
 						<div class="row">
 							<div class="col-5">
-								<label value="TOTAL SOAL"
-									style="font-size: 14px; font-weight: bold" />
+								<label value="JUMLAH SOAL"
+									style="font-size: 24px; font-weight: bold" />
 							</div>
 							<div class="col-7" align="right">
-								<label style="font-weight: bold"
+								<label style="font-size: 26px; font-weight: bold"
 									value="@load(vm.obj.approvalquest) @converter('formatedNumber', format='#,###')" />
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<div class="col-3">
-				<div class="card text-white bg-secondary mb-3">
-					<div class="card-header">
-						<div class="row">
-							<div class="col-4" align="right">
-								<image src="/images/reject2.png"
-									width="32px" />
-							</div>
-							<div class="col-8">
-								<n:h6 class="card-title">
-									<n:b>SOAL DITOLAK</n:b>
-								</n:h6>
-							</div>
-						</div>
-					</div>
-					<div class="card-body"
-						style="cursor:hand;cursor:pointer"
-						onClick="@command('doView', arg='decline')">
-						<div class="row">
-							<div class="col-5">
-								<label value="TOTAL SOAL"
-									style="font-size: 14px; font-weight: bold" />
-							</div>
-							<div class="col-7" align="right">
-								<label style="font-weight: bold"
-									value="@load(vm.obj.declinequest) @converter('formatedNumber', format='#,###')" />
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-3">
+			<div class="col-6">
 				<div class="card text-white bg-warning mb-3">
 					<div class="card-header">
 						<div class="row">
-							<div class="col-4" align="right">
+							<div class="col-12" align="center">
 								<image src="/images/pending2.png"
-									width="32px" />
-							</div>
-							<div class="col-8">
-								<n:h6 class="card-title">
-									<n:b>DRAFT SOAL</n:b>
-								</n:h6>
+									style="padding-right:12px; width:13%" />
+								<label value="DRAFT SOAL"
+									style="font-size: 24px; font-weight: bold" />
 							</div>
 						</div>
 					</div>
@@ -92,44 +81,40 @@
 						onClick="@command('doView', arg='draft')">
 						<div class="row">
 							<div class="col-5">
-								<label value="TOTAL SOAL"
-									style="font-size: 14px; font-weight: bold" />
+								<label value="JUMLAH SOAL"
+									style="font-size: 24px; font-weight: bold" />
 							</div>
 							<div class="col-7" align="right">
-								<label style="font-weight: bold"
+								<label style="font-size: 26px; font-weight: bold"
 									value="@load(vm.obj.draftquest) @converter('formatedNumber', format='#,###')" />
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<div class="col-3">
-				<div class="card text-white bg-info mb-3">
+			<div class="col-6">
+				<div class="card text-white bg-secondary mb-3">
 					<div class="card-header">
 						<div class="row">
-							<div class="col-4" align="right">
-								<image src="/images/download2.png"
-									width="32px" />
-							</div>
-							<div class="col-8">
-								<n:h6 class="card-title">
-									<n:b>SOAL KESELURUHAN</n:b>
-								</n:h6>
+							<div class="col-12" align="center">
+								<image src="/images/reject2.png"
+									style="padding-right:12px; width:13%" />
+								<label value="DITOLAK"
+									style="font-size: 24px; font-weight: bold" />
 							</div>
 						</div>
 					</div>
 					<div class="card-body"
 						style="cursor:hand;cursor:pointer"
-						onClick="@command('doView', arg='total')">
+						onClick="@command('doView', arg='decline')">
 						<div class="row">
 							<div class="col-5">
-								<label value="TOTAL SOAL"
-									style="font-size: 14px; font-weight: bold" />
+								<label value="JUMLAH SOAL"
+									style="font-size: 24px; font-weight: bold" />
 							</div>
 							<div class="col-7" align="right">
-								<label style="font-weight: bold"
-									value="@load(vm.obj.totalquest) @converter('formatedNumber', format='#,###')" />
+								<label style="font-size: 26px; font-weight: bold"
+									value="@load(vm.obj.declinequest) @converter('formatedNumber', format='#,###')" />
 							</div>
 						</div>
 					</div>

@@ -1,5 +1,6 @@
 package com.sds.toms.viewmodel.dosen;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -18,6 +20,7 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Caption;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Label;
@@ -43,11 +46,16 @@ public class QuestWaitApprovalVm {
 	
 	@Wire
 	private Grid grid;
-	
+	@Wire
+	private Caption caption;
+
 	@AfterCompose
-	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
+	public void afterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("isSummary") String isSummary) {
 		Selectors.wireComponents(view, this, false);
 		oUser = (Muser) zkSession.getAttribute("oUser");
+		
+		if(isSummary != null && isSummary.equals("Y"))
+			caption.setVisible(true);
 		
 		doReset();
 		if (grid != null) {
@@ -56,7 +64,10 @@ public class QuestWaitApprovalVm {
 				@Override
 				public void render(Row row, BanksoalReq data, int index) throws Exception {
 					row.getChildren().add(new Label(String.valueOf(index + 1)));
+					row.getChildren().add(new Label(data.getQuestid()));
+					row.getChildren().add(new Label(data.getCategory()));
 					row.getChildren().add(new Label(data.getQuesttext()));
+					row.getChildren().add(new Label(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(data.getCreatetime())));
 					
 					Button btnDetail = new Button();
 					btnDetail.setClass("btn btn-sm btn-info");
@@ -102,6 +113,9 @@ public class QuestWaitApprovalVm {
 				objList = mapper.convertValue(Resp.getData(), new TypeReference<List<BanksoalReq>>() {
 				});
 
+				if(objList == null)
+					objList = new ArrayList<>();
+				
 				grid.setModel(new ListModelList<>(objList));
 				totalrecord = objList.size();
 			} else {

@@ -70,12 +70,12 @@ public class DashboardDosenVm {
 			
 			String url = "";
 			if(arg.equals("approve"))
-				url = "/view/bank/banksoallist.zul";
+				url = "/view/quest/questwaitapproval.zul";
 			else if(arg.equals("decline"))
 				url = "/view/quest/questdecline.zul";
 			else if(arg.equals("draft"))
 				url = "/view/quest/draftquestlist.zul";
-			else url = "/view/quest/questsumarydetail.zul";
+			else url = "/view/bank/banksoallist.zul";
 			
 			Window win = (Window) Executions.createComponents(url, null, map);
 			win.setWidth("80%");

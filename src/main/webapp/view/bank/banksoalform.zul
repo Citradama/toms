@@ -1,11 +1,11 @@
 <?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
 <?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
-<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12213" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets2/css/custom.css?v=1279713" ?>
 
-<zk xmlns:w="client" xmlns:n="native" 
+<zk xmlns:w="client" xmlns:n="native"  
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
-	<window id="winLecturer" width="60%"
+	<window width="60%"
 		viewModel="@id('vm') @init('com.sds.toms.viewmodel.TquestFormVM')"
 		validationMessages="@id('vmsgs')" border="normal" closable="true"
 		action="hide: slideUp" position="center,center">

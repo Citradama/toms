@@ -40,7 +40,7 @@
 					<caption label="Soal"/>
 					<grid id="grid">
 						<columns>
-							<column width="3%" valign="top"/>
+							<column width="5%" valign="top"/>
 							<column/>
 						</columns>
 					</grid>

@@ -1,5 +1,6 @@
 package com.sds.toms.viewmodel.dosen;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -93,7 +94,10 @@ public class DraftQuestListVm {
 					if (map.get(data.getId()) != null)
 						check.setChecked(true);
 					row.getChildren().add(check);
+					row.getChildren().add(new Label(data.getQuestid()));
+					row.getChildren().add(new Label(data.getCategory()));
 					row.getChildren().add(new Label(data.getQuesttext()));
+					row.getChildren().add(new Label(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(data.getCreatetime())));
 					Button btnDetail = new Button();
 					btnDetail.setClass("btn btn-sm btn-info");
 					btnDetail.setIconSclass("z-icon-eye");
@@ -235,6 +239,9 @@ public class DraftQuestListVm {
 				objList = mapper.convertValue(Resp.getData(), new TypeReference<List<BanksoalReq>>() {
 				});
 
+				if(objList == null)
+					objList = new ArrayList<>();
+				
 				grid.setModel(new ListModelList<>(objList));
 				totalrecord = objList.size();
 			} else {
@@ -267,12 +274,12 @@ public class DraftQuestListVm {
 				rsp = RespHandler.responObj(url, mapper.writeValueAsString(objList),
 						AppUtil.METHOD_PUT, oUser);
 
+				doReset();
 				if (rsp.getCode() == 200) {
 					Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
 							+ "  title: 'Berhasil',\r\n" + "  text: '"
 							+ Labels.getLabel("common.update.success") + "'," + "})");
 				}
-				doReset();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
