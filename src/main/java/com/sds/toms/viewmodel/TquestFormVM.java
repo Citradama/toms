@@ -173,102 +173,112 @@ public class TquestFormVM {
 					isSetRight = false;
 				}
 			}
-			Label lblAnswer = new Label(objAnswer.getAnswertext());
+			
 			if (chkRight.isChecked() || (objAnswer.getIsright() != null && objAnswer.getIsright().equals("Y"))) {
-				isSetRight = true;
 				objAnswer.setIsright("Y");
-				lblAnswer.setStyle("font-weight: bold");
 			} else
 				objAnswer.setIsright("N");
 			listAnswers.add(objAnswer);
-
-			Div divRow = new Div();
-			divRow.setClass("row");
-
-			Div divCol1 = new Div();
-			divCol1.setClass("col-8");
-			divCol1.appendChild(lblAnswer);
-			divRow.appendChild(divCol1);
-
-			Div divCol2 = new Div();
-			divCol2.setClass("col-4");
-
-			Div divGroup = new Div();
-			divGroup.setAttribute("obj", objAnswer);
-			divGroup.setClass("btn-group");
-			divGroup.setAlign("right");
-			Button btEdit = new Button("Edit");
-			btEdit.setAutodisable("self");
-			btEdit.setSclass("btn btn-default btn-sm");
-			btEdit.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
-
-				@Override
-				public void onEvent(Event event) throws Exception {
-					divRowEdit = divRow;
-					objAnswerEdit = (QuestAnswerModel) divGroup.getAttribute("obj");
-					objAnswer = objAnswerEdit;
-					if (objAnswerEdit.getIsright() != null && objAnswerEdit.getIsright().equals("Y")) {
-						chkRight.setDisabled(false);
-						chkRight.setChecked(true);
-					} else {
-						chkRight.setChecked(false);
-						if (isSetRight)
-							chkRight.setDisabled(true);
-						else
-							chkRight.setDisabled(false);
-					}
-
-					BindUtils.postNotifyChange(null, null, TquestFormVM.this, "objAnswer");
+			
+			Integer no = 0;
+			divAnswers.getChildren().clear();
+			for (QuestAnswerModel data : listAnswers) {
+				objAnswer = data;
+				Label lblAnswer = new Label(AppUtil.ALPHABETS[no] + ". " + objAnswer.getAnswertext());
+				if(objAnswer.getIsright().equals("Y")) {
+					isSetRight = true;
+					lblAnswer.setStyle("font-weight: bold");
 				}
-			});
-			divGroup.appendChild(btEdit);
+				Div divRow = new Div();
+				divRow.setClass("row");
 
-			Button btDelete = new Button("Hapus");
-			btDelete.setAutodisable("self");
-			btDelete.setSclass("btn btn-default btn-sm");
-			btDelete.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+				Div divCol1 = new Div();
+				divCol1.setClass("col-8");
+				divCol1.appendChild(lblAnswer);
+				divRow.appendChild(divCol1);
 
-				@Override
-				public void onEvent(Event event) throws Exception {
-					Messagebox.show(Labels.getLabel("common.delete.confirm"), WebApps.getCurrent().getAppName(),
-							Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new EventListener<Event>() {
+				Div divCol2 = new Div();
+				divCol2.setClass("col-4");
 
-								@Override
-								public void onEvent(Event event) throws Exception {
-									if (event.getName().equals("onOK")) {
-										try {
-											QuestAnswerModel objDel = (QuestAnswerModel) divGroup.getAttribute("obj");
-											listAnswers.remove(objDel);
-											divAnswers.removeChild(divRow.getNextSibling());
-											divAnswers.removeChild(divRow);
-											if (objDel.getIsright() != null && objDel.getIsright().equals("Y")) {
-												isSetRight = false;
-												chkRight.setDisabled(false);
+				Div divGroup = new Div();
+				divGroup.setAttribute("obj", objAnswer);
+				divGroup.setClass("btn-group");
+				divGroup.setAlign("right");
+				Button btEdit = new Button("Edit");
+				btEdit.setAutodisable("self");
+				btEdit.setSclass("btn btn-default btn-sm");
+				btEdit.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+
+					@Override
+					public void onEvent(Event event) throws Exception {
+						divRowEdit = divRow;
+						objAnswerEdit = (QuestAnswerModel) divGroup.getAttribute("obj");
+						objAnswer = objAnswerEdit;
+						if (objAnswerEdit.getIsright() != null && objAnswerEdit.getIsright().equals("Y")) {
+							chkRight.setDisabled(false);
+							chkRight.setChecked(true);
+						} else {
+							chkRight.setChecked(false);
+							if (isSetRight)
+								chkRight.setDisabled(true);
+							else
+								chkRight.setDisabled(false);
+						}
+
+						BindUtils.postNotifyChange(null, null, TquestFormVM.this, "objAnswer");
+					}
+				});
+				divGroup.appendChild(btEdit);
+
+				Button btDelete = new Button("Hapus");
+				btDelete.setAutodisable("self");
+				btDelete.setSclass("btn btn-default btn-sm");
+				btDelete.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+
+					@Override
+					public void onEvent(Event event) throws Exception {
+						Messagebox.show(Labels.getLabel("common.delete.confirm"), WebApps.getCurrent().getAppName(),
+								Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new EventListener<Event>() {
+
+									@Override
+									public void onEvent(Event event) throws Exception {
+										if (event.getName().equals("onOK")) {
+											try {
+												QuestAnswerModel objDel = (QuestAnswerModel) divGroup.getAttribute("obj");
+												listAnswers.remove(objDel);
+												divAnswers.removeChild(divRow.getNextSibling());
+												divAnswers.removeChild(divRow);
+												if (objDel.getIsright() != null && objDel.getIsright().equals("Y")) {
+													isSetRight = false;
+													chkRight.setDisabled(false);
+												}
+												doResetAnswer();
+												BindUtils.postNotifyChange(null, null, TquestFormVM.this, "objAnswer");
+												BindUtils.postNotifyChange(null, null, TquestFormVM.this, "objAnswerEdit");
+											} catch (Exception e) {
+												Messagebox.show(e.getMessage(), WebApps.getCurrent().getAppName(),
+														Messagebox.OK, Messagebox.ERROR);
+												e.printStackTrace();
 											}
-											doResetAnswer();
-											BindUtils.postNotifyChange(null, null, TquestFormVM.this, "objAnswer");
-											BindUtils.postNotifyChange(null, null, TquestFormVM.this, "objAnswerEdit");
-										} catch (Exception e) {
-											Messagebox.show(e.getMessage(), WebApps.getCurrent().getAppName(),
-													Messagebox.OK, Messagebox.ERROR);
-											e.printStackTrace();
 										}
 									}
-								}
 
-							});
-				}
-			});
-			divGroup.appendChild(btDelete);
-			divCol2.appendChild(divGroup);
+								});
+					}
+				});
+				divGroup.appendChild(btDelete);
+				divCol2.appendChild(divGroup);
 
-			if (isDetail)
-				divCol2.setVisible(false);
+				if (isDetail)
+					divCol2.setVisible(false);
 
-			divRow.appendChild(divCol2);
+				divRow.appendChild(divCol2);
 
-			divAnswers.appendChild(divRow);
-			divAnswers.appendChild(new HtmlNativeComponent("hr"));
+				divAnswers.appendChild(divRow);
+				divAnswers.appendChild(new HtmlNativeComponent("hr"));
+				no++;
+			}
+			
 			doResetAnswer();
 		} catch (Exception e) {
 			e.printStackTrace();
