@@ -399,7 +399,7 @@ public class TquestFormVM {
 												else
 													label = "common.update.success";
 												Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
-														+ "  title: 'Informasi',\r\n" + "  text: '"
+														+ "  title: 'Berhasil',\r\n" + "  text: '"
 														+ Labels.getLabel(label) + "'," + "})");
 											} else {
 												Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n"
@@ -412,7 +412,7 @@ public class TquestFormVM {
 											else
 												label = "common.update.success";
 											Clients.evalJavaScript(
-													"swal.fire({" + "icon: 'success',\r\n" + "  title: 'Informasi',\r\n"
+													"swal.fire({" + "icon: 'success',\r\n" + "  title: 'Berhasil',\r\n"
 															+ "  text: '" + Labels.getLabel(label) + "'," + "})");
 										}
 									} else {
