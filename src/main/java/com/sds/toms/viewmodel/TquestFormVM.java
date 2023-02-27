@@ -1,5 +1,8 @@
 package com.sds.toms.viewmodel;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.net.ConnectException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,10 +20,11 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
+import org.zkoss.io.Files;
 import org.zkoss.util.media.Media;
 import org.zkoss.util.resource.Labels;
-import org.zkoss.zhtml.Input;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.HtmlNativeComponent;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WebApps;
@@ -34,25 +38,23 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
 import com.sds.toms.model.Mcategory;
-import com.sds.toms.model.Mcust;
-import com.sds.toms.model.Mdosen;
 import com.sds.toms.model.Muser;
-import com.sds.toms.model.Tquest;
-import com.sds.toms.model.Tquestanswer;
 import com.sds.toms.pojo.BanksoalReq;
 import com.sds.toms.pojo.ObjectResp;
-import com.sds.toms.pojo.SearchReq;
+import com.sds.toms.pojo.QuestAnswerModel;
+import com.sds.toms.util.AppData;
 import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 
@@ -60,50 +62,87 @@ public class TquestFormVM {
 	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
 
 	private Muser oUser;
-	private Tquest objForm;
-	private Tquestanswer objAnswer;
-	private Tquestanswer objAnswerEdit;
+	private BanksoalReq objForm;
+	private QuestAnswerModel objAnswer;
+	private QuestAnswerModel objAnswerEdit;
 	private boolean isInsert;
 	private String dosenid;
 	private String dosenname;
-	private List<Tquestanswer> listAnswers = new ArrayList<Tquestanswer>();
+	private List<QuestAnswerModel> listAnswers = new ArrayList<QuestAnswerModel>();
+	private List<QuestAnswerModel> objAnswerList = new ArrayList<QuestAnswerModel>();
 	private Boolean isSetRight;
 	private Div divRowEdit;
+	private boolean isDetail;
+
+	private Mcategory mcategory;
+	private Media media;
 
 	@Wire
 	private Window winCategory;
 	@Wire
-	private Div divFooter, divPassword, divAnswers;
-	@Wire
-	private Input txUnivname;
+	private Div divFooter, divPassword, divAnswers, divSetright;
 	@Wire
 	private Combobox cbCategory;
 	@Wire
 	private Checkbox chkRight;
 	@Wire
 	private Image img;
+	@Wire
+	private Textbox tbQuest, tbAnswer;
+	@Wire
+	private Button btnImage;
 
 	@AfterCompose
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("objForm") Tquest objForm, @ExecutionArgParam("isEdit") String isEdit,
+			@ExecutionArgParam("obj") BanksoalReq objReq, @ExecutionArgParam("isEdit") String isEdit,
 			@ExecutionArgParam("isDetail") String isDetail) {
 		Selectors.wireComponents(view, this, false);
 		try {
 			oUser = (Muser) zkSession.getAttribute("oUser");
 			doReset();
 
-			if (objForm != null) {
-				this.objForm = objForm;
+			if (objReq != null) {
+				objForm = objReq;
 				isInsert = false;
-			}
-
-			if (isEdit != null && isEdit.equals("Y")) {
-
 			}
 
 			if (isDetail != null && isDetail.equals("Y")) {
 				divFooter.setVisible(false);
-				txUnivname.setReadonly(true);
+				cbCategory.setReadonly(true);
+				cbCategory.setButtonVisible(false);
+				divSetright.setVisible(false);
+				tbQuest.setDisabled(true);
+				tbAnswer.setVisible(false);
+				btnImage.setVisible(false);
+				this.isDetail = true;
+			}
+
+			if ((isEdit != null && isEdit.equals("Y")) || (isDetail != null && isDetail.equals("Y"))) {
+				ObjectResp Resp = null;
+				String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mcategory() + "/"
+						+ objReq.getCategoryid();
+
+				Resp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
+
+				if (Resp.getCode() == 200) {
+					ObjectMapper mapper = new ObjectMapper();
+					mcategory = mapper.convertValue(Resp.getData(), new TypeReference<Mcategory>() {
+					});
+
+					if (objForm.getQuestimglink() != null) {
+						String linkimg = objForm.getQuestimglink().replace("\\", "/");
+						System.out.println("LINK IMG : " + linkimg);
+						img.setSrc(linkimg);
+						img.setWidth("30%");
+					}
+
+					cbCategory.setValue(mcategory.getCategory());
+					for (QuestAnswerModel data : objReq.getAnswers()) {
+						objAnswer = data;
+						doSaveAnswer();
+						objAnswerList.add(data);
+					}
+				}
 			}
 
 		} catch (Exception e) {
@@ -120,6 +159,7 @@ public class TquestFormVM {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Command
 	@NotifyChange("objAnswer")
 	public void doSaveAnswer() {
@@ -133,99 +173,112 @@ public class TquestFormVM {
 					isSetRight = false;
 				}
 			}
-			Label lblAnswer = new Label(objAnswer.getAnswertext());
-			if (chkRight.isChecked()) {
-				isSetRight = true;
+			
+			if (chkRight.isChecked() || (objAnswer.getIsright() != null && objAnswer.getIsright().equals("Y"))) {
 				objAnswer.setIsright("Y");
-				lblAnswer.setStyle("font-weight: bold");
 			} else
 				objAnswer.setIsright("N");
 			listAnswers.add(objAnswer);
-
-			Div divRow = new Div();
-			divRow.setClass("row");
-
-			Div divCol1 = new Div();
-			divCol1.setClass("col-8");
-			divCol1.appendChild(lblAnswer);
-			divRow.appendChild(divCol1);
-
-			Div divCol2 = new Div();
-			divCol2.setClass("col-4");
-
-			Div divGroup = new Div();
-			divGroup.setAttribute("obj", objAnswer);
-			divGroup.setClass("btn-group");
-			Button btEdit = new Button("Edit");
-			btEdit.setAutodisable("self");
-			btEdit.setSclass("btn btn-default btn-sm");
-			btEdit.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
-
-				@Override
-				public void onEvent(Event event) throws Exception {
-					divRowEdit = divRow;
-					objAnswerEdit = (Tquestanswer) divGroup.getAttribute("obj");
-					objAnswer = objAnswerEdit;
-					if (objAnswerEdit.getIsright() != null && objAnswerEdit.getIsright().equals("Y")) {
-						chkRight.setDisabled(false);
-						chkRight.setChecked(true);
-					} else {
-						chkRight.setChecked(false);
-						if (isSetRight)
-							chkRight.setDisabled(true);
-						else
-							chkRight.setDisabled(false);
-					}
-
-					BindUtils.postNotifyChange(null, null, TquestFormVM.this, "objAnswer");
+			
+			Integer no = 0;
+			divAnswers.getChildren().clear();
+			for (QuestAnswerModel data : listAnswers) {
+				objAnswer = data;
+				Label lblAnswer = new Label(AppUtil.ALPHABETS[no] + ". " + objAnswer.getAnswertext());
+				if(objAnswer.getIsright().equals("Y")) {
+					isSetRight = true;
+					lblAnswer.setStyle("font-weight: bold");
 				}
-			});
-			divGroup.appendChild(btEdit);
+				Div divRow = new Div();
+				divRow.setClass("row");
 
-			Button btDelete = new Button("Hapus");
-			btDelete.setAutodisable("self");
-			btDelete.setSclass("btn btn-default btn-sm");
-			btDelete.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+				Div divCol1 = new Div();
+				divCol1.setClass("col-8");
+				divCol1.appendChild(lblAnswer);
+				divRow.appendChild(divCol1);
 
-				@Override
-				public void onEvent(Event event) throws Exception {
-					Messagebox.show(Labels.getLabel("common.delete.confirm"), WebApps.getCurrent().getAppName(),
-							Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new EventListener<Event>() {
+				Div divCol2 = new Div();
+				divCol2.setClass("col-4");
 
-								@Override
-								public void onEvent(Event event) throws Exception {
-									if (event.getName().equals("onOK")) {
-										try {
-											Tquestanswer objDel = (Tquestanswer) divGroup.getAttribute("obj");
-											listAnswers.remove(objDel);
-											divAnswers.removeChild(divRow.getNextSibling());
-											divAnswers.removeChild(divRow);
-											if (objDel.getIsright() != null && objDel.getIsright().equals("Y")) {
-												isSetRight = false;
-												chkRight.setDisabled(false);
+				Div divGroup = new Div();
+				divGroup.setAttribute("obj", objAnswer);
+				divGroup.setClass("btn-group");
+				divGroup.setAlign("right");
+				Button btEdit = new Button("Edit");
+				btEdit.setAutodisable("self");
+				btEdit.setSclass("btn btn-default btn-sm");
+				btEdit.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+
+					@Override
+					public void onEvent(Event event) throws Exception {
+						divRowEdit = divRow;
+						objAnswerEdit = (QuestAnswerModel) divGroup.getAttribute("obj");
+						objAnswer = objAnswerEdit;
+						if (objAnswerEdit.getIsright() != null && objAnswerEdit.getIsright().equals("Y")) {
+							chkRight.setDisabled(false);
+							chkRight.setChecked(true);
+						} else {
+							chkRight.setChecked(false);
+							if (isSetRight)
+								chkRight.setDisabled(true);
+							else
+								chkRight.setDisabled(false);
+						}
+
+						BindUtils.postNotifyChange(null, null, TquestFormVM.this, "objAnswer");
+					}
+				});
+				divGroup.appendChild(btEdit);
+
+				Button btDelete = new Button("Hapus");
+				btDelete.setAutodisable("self");
+				btDelete.setSclass("btn btn-default btn-sm");
+				btDelete.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+
+					@Override
+					public void onEvent(Event event) throws Exception {
+						Messagebox.show(Labels.getLabel("common.delete.confirm"), WebApps.getCurrent().getAppName(),
+								Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new EventListener<Event>() {
+
+									@Override
+									public void onEvent(Event event) throws Exception {
+										if (event.getName().equals("onOK")) {
+											try {
+												QuestAnswerModel objDel = (QuestAnswerModel) divGroup.getAttribute("obj");
+												listAnswers.remove(objDel);
+												divAnswers.removeChild(divRow.getNextSibling());
+												divAnswers.removeChild(divRow);
+												if (objDel.getIsright() != null && objDel.getIsright().equals("Y")) {
+													isSetRight = false;
+													chkRight.setDisabled(false);
+												}
+												doResetAnswer();
+												BindUtils.postNotifyChange(null, null, TquestFormVM.this, "objAnswer");
+												BindUtils.postNotifyChange(null, null, TquestFormVM.this, "objAnswerEdit");
+											} catch (Exception e) {
+												Messagebox.show(e.getMessage(), WebApps.getCurrent().getAppName(),
+														Messagebox.OK, Messagebox.ERROR);
+												e.printStackTrace();
 											}
-											doResetAnswer();
-											BindUtils.postNotifyChange(null, null, TquestFormVM.this, "objAnswer");
-											BindUtils.postNotifyChange(null, null, TquestFormVM.this, "objAnswerEdit");
-										} catch (Exception e) {
-											Messagebox.show(e.getMessage(), WebApps.getCurrent().getAppName(),
-													Messagebox.OK, Messagebox.ERROR);
-											e.printStackTrace();
 										}
 									}
-								}
 
-							});
-				}
-			});
-			divGroup.appendChild(btDelete);
+								});
+					}
+				});
+				divGroup.appendChild(btDelete);
+				divCol2.appendChild(divGroup);
 
-			divCol2.appendChild(divGroup);
-			divRow.appendChild(divCol2);
+				if (isDetail)
+					divCol2.setVisible(false);
 
-			divAnswers.appendChild(divRow);
+				divRow.appendChild(divCol2);
 
-			divAnswers.appendChild(new HtmlNativeComponent("hr"));
+				divAnswers.appendChild(divRow);
+				divAnswers.appendChild(new HtmlNativeComponent("hr"));
+				no++;
+			}
+			
 			doResetAnswer();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -233,7 +286,7 @@ public class TquestFormVM {
 	}
 
 	public void doResetAnswer() {
-		objAnswer = new Tquestanswer();
+		objAnswer = new QuestAnswerModel();
 		chkRight.setChecked(false);
 		if (isSetRight != null && isSetRight)
 			chkRight.setDisabled(true);
@@ -250,36 +303,18 @@ public class TquestFormVM {
 	@NotifyChange("*")
 	public void doReset() {
 		oUser = (Muser) zkSession.getAttribute("oUser");
-		objForm = new Tquest();
-		objAnswer = new Tquestanswer();
+		objForm = new BanksoalReq();
+		objAnswer = new QuestAnswerModel();
 		isInsert = true;
-		String url = "";
 		divAnswers.getChildren().clear();
-//		chkRight.setDisabled(false);
+		cbCategory.setValue(null);
 		img.setSrc(null);
+		isDetail = false;
+		media = null;
 
 		dosenid = oUser.getUserid();
 		dosenname = oUser.getUsername();
 
-		ObjectResp rsp = new ObjectResp();
-
-//		-------Get Combobox Mcategory-------
-		url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mcategory();
-		rsp = RespHandler.getObject(url);
-
-		ObjectMapper mapper = new ObjectMapper();
-		List<Mcategory> objList = mapper.convertValue(rsp.getData(), new TypeReference<List<Mcategory>>() {
-		});
-
-		if (rsp.getCode() == 200) {
-			Comboitem comboitem = null;
-			for (Mcategory category : objList) {
-				comboitem = new Comboitem();
-				comboitem.setLabel(category.getCategory());
-				comboitem.setValue(category);
-				cbCategory.appendChild(comboitem);
-			}
-		}
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -296,85 +331,96 @@ public class TquestFormVM {
 								Muser oUser = (Muser) zkSession.getAttribute("oUser");
 								try {
 									String url = "";
-									if (isInsert) {
-										ObjectResp rsp = null;
-										BanksoalReq req = new BanksoalReq();
+									ObjectMapper mapper = new ObjectMapper();
 
-										objForm.setCreatedby(oUser.getUserid());
+									ObjectResp rsp = null;
+									objForm.setCategory(mcategory.getCategory());
+									objForm.setCategoryid(mcategory.getId());
+									objForm.setDosenid(oUser.getUserid());
+									objForm.setDosenname(oUser.getUsername());
+									if (isInsert)
 										objForm.setQuestid(new SimpleDateFormat("YYMMDDHHMMSS").format(new Date()));
-										SearchReq searchreq = new SearchReq();
-										System.out.println("userid : " + oUser.getUserid());
-										searchreq.setGeneral(oUser.getUserid());
-										url = ConfigUtil.getConfig().getUrl_base()
-												+ ConfigUtil.getConfig().getEndpoint_mdosen() + "/search";
-										rsp = RespHandler.postObject(url, req);
-										if (rsp.getCode() == 200) {
-											ObjectMapper mapper = new ObjectMapper();
-											List<Mdosen> objList = mapper.convertValue(rsp.getData(),
-													new TypeReference<List<Mdosen>>() {
-													});
-											objForm.setMdosen(objList.get(0));
-											req.setData(objForm);
 
-											List<Tquestanswer> list = new ArrayList<Tquestanswer>();
-											Integer no = 0;
-											for (Tquestanswer data : listAnswers) {
-												data.setAnswerno(AppUtil.ALPHABETS[no]);
-												data.setUpdatedby(oUser.getUserid());
-												if (data.getIsright().equals("Y"))
-													objForm.setRightanswer(AppUtil.ALPHABETS[no]);
-												list.add(data);
+									Integer no = 0;
+									for (QuestAnswerModel data : listAnswers) {
+										data.setAnswerno(AppUtil.ALPHABETS[no]);
+										if (data.getIsright().equals("Y"))
+											objForm.setRightanswer(AppUtil.ALPHABETS[no]);
+										no++;
+									}
 
-												no++;
-											}
-
-											req.setDataList(list);
-
+									if (!isInsert) {
+										for (QuestAnswerModel data : objAnswerList) {
 											url = ConfigUtil.getConfig().getUrl_base()
-													+ ConfigUtil.getConfig().getEndpoint_tquest();
-											System.out.println("save : " + url);
-
-											rsp = RespHandler.postObject(url, req);
-											if (rsp.getCode() == 201) {
-
-												Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
-														+ "  title: 'Berhasil',\r\n" + "  text: '"
-														+ Labels.getLabel("common.add.success") + "'," + "})");
-
-											} else {
-												if (rsp.getCode() != 201
-														&& (rsp.getMessage().contains("ConstraintViolationException")
-																|| rsp.getMessage().contains("duplicate"))) {
-													Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n"
-															+ "  title: 'Informasi',\r\n"
-															+ "  text: 'Data gagal disimpan, kode role sudah terdaftar',"
-															+ "})");
-												} else {
-													Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n"
-															+ "  title: 'Informasi',\r\n"
-															+ "  text: 'Data gagal disimpan'," + "})");
-												}
-											}
-
-										} else {
-											objForm.setUpdatedby(oUser.getUserid());
-											objForm.setLastupdated(null);
-											objForm.setCreatetime(null);
-
-											url = ConfigUtil.getConfig().getUrl_base()
-													+ ConfigUtil.getConfig().getEndpoint_mcategory();
-											System.out.println("update : " + url);
-
-											ObjectResp respobj = new ObjectResp();
-											respobj = RespHandler.putObject(url, objForm);
-
-											if (respobj.getCode() == 200) {
-												Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
-														+ "  title: 'Berhasil',\r\n" + "  text: '"
-														+ Labels.getLabel("common.update.success") + "'," + "})");
+													+ ConfigUtil.getConfig().getEndpoint_tquest() + "answer/"
+													+ data.getId();
+											rsp = RespHandler.responObj(url, mapper.writeValueAsString(data),
+													AppUtil.METHOD_DEL, oUser);
+											if (rsp.getCode() == 200) {
+												System.out.println("UPDATE JAWABAN");
 											}
 										}
 									}
+
+									objForm.setAnswers(listAnswers);
+									url = ConfigUtil.getConfig().getUrl_base()
+											+ ConfigUtil.getConfig().getEndpoint_tquest();
+									System.out.println("save : " + url);
+									if (isInsert) {
+										rsp = RespHandler.responObj(url, mapper.writeValueAsString(objForm),
+												AppUtil.METHOD_POST, oUser);
+									} else {
+										rsp = RespHandler.responObj(url, mapper.writeValueAsString(objForm),
+												AppUtil.METHOD_PUT, oUser);
+									}
+									String label = "";
+									if (rsp.getCode() == 201 || rsp.getCode() == 200) {
+										if (media != null) {
+											objForm = mapper.convertValue(rsp.getData(),
+													new TypeReference<BanksoalReq>() {
+													});
+											if (media.isBinary()) {
+												Files.copy(new File(objForm.getQuestimglink()), media.getStreamData());
+											} else {
+												BufferedWriter writer = new BufferedWriter(
+														new FileWriter(objForm.getQuestimglink()));
+												Files.copy(writer, media.getReaderData());
+												writer.close();
+											}
+
+											url = ConfigUtil.getConfig().getUrl_base()
+													+ ConfigUtil.getConfig().getEndpoint_tquest() + "/uploadimg/"
+													+ objForm.getId();
+											rsp = RespHandler.postMedia(url, objForm.getQuestimglink(), media.getName(),
+													oUser);
+											if (rsp.getCode() == 201 || rsp.getCode() == 200) {
+												if (rsp.getCode() == 201)
+													label = "common.add.success";
+												else
+													label = "common.update.success";
+												Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
+														+ "  title: 'Berhasil',\r\n" + "  text: '"
+														+ Labels.getLabel(label) + "'," + "})");
+											} else {
+												Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n"
+														+ "  title: 'Informasi',\r\n" + "  text: 'Data gagal disimpan',"
+														+ "})");
+											}
+										} else {
+											if (rsp.getCode() == 201)
+												label = "common.add.success";
+											else
+												label = "common.update.success";
+											Clients.evalJavaScript(
+													"swal.fire({" + "icon: 'success',\r\n" + "  title: 'Berhasil',\r\n"
+															+ "  text: '" + Labels.getLabel(label) + "'," + "})");
+										}
+									} else {
+										Clients.evalJavaScript(
+												"swal.fire({" + "icon: 'warning',\r\n" + "  title: 'Informasi',\r\n"
+														+ "  text: 'Data gagal disimpan'," + "})");
+									}
+									doClose();
 
 								} catch (Exception e) {
 									if (isInsert)
@@ -396,15 +442,20 @@ public class TquestFormVM {
 	}
 
 	@Command
+	@NotifyChange("*")
 	public void doUpload(@ContextParam(ContextType.BIND_CONTEXT) BindContext ctx) {
 		try {
 			UploadEvent event = (UploadEvent) ctx.getTriggerEvent();
-			Media media = event.getMedia();
+			media = event.getMedia();
+			String path = Executions.getCurrent().getDesktop().getWebApp()
+					.getRealPath(AppUtil.FILES_ROOT_PATH + AppUtil.IMAGE_PATH);
 			if (media instanceof org.zkoss.image.Image) {
-//				objForm.set(media.getByteData());
 				img.setContent((org.zkoss.image.Image) media);
+				img.setWidth("30%");
+				objForm.setQuestimglink(path + media.getName());
 			} else {
 				media = null;
+				img.setWidth(null);
 				Messagebox.show("Not an image: " + media, "Error", Messagebox.OK, Messagebox.ERROR);
 			}
 		} catch (Exception e) {
@@ -434,12 +485,14 @@ public class TquestFormVM {
 		};
 	}
 
-	public Tquest getObjForm() {
-		return objForm;
-	}
-
-	public void setObjForm(Tquest objForm) {
-		this.objForm = objForm;
+	public ListModelList<Mcategory> getMcategorymodel() {
+		ListModelList<Mcategory> lm = null;
+		try {
+			lm = new ListModelList<Mcategory>(AppData.getMcategory());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lm;
 	}
 
 	public String getDosenid() {
@@ -458,20 +511,36 @@ public class TquestFormVM {
 		this.dosenname = dosenname;
 	}
 
-	public Tquestanswer getObjAnswer() {
+	public QuestAnswerModel getObjAnswer() {
 		return objAnswer;
 	}
 
-	public void setObjAnswer(Tquestanswer objAnswer) {
+	public void setObjAnswer(QuestAnswerModel objAnswer) {
 		this.objAnswer = objAnswer;
 	}
 
-	public Tquestanswer getObjAnswerEdit() {
+	public QuestAnswerModel getObjAnswerEdit() {
 		return objAnswerEdit;
 	}
 
-	public void setObjAnswerEdit(Tquestanswer objAnswerEdit) {
+	public void setObjAnswerEdit(QuestAnswerModel objAnswerEdit) {
 		this.objAnswerEdit = objAnswerEdit;
+	}
+
+	public Mcategory getMcategory() {
+		return mcategory;
+	}
+
+	public void setMcategory(Mcategory mcategory) {
+		this.mcategory = mcategory;
+	}
+
+	public BanksoalReq getObjForm() {
+		return objForm;
+	}
+
+	public void setObjForm(BanksoalReq objForm) {
+		this.objForm = objForm;
 	}
 
 }

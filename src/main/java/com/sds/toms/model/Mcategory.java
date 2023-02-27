@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Mcategory {
 
-	private Integer id;
+	private Long id;
 	private String category;
 	private Date createtime;
 	private String createdby;
@@ -45,11 +45,11 @@ public class Mcategory {
 		this.category = category;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

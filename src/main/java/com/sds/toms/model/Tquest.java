@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Tquest {
-	private Integer tquestpk;
+	private Long id;
 	private String questid;
 	private String questtext;
 	private String questimgid;
@@ -23,13 +23,6 @@ public class Tquest {
 	private Mcategory mcategory;
 	private Mdosen mdosen;
 
-	public Integer getTquestpk() {
-		return tquestpk;
-	}
-
-	public void setTquestpk(Integer tquestpk) {
-		this.tquestpk = tquestpk;
-	}
 
 	public String getQuestid() {
 		return questid;
@@ -165,6 +158,14 @@ public class Tquest {
 
 	public void setMdosen(Mdosen mdosen) {
 		this.mdosen = mdosen;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

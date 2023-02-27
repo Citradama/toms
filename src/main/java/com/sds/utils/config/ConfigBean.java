@@ -12,6 +12,7 @@ public class ConfigBean {
 	private String endpoint_mcategory;
 	private String endpoint_mmenu;
 	private String endpoint_tquest;
+	private String endpoint_tbook;
 
 	public String getUrl_base() {
 		return url_base;
@@ -91,6 +92,14 @@ public class ConfigBean {
 
 	public void setEndpoint_mmenu(String endpoint_mmenu) {
 		this.endpoint_mmenu = endpoint_mmenu;
+	}
+
+	public String getEndpoint_tbook() {
+		return endpoint_tbook;
+	}
+
+	public void setEndpoint_tbook(String endpoint_tbook) {
+		this.endpoint_tbook = endpoint_tbook;
 	}
 
 }

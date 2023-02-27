@@ -5,91 +5,102 @@
 <?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12213" ?>
 
 <zk xmlns:w="client" xmlns:n="native">
-	<div class="card"
-		viewModel="@id('vm') @init('com.sds.toms.viewmodel.TquestListVM')">
-		<div class="card-header" style="background-color:white;">
-			<n:h5>
-				<n:i class="fas fa-list"></n:i>
-				Daftar Bank Soal
-			</n:h5>
-		</div>
-		<div class="card-body">
-			<groupbox id="gbSearch">
-				<caption label="${labels.common.searching}"
-					image="/images/search.png" />
-				<grid>
-					<columns>
-						<column width="170px" />
-						<column />
-					</columns>
-					<rows>
-						
-					</rows>
-					<foot>
-						<footer />
-						<footer>
-							<div class="row">
-								<div class="col-md-1">
-									<n:div>
-										<button autodisable="self"
-											label=" ${labels.common.search}" class="btn btn-warning"
-											iconSclass="z-icon-search" onClick="@command('doSearch')" />
-										<button autodisable="self"
-											label=" ${labels.common.reset}" class="btn btn-primary"
-											iconSclass="z-icon-repeat" onClick="@command('doReset')" />
-
-									</n:div>
+	<window border="normal" closable="true" action="hide: slideUp"
+		position="center,center">
+		<caption id="caption" visible="false" />
+		<div class="card"
+			viewModel="@id('vm') @init('com.sds.toms.viewmodel.TquestListVM')">
+			<div class="card-header" style="background-color:white;">
+				<n:h5>
+					<n:i class="fas fa-list"></n:i>
+					Daftar Bank Soal
+				</n:h5>
+			</div>
+			<div class="card-body">
+				<groupbox id="gbSearch">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="15%" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Filter" />
+								<textbox cols="30" value=""
+									placeholder="Search..." />
+							</row>
+							<!-- <row>
+								<label value="Dosen"/>
+								<combobox id="cbDosen" placeholder="Dosen"
+								model="@load(vm.mdosenmodel)" cols="26"
+								selectedItem="@bind(vm.mdosen)">
+								<template name="model" var="mdosen">
+								<comboitem
+								label="@load(mdosen.dosenname)" />
+								</template>
+								</combobox>
+								</row> -->
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-1">
+										<n:div>
+											<button autodisable="self"
+												label=" ${labels.common.search}" class="btn btn-warning"
+												iconSclass="z-icon-search" onClick="@command('doSearch')" />
+											<button autodisable="self"
+												label=" ${labels.common.reset}" class="btn btn-primary"
+												iconSclass="z-icon-repeat" onClick="@command('doReset')" />
+										</n:div>
+									</div>
 								</div>
-							</div>
-						</footer>
-					</foot>
-				</grid>
-			</groupbox>
-			<separator />
-			<separator />
-			<div class="row">
-				<div class="col-md-12" align="right">
-					<button autodisable="self" label=" Buat Baru"
-						sclass="btn btn-primary btn-sm" iconSclass="z-icon-plus"
-						onClick="@command('doAddnew')">
-					</button>
-
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<separator />
+				<div class="row">
+					<div class="col-md-12" align="right">
+						<button autodisable="self" label=" Buat Baru"
+							sclass="btn btn-primary btn-sm" iconSclass="z-icon-plus"
+							onClick="@command('doAddnew')">
+						</button>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md">
-					<paging id="paging" autohide="true"
-						style="margin-bottom:-20px" />
+				<div class="row">
+					<div class="col-md">
+						<paging id="paging" autohide="true"
+							style="margin-bottom:-20px" />
+					</div>
+					<div class="col-md-2" align="right">
+						<label value="Total Data :"
+							style="font-weight: bold" />
+						<label value="@load(vm.totalrecord)"
+							style="font-weight: bold" />
+					</div>
 				</div>
-				<div class="col-md-2" align="right">
-					<label value="Total Data :"
-						style="font-weight: bold" />
-					<label value="@load(vm.totalrecord)"
-						style="font-weight: bold" />
+				<div style="max-width:1400px; overflow:auto">
+					<timer id="timer" />
+					<grid id="grid"
+						emptyMessage="${labels.common.emptymsg}">
+						<columns>
+							<column label="${labels.common.no}"
+								width="5%" align="right" class="head-color " />
+							<column label="Kategori"
+								class="head-color " />
+							<column label="Total Soal"
+								class="head-color " align="right" />
+							<column label="${labels.common.action}"
+								width="5%" align="center" class="head-color" />
+						</columns>
+					</grid>
 				</div>
-			</div>
-			<div style="max-width:1400px; overflow:auto">
-				<timer id="timer" />
-				<grid id="grid"
-					emptyMessage="${labels.common.emptymsg}">
-					<columns>
-						<column label="${labels.common.no}" width="40px"
-							align="right" class="head-color " />
-						<column label="ID Soal"
-							width="180px" class="head-color " />
-						<column label="Sub Kategori"
-							class="head-color " />
-						<column label="Dosen"
-							width="230px" class="head-color " />
-						<column label="Harga"
-							width="100px" class="head-color " align="center"/>
-						<column label="Status"
-							width="200px" class="head-color " align="center"/>
-						<column label="${labels.common.action}"
-							width="250px" align="center" class="head-color" />
-					</columns>
-				</grid>
 			</div>
 		</div>
-	</div>
+	</window>
 </zk>

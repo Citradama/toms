@@ -345,7 +345,7 @@ public class MusergroupFormVM {
 											rsp = RespHandler.responObj(url, mapper.writeValueAsString(listGroup),
 													AppUtil.METHOD_POST, oUser);
 											if (rsp.getCode() == 201) {
-												Clients.evalJavaScript("swal.fire({" + "icon: 'info',\r\n"
+												Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
 														+ "  title: 'Informasi',\r\n" + "  text: '"
 														+ Labels.getLabel("common.add.success") + "'," + "})");
 											} else {
@@ -400,8 +400,8 @@ public class MusergroupFormVM {
 														mapper.writeValueAsString(listGroup), AppUtil.METHOD_POST,
 														oUser);
 
-												if (rsps.getCode() == 200) {
-													Clients.evalJavaScript("swal.fire({" + "icon: 'info',\r\n"
+												if (rsps.getCode() == 201) {
+													Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
 															+ "  title: 'Informasi',\r\n" + "  text: '"
 															+ Labels.getLabel("common.update.success") + "'," + "})");
 												}

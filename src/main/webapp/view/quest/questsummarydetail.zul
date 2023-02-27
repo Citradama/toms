@@ -1,0 +1,51 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12213" ?>
+
+<zk xmlns:w="client" xmlns:n="native"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
+	<window id="winLecturer" width="60%"
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.dosen.QuestSummaryDetailVm')"
+		border="normal" closable="true" action="hide: slideUp"
+		position="center,center">
+		<caption />
+		<div class="card">
+			<div class="card-header">
+				<n:h6>Detail Summary Soal</n:h6>
+			</div>
+			<div class="card-body pt-1 pb-1 pl-1 pr-1"
+				form="@id('e') @load(vm.obj)">
+				<groupbox mold="3d" id="groupbox">
+					<caption label="Informasi" />
+					<grid>
+						<columns>
+							<column width="20%"/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<label value="Kategori"/>
+								<label value="@load(vm.obj.category)"/>
+							</row>
+							<row>
+								<label value="Total Soal"/>
+								<label value="@load(vm.obj.totalquest)"/>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<separator/>
+				<groupbox mold="3d"> 
+					<caption label="Soal"/>
+					<grid id="grid">
+						<columns>
+							<column width="5%" valign="top"/>
+							<column/>
+						</columns>
+					</grid>
+				</groupbox>
+			</div>
+		</div>
+	</window>
+</zk>

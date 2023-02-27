@@ -1,11 +1,11 @@
 <?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
 <?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
-<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12213" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets2/css/custom.css?v=1279713" ?>
 
-<zk xmlns:w="client" xmlns:n="native"
+<zk xmlns:w="client" xmlns:n="native"  
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
-	<window id="winLecturer" width="60%"
+	<window width="60%"
 		viewModel="@id('vm') @init('com.sds.toms.viewmodel.TquestFormVM')"
 		validationMessages="@id('vmsgs')" border="normal" closable="true"
 		action="hide: slideUp" position="center,center">
@@ -27,7 +27,6 @@
 								</label>
 								<h:input id="txDosenid" type="text"
 									class="form-control" value="@bind(vm.dosenid)" readonly="true" />
-
 							</div>
 							<div class="col">
 								<label class="form-label">
@@ -40,30 +39,24 @@
 							</div>
 						</div>
 						<separator />
-						<div class="row">
-							<div class="col">
-								<hlayout>
-									<label class="form-label">
-										Kategori
-									</label>
-									<label class="text-danger"
-										value="@load(vmsgs['mcategory'])">
-									</label>
-								</hlayout>
-								<combobox id="cbCategory" width="100%"
-									height="100%" style="font-size:14px"
-									selectedItem="@bind(e.mcategory)" />
-							</div>
-							<div class="col">
-								<label class="form-label">Status</label>
-								<combobox id="cbStatus" width="100%"
-									height="100%" style="font-size:14px"
-									selectedItem="@bind(e.status)">
-									<comboitem label="Aktif" value="Y" />
-									<comboitem label="Tidak Aktif"
-										value="N" />
-								</combobox>
-							</div>
+						<div class="row" width="99%">
+							<hlayout>
+								<label class="form-label">
+									Kategori
+								</label>
+								<label class="text-danger"
+									value="@load(vmsgs['mcategory'])">
+								</label>
+							</hlayout>
+							<combobox id="cbCategory" 
+								placeholder="Pilih Kategori..." model="@load(vm.mcategorymodel)"
+								cols="20" selectedItem="@bind(vm.mcategory)">
+								<template name="model" 
+									var="mcategory">
+									<comboitem
+										label="@load(mcategory.category)" />
+								</template>
+							</combobox>
 						</div>
 						<separator />
 					</h:form>
@@ -81,24 +74,24 @@
 									value="@load(vmsgs['questtext'])" />
 							</hlayout>
 							<vlayout>
-								<button label="Upload Gambar"
+								<button label="Upload Gambar" id="btnImage" 
 									sclass="btn btn-default btn-sm" upload="true,maxsize=2048"
 									onUpload="@command('doUpload', upEvent=event)"
 									autodisable="self" />
-								<image id="img" />
-								<h:input id="txQuest" type="text"
-									width="100%" height="300%" class="form-control"
-									value="@bind(e.questtext)" placeholder="Soal" />
+								<image id="img"/>
+								<textbox id="tbQuest" rows="3"
+									value="@bind(e.questtext)" placeholder="Soal"
+									sclass="form-control" />
 							</vlayout>
 						</div>
 						<separator />
 						<div>
 							<label class="form-label">Jawaban</label>
-							<h:input id="txAnswer" type="text"
-								class="form-control" value="@bind(vm.objAnswer.answertext)" />
+							<textbox id="tbAnswer" rows="3"
+								value="@bind(vm.objAnswer.answertext)" sclass="form-control" />
 						</div>
 						<n:br />
-						<div class="row">
+						<div id="divSetright" class="row">
 							<div class="col">
 								<hlayout>
 									<checkbox id="chkRight"
@@ -111,7 +104,7 @@
 							</div>
 						</div>
 						<n:br />
-						<div class="row" id="divAnswers"/>
+						<div class="row" id="divAnswers" />
 					</h:form>
 				</groupbox>
 				<n:br />

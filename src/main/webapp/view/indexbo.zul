@@ -1,10 +1,11 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
 <?link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" ?>
 <?link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" ?>
 <!-- MDB -->
 <?link rel="stylesheet" href="/mdb2/css/mdb.min.css" ?>
 <!-- Custom styles -->
 <?link rel="stylesheet" href="/mdb2/css/admin.css" ?>
-<?link rel="stylesheet" type="text/css"	href="/assets2/css/custom.css?v=31" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets2/css/custom.css?v=3174564656" ?>
 
 <?meta charset="UTF-8" ?>
 <?meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" ?>
