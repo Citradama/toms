@@ -12,6 +12,7 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
+import org.zkoss.json.JSONObject;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zhtml.Input;
 import org.zkoss.zk.ui.Component;
@@ -151,12 +152,23 @@ public class McustFormVM {
 									url = ConfigUtil.getConfig().getUrl_base()
 											+ ConfigUtil.getConfig().getEndpoint_mcust();
 									System.out.println("save : " + url);
-									CustReq req = new CustReq();
-									req.setMcust(objForm);
-									req.setPassword(password);
-									req.setUsergroupcode("CST");
+//									CustReq req = new CustReq();
+//									req.setMcust(objForm);
+//									req.setPassword(password);
+//									req.setUsergroupcode("CST");
+									
+									JSONObject jsonReq = new JSONObject();
 
-									rsp = RespHandler.responObj(url, mapper.writeValueAsString(req),
+									jsonReq.put("id", null);
+									jsonReq.put("custid", objForm.getCustid() != null ? objForm.getCustid() : "");
+									jsonReq.put("custname", objForm.getCustname());
+									jsonReq.put("major", objForm.getMajor());
+									jsonReq.put("hp", objForm.getHp());
+									jsonReq.put("email", objForm.getEmail());
+									jsonReq.put("university", objForm.getUniversity());
+									
+
+									rsp = RespHandler.responObj(url, mapper.writeValueAsString(jsonReq),
 											AppUtil.METHOD_POST, oUser);
 									if (rsp.getCode() == 201) {
 
