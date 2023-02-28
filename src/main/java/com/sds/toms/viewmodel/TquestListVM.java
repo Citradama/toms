@@ -114,7 +114,10 @@ public class TquestListVM {
 				ObjectMapper mapper = new ObjectMapper();
 				objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Vquestcategory>>() {
 				});
-
+				
+				if(objList == null)
+					objList = new ArrayList<>();
+				
 				grid.setModel(new ListModelList<>(objList));
 				totalrecord = objList.size();
 			} else {
