@@ -31,6 +31,8 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Row;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -61,6 +63,10 @@ public class BankMateriFormVm {
 	private Combobox cbCategory;
 	@Wire
 	private Div divBtn;
+	@Wire
+	private Row rowUpload, rowLampiran;
+	@Wire
+	private Textbox tbDeskripsi, tbJudul;
 
 	@AfterCompose
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("obj") Tbook obj,
@@ -70,13 +76,50 @@ public class BankMateriFormVm {
 		doReset();
 
 		if (obj != null) {
-			objForm = obj;
-			isInsert = false;
+			try {
+				objForm = obj;
+				isInsert = false;
+				filename = obj.getBookname();
+				
+				ObjectResp Resp = null;
+				String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mcategory() + "/"
+						+ obj.getCategoryid();
+
+				Resp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
+
+				if (Resp.getCode() == 200) {
+					ObjectMapper mapper = new ObjectMapper();
+					mcategory = mapper.convertValue(Resp.getData(), new TypeReference<Mcategory>() {
+					});
+					
+					cbCategory.setValue(mcategory.getCategory());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		}
 
 		if (isDetail != null && isDetail.equals("Y")) {
-			divBtn.setVisible(false);
-			cbCategory.setButtonVisible(false);
+			
+				divBtn.setVisible(false);
+				rowLampiran.setVisible(true);
+				rowUpload.setVisible(false);
+				cbCategory.setButtonVisible(false);
+				cbCategory.setDisabled(true);
+				tbDeskripsi.setDisabled(true);
+				tbJudul.setDisabled(true);
+			
+		}
+	}
+	
+	@Command
+	public void doView() {
+		try {
+			Sessions.getCurrent().setAttribute("reportPath", objForm.getBooklink());
+			Executions.getCurrent().sendRedirect("/view/docviewer.zul", "_blank");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

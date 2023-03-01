@@ -60,7 +60,7 @@
 										style="color:red" />
 								</hlayout>
 								<hlayout>
-									<textbox cols="75" maxlength="50"
+									<textbox id="tbJudul" cols="75" maxlength="50"
 										value="@bind(e.bookname)" />
 								</hlayout>
 							</row>
@@ -71,11 +71,11 @@
 										style="color:red" />
 								</hlayout>
 								<hlayout>
-									<textbox cols="75" rows="3"
+									<textbox id="tbDeskripsi" cols="75" rows="3"
 										maxlength="100" value="@bind(e.bookdesc)" />
 								</hlayout>
 							</row>
-							<row>
+							<row id="rowUpload">
 								<hlayout>
 									<label value="Lampiran Materi" />
 									<label value="*"
@@ -89,6 +89,10 @@
 										autodisable="self" />
 									<label value="@load(vm.filename)" />
 								</hlayout>
+							</row>
+							<row id="rowLampiran" visible="false">
+								<label value="Lampiran Materi"/>
+								<a label="@load(e.bookname)" onClick="@command('doView')"/>
 							</row>
 						</rows>
 					</grid>

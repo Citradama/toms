@@ -45,7 +45,7 @@ import com.sds.toms.pojo.ObjectResp;
 import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 
-public class DraftMateriListVm {
+public class BookDraftListVm {
 
 	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
 	private Muser oUser;
@@ -82,7 +82,7 @@ public class DraftMateriListVm {
 								map.remove(data.getId());
 							}
 							totalselected = map.size();
-							BindUtils.postNotifyChange(null, null, DraftMateriListVm.this, "totalselected");
+							BindUtils.postNotifyChange(null, null, BookDraftListVm.this, "totalselected");
 						}
 					});
 					if (map.get(data.getId()) != null)
@@ -134,7 +134,7 @@ public class DraftMateriListVm {
 
 								public void onEvent(Event event) throws Exception {
 									doReset();
-									BindUtils.postNotifyChange(null, null, DraftMateriListVm.this, "*");
+									BindUtils.postNotifyChange(null, null, BookDraftListVm.this, "*");
 								}
 							});
 						}
@@ -174,7 +174,7 @@ public class DraftMateriListVm {
 																		+ "'," + "})");
 													}
 													doReset();
-													BindUtils.postNotifyChange(null, null, DraftMateriListVm.this, "*");
+													BindUtils.postNotifyChange(null, null, BookDraftListVm.this, "*");
 												} catch (Exception e) {
 													e.printStackTrace();
 												}
@@ -222,7 +222,7 @@ public class DraftMateriListVm {
 	public void doSearch() {
 		try {
 			ObjectResp Resp = null;
-			List<BanksoalReq> objList = new ArrayList<>();
+			List<Tbook> objList = new ArrayList<>();
 
 			String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_tbook()
 					+ "/draft/dosen/" + oUser.getUserid();
@@ -230,7 +230,7 @@ public class DraftMateriListVm {
 
 			if (Resp.getCode() == 200) {
 				ObjectMapper mapper = new ObjectMapper();
-				objList = mapper.convertValue(Resp.getData(), new TypeReference<List<BanksoalReq>>() {
+				objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Tbook>>() {
 				});
 
 				if(objList == null)
@@ -261,7 +261,7 @@ public class DraftMateriListVm {
 					objList.add(obj);
 				}
 				url = ConfigUtil.getConfig().getUrl_base()
-						+ ConfigUtil.getConfig().getEndpoint_tquest() + "/submitdraft";
+						+ ConfigUtil.getConfig().getEndpoint_tbook() + "/submitdraft";
 				System.out.println("update : " + url);
 
 				rsp = new ObjectResp();
