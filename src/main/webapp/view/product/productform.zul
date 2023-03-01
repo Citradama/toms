@@ -1,0 +1,114 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets2/css/custom.css?v=1279713" ?>
+
+<zk xmlns:w="client" xmlns:n="native"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
+	<window width="60%"
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.ProductFormVM')"
+		validationMessages="@id('vmsgs')" border="normal" closable="true"
+		action="hide: slideUp" position="center,center">
+		<caption />
+		<div class="card">
+			<div class="card-header">
+				<n:h6>Form Tambah Paket Soal</n:h6>
+			</div>
+
+			<div class="card-body pt-1 pb-1 pl-1 pr-1"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+				<groupbox mold="3d">
+					<caption label="Form Paket Soal" />
+					<h:form>
+						<div class="row">
+							<div class="col">
+								<vlayout>
+									<hlayout>
+										<label class="form-label">
+											Kode Paket Soal
+										</label>
+										<label value="*"
+											style="color:red" />
+									</hlayout>
+									<h:input id="txProductid"
+										type="text" class="form-control" value="@bind(e.productid)" />
+								</vlayout>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<vlayout>
+									<hlayout>
+										<label class="form-label">
+											Nama Paket Soal
+										</label>
+										<label value="*"
+											style="color:red" />
+									</hlayout>
+									<h:input id="txProductname"
+										type="text" class="form-control" value="@bind(e.productname)" />
+							</div>
+							</vlayout>
+						</div>
+						<separator />
+						<div class="row">
+							<div class="col">
+								<vlayout>
+									<hlayout>
+										<label class="form-label">
+											Kategori
+										</label>
+										<label style="color:red"
+											value="*">
+										</label>
+									</hlayout>
+									<combobox id="cbCategory"
+										placeholder="Pilih Kategori..."
+										model="@load(vm.mcategorymodel)" cols="20"
+										selectedItem="@bind(vm.mcategory)">
+										<template name="model"
+											var="mcategory">
+											<comboitem
+												label="@load(mcategory.category)" />
+										</template>
+									</combobox>
+								</vlayout>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<vlayout>
+									<hlayout>
+										<label class="form-label">
+											Sub Kategori
+										</label>
+										<label style="color:red"
+											value="*">
+										</label>
+									</hlayout>
+									<combobox></combobox>
+								</vlayout>
+							</div>
+						</div>
+						<separator />
+					</h:form>
+				</groupbox>
+				<n:br />
+
+				<div id="divFooter">
+					<button onClick="@command('doSave')" width="100%"
+						class="btn btn-primary" style="background-color: #481449;">
+						${labels.common.save}
+					</button>
+					<button onClick="@command('doReset')" width="100%"
+						class="btn btn-warning">
+						Batal
+					</button>
+				</div>
+			</div>
+
+
+		</div>
+		<separator />
+	</window>
+</zk>

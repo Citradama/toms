@@ -1,11 +1,19 @@
-<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="/mdb/css/mdb.min.css" ?>
+
 <?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
-<?link rel="stylesheet" type="text/css"	href="mdb/css/bootstrap.min.css" ?>
-<?link rel="stylesheet" type="text/css" href="mdb/css/mdb.min.css" ?>
 <?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12213" ?>
+<?script rel="javascript" type="text/javascript" href="/js/jquery.bxslider.min.js"?>
+<?link rel="stylesheet" type="text/css" href="/css/jquery.bxslider.min.css"?>
+<?link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css"?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/avio-style.css" ?>
 
 <zk xmlns:w="client" xmlns:n="native">
-	<div class="card">
+	<div class="card"
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.ProductListVm')">
 		<div class="card-header" style="background-color:white;">
 			<n:h5>
 				<n:i class="fas fa-list"></n:i>
@@ -13,7 +21,7 @@
 			</n:h5>
 		</div>
 		<div class="card-body">
-			<groupbox id="gbSearch">
+			<!-- <groupbox id="gbSearch">
 				<caption label="${labels.common.searching}"
 					image="/images/search.png" />
 				<grid>
@@ -22,7 +30,7 @@
 						<column />
 					</columns>
 					<rows>
-						
+
 					</rows>
 					<foot>
 						<footer />
@@ -43,10 +51,10 @@
 						</footer>
 					</foot>
 				</grid>
-			</groupbox>
+			</groupbox> -->
 			<separator />
 			<separator />
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-md-12" align="right">
 					<button autodisable="self" label=" Buat Baru"
 						sclass="btn btn-primary btn-sm" iconSclass="z-icon-plus"
@@ -54,8 +62,8 @@
 					</button>
 
 				</div>
-			</div>
-			<div class="row">
+			</div> -->
+			<!-- <div class="row">
 				<div class="col-md">
 					<paging id="paging" autohide="true"
 						style="margin-bottom:-20px" />
@@ -63,34 +71,11 @@
 				<div class="col-md-2" align="right">
 					<label value="Total Data :"
 						style="font-weight: bold" />
-					<!-- <label value="@load(vm.totalrecord)"
-						style="font-weight: bold" /> -->
+					<label value="@load(vm.totalrecord)"
+						style="font-weight: bold" />
 				</div>
-			</div>
-			<div style="max-width:1400px; overflow:auto">
-				<timer id="timer" />
-				<grid id="grid"
-					emptyMessage="${labels.common.emptymsg}">
-					<columns>
-						<column label="${labels.common.no}" width="40px"
-							align="right" class="head-color " />
-						<column label="Kode Paket Soal"
-							width="180px" class="head-color " />
-						<column label="Nama Paket Soal"
-							class="head-color " />
-						<column label="Kategori"
-							width="200px" class="head-color " />
-						<column label="Jumlah Soal"
-							width="100px" class="head-color " align="center"/>
-						<column label="Harga"
-							width="180px" class="head-color " align="right"/>
-						<column label="Status"
-							width="200px" class="head-color " align="center"/>
-						<column label="${labels.common.action}"
-							width="250px" align="center" class="head-color" />
-					</columns>
-				</grid>
-			</div>
+			</div> -->
+			<div id="divCard"/>
 		</div>
 	</div>
 </zk>
