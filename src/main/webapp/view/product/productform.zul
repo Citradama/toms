@@ -14,99 +14,244 @@
 			<div class="card-header">
 				<n:h6>Form Tambah Paket Soal</n:h6>
 			</div>
-
 			<div class="card-body pt-1 pb-1 pl-1 pr-1"
 				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+
+				<div class="row" style="background-color:#481449;"
+					width="2px" />
 				<groupbox mold="3d">
 					<caption label="Form Paket Soal" />
-					<h:form>
-						<div class="row">
-							<div class="col">
-								<vlayout>
-									<hlayout>
-										<label class="form-label">
-											Kode Paket Soal
-										</label>
-										<label value="*"
-											style="color:red" />
-									</hlayout>
-									<h:input id="txProductid"
-										type="text" class="form-control" value="@bind(e.productid)" />
-								</vlayout>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<vlayout>
-									<hlayout>
-										<label class="form-label">
-											Nama Paket Soal
-										</label>
-										<label value="*"
-											style="color:red" />
-									</hlayout>
-									<h:input id="txProductname"
-										type="text" class="form-control" value="@bind(e.productname)" />
-							</div>
-							</vlayout>
-						</div>
-						<separator />
-						<div class="row">
-							<div class="col">
-								<vlayout>
-									<hlayout>
-										<label class="form-label">
-											Kategori
-										</label>
-										<label style="color:red"
-											value="*">
-										</label>
-									</hlayout>
-									<combobox id="cbCategory"
-										placeholder="Pilih Kategori..."
-										model="@load(vm.mcategorymodel)" cols="20"
-										selectedItem="@bind(vm.mcategory)">
-										<template name="model"
-											var="mcategory">
-											<comboitem
-												label="@load(mcategory.category)" />
-										</template>
-									</combobox>
-								</vlayout>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<vlayout>
-									<hlayout>
-										<label class="form-label">
-											Sub Kategori
-										</label>
-										<label style="color:red"
-											value="*">
-										</label>
-									</hlayout>
-									<combobox></combobox>
-								</vlayout>
-							</div>
-						</div>
-						<separator />
-					</h:form>
-				</groupbox>
-				<n:br />
+					<grid>
+						<columns>
+							<column width="20%" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<hlayout>
+									<label class="form-label">
+										Kode Paket Soal
+									</label>
+									<label value="*" style="color:red" />
+								</hlayout>
+								<textbox id="txProductid"
+									style="width:70%" class="form-control"
+									value="@bind(e.productid)" />
+							</row>
+							<row>
+								<hlayout>
+									<label class="form-label">
+										Nama Paket Soal
+									</label>
+									<label value="*" style="color:red" />
+								</hlayout>
+								<textbox id="txProductname"
+									style="width:70%" class="form-control"
+									value="@bind(e.productname)" />
+							</row>
+							<row>
+								<hlayout>
+									<label class="form-label">
+										Kategori
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<combobox style="width:70%"></combobox>
+							</row>
+							<row>
+								<hlayout>
+									<label class="form-label">
+										Sub Kategori
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<combobox style="width:70%"></combobox>
+							</row>
+							<row>
+								<hlayout>
+									<label class="form-label">
+										Jumlah Soal
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<textbox id="txTotalquest"
+									style="width:70%" class="form-control"
+									value="@bind(e.totalquest)" />
+							</row>
+							<row>
+								<hlayout>
+									<label class="form-label">
+										Passing Grade
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<textbox id="txPassinggrd"
+									style="width:70%" class="form-control"
+									value="@bind(e.passingscore)" />
+							</row>
+							<row>
+								<hlayout>
+									<label class="form-label">
+										Harga
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<textbox id="txPrice" type="text"
+									style="width:70%" class="form-control" value="@bind(e.price)" />
+							</row>
+							<row>
+								<hlayout>
+									<label class="form-label">
+										Deskripsi
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<textbox id="txDesc" style="width:70%"
+									class="form-control" value="@bind(e.productdesc)" />
+							</row>
+							<row>
 
+							</row>
+						</rows>
+					</grid>
+					<separator />
+					<n:br />
+				</groupbox>
+				<separator />
+				<groupbox mold="3d">
+					<caption label="Materi" />
+					<grid>
+						<columns>
+							<column width="20%" />
+							<column />
+							<column width="25%" />
+						</columns>
+						<rows>
+							<row>
+								<hlayout>
+									<label class="form-label">
+										Pilih Materi
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<combobox width="100%" />
+								<button width="50%"
+									class="btn btn-success btn-sm" style="border-radius:5px">
+									Tambah
+								</button>
+							</row>
+							<row>
+								<label class="form-label">
+									Daftar Materi
+								</label>
+								<grid id="gridMateri"
+									emptyMessage="${labels.common.emptymsg}">
+									<columns>
+										<column width="30%"
+											label="Judul Materi" align="center"
+											style="background-color:white; border:0px; border-bottom:1px;solid #fff; color:black; border-color:white" />
+										<column width="30%"
+											label="Deskripsi" align="center"
+											style="background-color:white; border:0px; border-bottom:1px;solid #fff; color:black;" />
+										<column width="30%"
+											label="Lampiran" align="center"
+											style="background-color:white; border:0px; border-bottom:1px;solid #fff; color:black;" />
+										<column width="10%"
+											align="center"
+											style="background-color:white; border:0px; border-bottom:1px;solid #fff; color:black;" />
+									</columns>
+									<rows>
+										<row></row>
+									</rows>
+								</grid>
+
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<separator />
+				<groupbox>
+					<caption label="Materi" />
+					<grid>
+						<columns>
+							<column width="20%" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<hlayout>
+									<label class="form-label">
+										Nama
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<textbox width="70%" />
+							</row>
+							<row>
+								<hlayout>
+									<label class="form-label">
+										Deskripsi
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<textbox width="70%" />
+							</row>
+							<row>
+								<hlayout>
+									<label class="form-label">
+										Jenis Soal
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<hlayout>
+									<radiogroup id="rgType" />
+									<radio id="rbGenerate"
+										label="Generate Soal" radiogroup="rgType" />
+									<radio id="rbManual"
+										label="Pilih Manual" radiogroup="rgType" />
+
+								</hlayout>
+							</row>
+							<row>
+								<label class="form-label" />
+								<textbox width="70%" readonly="true" />
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<separator />
 				<div id="divFooter">
 					<button onClick="@command('doSave')" width="100%"
-						class="btn btn-primary" style="background-color: #481449;">
+						class="btn btn-primary btn-sm"
+						style="background-color: #481449;">
 						${labels.common.save}
 					</button>
 					<button onClick="@command('doReset')" width="100%"
-						class="btn btn-warning">
+						class="btn btn-warning btn-sm">
 						Batal
 					</button>
 				</div>
 			</div>
-
 
 		</div>
 		<separator />
