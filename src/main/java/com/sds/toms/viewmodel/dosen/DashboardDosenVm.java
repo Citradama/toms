@@ -39,7 +39,8 @@ public class DashboardDosenVm {
 		Selectors.wireComponents(view, this, false);
 		oUser = (Muser) zkSession.getAttribute("oUser");
 		
-		doGetsummary();
+		if(oUser != null)
+			doGetsummary();
 	}
 	
 	public void doGetsummary() {

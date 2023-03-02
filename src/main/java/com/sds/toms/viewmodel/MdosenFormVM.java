@@ -151,12 +151,12 @@ public class MdosenFormVM {
 
 									url = ConfigUtil.getConfig().getUrl_base()
 											+ ConfigUtil.getConfig().getEndpoint_mdosen();
-									DosenReq req = new DosenReq();
-									req.setMdosen(objForm);
-									req.setPassword(password);
-									req.setUsergroupcode("DSN");
+//									DosenReq req = new DosenReq();
+//									req.setMdosen(objForm);
+//									req.setPassword(password);
+//									req.setUsergroupcode("DSN");
 
-									rsp = RespHandler.responObj(url, mapper.writeValueAsString(req), AppUtil.METHOD_POST, oUser);
+									rsp = RespHandler.responObj(url, mapper.writeValueAsString(objForm), AppUtil.METHOD_POST, oUser);
 									if (rsp.getCode() == 201) {
 
 										Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"

@@ -19,767 +19,925 @@
 	<h:meta http-equiv="X-UA-Compatible" content="IE=Edge"></h:meta>
 	<h:meta name="viewport"
 		content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	</h:meta>	
+	</h:meta>
 	<script src="/assets/js/plugins.js"></script>
-	
-	<div class="avio page-body">
+
+	<div class="avio page-body"
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.DashboardCustomerVM')">
 
 		<!-- Page Header -->
-	 <div class="body-header sticky-md-top" style="background-color: #2a91b6;">
-		<div class="container-fluid" style="font-size: 12px;">
-			<div class="d-flex justify-content-between">
-				<div class="navbar-brand d-flex align-items-center color-900">
-					<n:img src="images/logo-01.png" width="80px" class="img-fluid no-filter" style="margin-right:90px;"/>
-					
-					 <menubar id="menuBar" autodrop="true" style="margin:15px;background-color: #2a91b6; border-color:#2a91b6">
-					 	<menu label="Kategori" style="font-size:12px; background-color:  #2a91b6">
-					 	 	<menupopup>
-					 	 	<menuitem label="kategori 1"/>
-					 	 	<menuitem label="kategori 2"/>
-					 	 	</menupopup>
-					 	</menu>
-       				 </menubar>
-					<textbox id="txSearchheader" width="50%"/>
+		<div class="body-header sticky-md-top"
+			style="background-color: #2a91b6;">
+			<div class="container-fluid" style="font-size: 12px;">
+				<div class="d-flex justify-content-between">
+					<div
+						class="navbar-brand d-flex align-items-center color-900">
+						<n:img src="images/logo-01.png" width="80px"
+							class="img-fluid no-filter" style="margin-right:90px;" />
+
+						<menubar id="menuBar" autodrop="true"
+							style="margin:15px;background-color: #2a91b6; border-color:#2a91b6">
+							<menu label="Kategori"
+								style="font-size:12px; background-color:  #2a91b6">
+								<menupopup>
+									<menuitem label="kategori 1" />
+									<menuitem label="kategori 2" />
+								</menupopup>
+							</menu>
+						</menubar>
+						<textbox id="txSearchheader" width="50%" />
+					</div>
+
+					<!-- List Menu -->
+					<div id="menuRoot" class="menu-link flex-fill" />
+
+					<h:ul
+						class="navbar-right d-flex align-items-center mb-0 list-unstyled">
+						<h:li>
+							<div
+								class="dropdown morphing scale-left user-profile mx-lg-3 mx-2 no-filter ">
+								<a id="aLogin" label="Login/Register"
+									class="btn btn-warning" href="#" ca:role="button" width="140px"
+									onClick="@command('doLoginRegist')">
+								</a>
+								<a id="aUser"
+									class="nav-link dropdown-toggle rounded-circle after-none p-0"
+									href="#" ca:role="button" ca:data-bs-toggle="dropdown"
+									visible="false">
+									<h:img
+										class="avatar lg img-thumbnail rounded-circle shadow"
+										src="/images/User.png" />
+								</a>
+							</div>
+						</h:li>
+					</h:ul>
 				</div>
-					
-				<!-- List Menu -->
-				<div id="menuRoot" class="menu-link flex-fill"/>
-					
-				<h:ul class="navbar-right d-flex align-items-center mb-0 list-unstyled">
-				   <h:li>
-					  <div class="dropdown morphing scale-left user-profile mx-lg-3 mx-2 no-filter ">
-						  <a id="aLogin" label="Login/Register" class="btn btn-warning"	href="#" ca:role="button"  width="140px" onClick="@command('doLoginRegist')"> </a>								
-					      <a id="aUser" class="nav-link dropdown-toggle rounded-circle after-none p-0"
-							 href="#" ca:role="button" ca:data-bs-toggle="dropdown" visible="false">
-							 <h:img
-								class="avatar lg img-thumbnail rounded-circle shadow"
-								src="/images/User.png"  />
-						  </a>
-					  </div>
-					</h:li>
-				</h:ul>
 			</div>
 		</div>
-	</div>
-		
-	 <!-- Page Materi -->	
-      <div id="divMateri">
-	   <div class="container-fluid">
-			<div class="row g-1 my-md-1 justify-content-between" align="center" style="border-radius:5">
-				<div>
-					<div class="card" align="center" style="border-radius:5">									
-						<div class="tab-content ">									
-							<div id="slider" sclass="myslider" width="600px" height="300px"
-		       				  	 w:onBind="this.bxSlider = jq(this).bxSlider();"
-		      					 w:reloadSlider="function() { this.bxSlider.reloadSlider();}">
-								<div sclass="slide"><image src="/images/img1.png" width="100%" class="img-fluid no-filter"/></div>
-								<div sclass="slide"><image src="/images/img2.png" width="100%" class="img-fluid no-filter"/></div>
-											<div sclass="slide"><image src="/images/img3.png" width="100%" class="img-fluid no-filter"/></div>
+
+		<!-- Page Materi -->
+		<div id="divMateri">
+			<div class="container-fluid">
+				<div class="row g-1 my-md-1 justify-content-between"
+					align="center" style="border-radius:5">
+					<div>
+						<div class="card" align="center"
+							style="border-radius:5">
+							<div class="tab-content ">
+								<div id="slider" sclass="myslider"
+									width="600px" height="300px"
+									w:onBind="this.bxSlider = jq(this).bxSlider();"
+									w:reloadSlider="function() { this.bxSlider.reloadSlider();}">
+									<div sclass="slide">
+										<image src="/images/img1.png"
+											width="100%" class="img-fluid no-filter" />
+									</div>
+									<div sclass="slide">
+										<image src="/images/img2.png"
+											width="100%" class="img-fluid no-filter" />
+									</div>
+									<div sclass="slide">
+										<image src="/images/img3.png"
+											width="100%" class="img-fluid no-filter" />
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-		    </div>
-			    <separator />
-			    <separator />
-			    <div class="card">
-			           <div class="card-header" style="background-color:#55B4EA">	
-			           <hlayout> 
-			           	 <image src="/images/bestsell.png"
-										width="30px" class="img-fluid no-filter"/> 
-			          	 <label value="Pembelajaran Terlaris" style="font-align:bottom; font-size:18px; font-family:arial; font-weight:bold"/>
-			          </hlayout>		          
-				         <a><label value="Lihat Semua" style="font-size:14px; font-family:arial; font-weight:underline"/></a>
-			           </div>
-			           <div class="card-body">
-			              <div class="row">
-			              	<div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
-			              	<separator />
-			              	    <image src="/images/lessons/math.jpg"
-										width="100%" class="img-fluid no-filter"/>
-								<separator />
-								<separator />
-			              	    <div class="row" >
-			              	       <div  class="col-6" style="background-color:#AADAF2; border-radius:8px;">
-			              	          <label value="Kategori" style="font-size:14px; font-family:arial;"></label>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <a onClick="@command('doFav')">
-			              	           <image id="imgheart11" src="/images/heartblank.png"
-										width="24px" class="img-fluid no-filter"/></a>
-			              	       </div>
-			              	    </div>
-			              	    <separator />	
-			              	    <separator />			              	    
-			              	    <label value="Matematika Dasar 1"/>	
-			              	    <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rp " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <label value="250.000,00 " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	    </div>
-			              	   <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rating " style="font-size:14px; font-family:arial;"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	        <hlayout>
-			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="/images/star.png"
-										width="20px" class="img-fluid no-filter"/>
-			              	        </hlayout>
-			              	        </div>
-			              	    </div>
-			              	    <separator />
-			              	    <separator />
-			              	    <div align="center">
-			              	    <button 
-									autodisable="self"
-									style="background-color: #0069ab !important; color:white; border-radius:10px"
-									class="btn btn-info btn-block my-4" label="Beli Sekarang" width="300px"
-									tooltiptext="Beli Sekarang" />
-			              	    </div>
-			              	    <separator />
-			              	</div>
-			              	<div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
-			              	<separator />
-			              	    <image src="/images/lessons/math1.jpg"
-										width="100%" class="img-fluid no-filter"/>
-								<separator />
-								<separator />
-			              	    <div class="row" >
-			              	       <div  class="col-6" style="background-color:#AADAF2; border-radius:8px;">
-			              	          <label value="Kategori" style="font-size:14px; font-family:arial;"></label>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <a>
-			              	           <image src="/images/heartblank.png"
-										width="24px" class="img-fluid no-filter"/></a>
-			              	       </div>
-			              	    </div>
-			              	    <separator />	
-			              	    <separator />			              	    
-			              	    <label value="Matematika Dasar 1"/>	
-			              	    <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rp " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <label value="250.000,00 " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	    </div>
-			              	   <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rating " style="font-size:14px; font-family:arial;"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	        <hlayout>
-			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="/images/star.png"
-										width="20px" class="img-fluid no-filter"/>
-			              	        </hlayout>
-			              	        </div>
-			              	    </div>
-			              	    <separator />
-			              	    <separator />
-			              	     <div align="center">
-			              	    <button 
-									autodisable="self"
-									style="background-color: #0069ab !important; color:white; border-radius:10px"
-									class="btn btn-info btn-block my-4" label="Beli Sekarang" width="300px"
-									tooltiptext="Beli Sekarang" />
-			              	    </div>
-			              	    <separator />
-			              	</div>
-			              <div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
-			              	<separator />
-			              	    <image src="/images/lessons/science.jpg"
-										width="100%" class="img-fluid no-filter"/>
-								<separator />
-								<separator />
-			              	    <div class="row" >
-			              	       <div  class="col-6" style="background-color:#AADAF2; border-radius:8px;">
-			              	          <label value="Kategori" style="font-size:14px; font-family:arial;"></label>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <a>
-			              	           <image src="/images/heartblank.png"
-										width="24px" class="img-fluid no-filter"/></a>
-			              	       </div>
-			              	    </div>
-			              	    <separator />	
-			              	    <separator />			              	    
-			              	    <label value="Matematika Dasar 1"/>	
-			              	    <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rp " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <label value="250.000,00 " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	    </div>
-			              	   <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rating " style="font-size:14px; font-family:arial;"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	        <hlayout>
-			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="/images/star.png"
-										width="20px" class="img-fluid no-filter"/>
-			              	        </hlayout>
-			              	        </div>
-			              	    </div>
-			              	    <separator />
-			              	    <separator />
-			              	     <div align="center">
-			              	    <button 
-									autodisable="self"
-									style="background-color: #0069ab !important; color:white; border-radius:10px"
-									class="btn btn-info btn-block my-4" label="Beli Sekarang" width="300px"
-									tooltiptext="Beli Sekarang" />
-			              	    </div>
-			              	    <separator />
-			              	</div>
-			              <div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
-			              	<separator />
-			              	    <image src="/images/lessons/science1.jpg"
-										width="100%" class="img-fluid no-filter"/>
-								<separator />
-								<separator />
-			              	    <div class="row" >
-			              	       <div  class="col-6" style="background-color:#AADAF2; border-radius:8px;">
-			              	          <label value="Kategori" style="font-size:14px; font-family:arial;"></label>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <a>
-			              	           <image src="/images/heartblank.png"
-										width="24px" class="img-fluid no-filter"/></a>
-			              	       </div>
-			              	    </div>
-			              	    <separator />	
-			              	    <separator />			              	    
-			              	    <label value="Matematika Dasar 1"/>	
-			              	    <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rp " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <label value="250.000,00 " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	    </div>
-			              	   <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rating " style="font-size:14px; font-family:arial;"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	        <hlayout>
-			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="/images/star.png"
-										width="20px" class="img-fluid no-filter"/>
-			              	        </hlayout>
-			              	        </div>
-			              	    </div>
-			              	    <separator />
-			              	    <separator />
-			              	     <div align="center">
-			              	    <button 
-									autodisable="self"
-									style="background-color: #0069ab !important; color:white; border-radius:10px"
-									class="btn btn-info btn-block my-4" label="Beli Sekarang" width="300px"
-									tooltiptext="Beli Sekarang" />
-			              	    </div>
-			              	    <separator />
-			              	</div>
-			              </div>
-			           </div>
-			    </div>
-			    
-		</div>
-		<separator/>
-		<separator/>
-		
-		<div class="card">
-			           <div class="card-header" style="background-color:#55B4EA">	
-			           <hlayout> 
-			           	 <image src="/images/new.png"
-										width="30px" class="img-fluid no-filter"/> 
-			          	 <label value="Pembelajaran Terbaru" style="font-align:bottom; font-size:18px; font-family:arial; font-weight:bold"/>
-			          </hlayout>		          
-				         <a><label value="Lihat Semua" style="font-size:14px; font-family:arial; font-weight:underline"/></a>
-			           </div>
-			           <div class="card-body">
-			              <div class="row">
-			              	<div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
-			              	<separator />
-			              	    <image src="/images/lessons/math.jpg"
-										width="100%" class="img-fluid no-filter"/>
-								<separator />
-								<separator />
-			              	    <div class="row" >
-			              	       <div  class="col-6" style="background-color:#AADAF2; border-radius:8px;">
-			              	          <label value="Kategori" style="font-size:14px; font-family:arial;"></label>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <a onClick="@command('doFav')">
-			              	           <image id="imgheart1" src="/images/heartblank.png"
-										width="24px" class="img-fluid no-filter"/></a>
-			              	       </div>
-			              	    </div>
-			              	    <separator />	
-			              	    <separator />			              	    
-			              	    <label value="Matematika Dasar 1"/>	
-			              	    <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rp " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <label value="250.000,00 " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	    </div>
-			              	   <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rating " style="font-size:14px; font-family:arial;"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	        <hlayout>
-			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="/images/star.png"
-										width="20px" class="img-fluid no-filter"/>
-			              	        </hlayout>
-			              	        </div>
-			              	    </div>
-			              	    <separator />
-			              	    <separator />
-			              	    <div align="center">
-			              	    <button 
-									autodisable="self"
-									style="background-color: #0069ab !important; color:white; border-radius:10px"
-									class="btn btn-info btn-block my-4" label="Beli Sekarang" width="300px"
-									tooltiptext="Beli Sekarang" />
-			              	    </div>
-			              	    <separator />
-			              	</div>
-			              	<div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
-			              	<separator />
-			              	    <image src="/images/lessons/math1.jpg"
-										width="100%" class="img-fluid no-filter"/>
-								<separator />
-								<separator />
-			              	    <div class="row" >
-			              	       <div  class="col-6" style="background-color:#AADAF2; border-radius:8px;">
-			              	          <label value="Kategori" style="font-size:14px; font-family:arial;"></label>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <a>
-			              	           <image src="/images/heartblank.png"
-										width="24px" class="img-fluid no-filter"/></a>
-			              	       </div>
-			              	    </div>
-			              	    <separator />	
-			              	    <separator />			              	    
-			              	    <label value="Matematika Dasar 1"/>	
-			              	    <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rp " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <label value="250.000,00 " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	    </div>
-			              	   <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rating " style="font-size:14px; font-family:arial;"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	        <hlayout>
-			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="/images/star.png"
-										width="20px" class="img-fluid no-filter"/>
-			              	        </hlayout>
-			              	        </div>
-			              	    </div>
-			              	    <separator />
-			              	    <separator />
-			              	     <div align="center">
-			              	    <button 
-									autodisable="self"
-									style="background-color: #0069ab !important; color:white; border-radius:10px"
-									class="btn btn-info btn-block my-4" label="Beli Sekarang" width="300px"
-									tooltiptext="Beli Sekarang" />
-			              	    </div>
-			              	    <separator />
-			              	</div>
-			              <div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
-			              	<separator />
-			              	    <image src="/images/lessons/science.jpg"
-										width="100%" class="img-fluid no-filter"/>
-								<separator />
-								<separator />
-			              	    <div class="row" >
-			              	       <div  class="col-6" style="background-color:#AADAF2; border-radius:8px;">
-			              	          <label value="Kategori" style="font-size:14px; font-family:arial;"></label>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <a>
-			              	           <image src="/images/heartblank.png"
-										width="24px" class="img-fluid no-filter"/></a>
-			              	       </div>
-			              	    </div>
-			              	    <separator />	
-			              	    <separator />			              	    
-			              	    <label value="Matematika Dasar 1"/>	
-			              	    <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rp " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <label value="250.000,00 " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	    </div>
-			              	   <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rating " style="font-size:14px; font-family:arial;"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	        <hlayout>
-			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="/images/star.png"
-										width="20px" class="img-fluid no-filter"/>
-			              	        </hlayout>
-			              	        </div>
-			              	    </div>
-			              	    <separator />
-			              	    <separator />
-			              	     <div align="center">
-			              	    <button 
-									autodisable="self"
-									style="background-color: #0069ab !important; color:white; border-radius:10px"
-									class="btn btn-info btn-block my-4" label="Beli Sekarang" width="300px"
-									tooltiptext="Beli Sekarang" />
-			              	    </div>
-			              	    <separator />
-			              	</div>
-			              <div class="col" style="border-style: ridge; border-radius:8px; margin: 5px; ">
-			              	<separator />
-			              	    <image src="/images/lessons/science1.jpg"
-										width="100%" class="img-fluid no-filter"/>
-								<separator />
-								<separator />
-			              	    <div class="row" >
-			              	       <div  class="col-6" style="background-color:#AADAF2; border-radius:8px;">
-			              	          <label value="Kategori" style="font-size:14px; font-family:arial;"></label>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <a>
-			              	           <image src="/images/heartblank.png"
-										width="24px" class="img-fluid no-filter"/></a>
-			              	       </div>
-			              	    </div>
-			              	    <separator />	
-			              	    <separator />			              	    
-			              	    <label value="Matematika Dasar 1"/>	
-			              	    <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rp " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	           <label value="250.000,00 " style="font-size:14px; font-family:arial;font-weight:bold"/>
-			              	       </div>
-			              	    </div>
-			              	   <separator />
-			              	     <div class="row" >
-			              	       <div  class="col-6">
-			              	        <label value="Rating " style="font-size:14px; font-family:arial;"/>
-			              	       </div>
-			              	        <div align="right" class="col-6">
-			              	        <hlayout>
-			              	        <label value="5" style="font-size:14px; font-family:arial;"/>
-			              	           <image src="/images/star.png"
-										width="20px" class="img-fluid no-filter"/>
-			              	        </hlayout>
-			              	        </div>
-			              	    </div>
-			              	    <separator />
-			              	    <separator />
-			              	     <div align="center">
-			              	    <button 
-									autodisable="self"
-									style="background-color: #0069ab !important; color:white; border-radius:10px"
-									class="btn btn-info btn-block my-4" label="Beli Sekarang" width="300px"
-									tooltiptext="Beli Sekarang" />
-			              	    </div>
-			              	    <separator />
-			              	</div>
-			              </div>
-			           </div>
-			    </div>
-		
-
-	 </div>
-	
-	<!-- Page Login/Register -->
-	<div id="divLogin" visible="false"> 
-	<div class="/view/indexcust.zul row animated fadeIn vh-100">
-			<div class="col-md-4 offset-md-4  my-auto">
-				<div id="fmlogin"
-					class="col-12"
-					style="padding-left:60px; padding-right:60px; background-color: #f3fdff !important; box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24); border-radius:8px">
 				<separator />
 				<separator />
-					<n:img src="images/logo-01.png"
-						class="img-fluid mb-4 no-filter " width="40%">
-					</n:img> 
-					<n:br/>
-					<label sclass="text-danger" />
-					<label value="Email" style="font-size:14px; font-weight:bold"/>
-					<div align="center">
-					<textbox id="tbUsername"
-						maxlength="15" focus="true" cols="38"
-						style="background-color: #f3fdff !important; border-radius:10px"
-						placeholder="Email" />
+				<div class="card">
+					<div class="card-header"
+						style="background-color:#55B4EA">
+						<hlayout>
+							<image src="/images/bestsell.png"
+								width="30px" class="img-fluid no-filter" />
+							<label value="Pembelajaran Terlaris"
+								style="font-align:bottom; font-size:18px; font-family:arial; font-weight:bold" />
+						</hlayout>
+						<a>
+							<label value="Lihat Semua"
+								style="font-size:14px; font-family:arial; font-weight:underline" />
+						</a>
 					</div>
-						<n:br/>
-						<label value="Password"  style="font-size:14px; font-weight:bold"/>
+					<div class="card-body">
+						<div class="row">
+							<div class="col"
+								style="border-style: ridge; border-radius:8px; margin: 5px; ">
+								<separator />
+								<image src="/images/lessons/math.jpg"
+									width="100%" class="img-fluid no-filter" />
+								<separator />
+								<separator />
+								<div class="row">
+									<div class="col-6"
+										style="background-color:#AADAF2; border-radius:8px;">
+										<label value="Kategori"
+											style="font-size:14px; font-family:arial;">
+										</label>
+									</div>
+									<div align="right" class="col-6">
+										<a
+											onClick="@command('doFav')">
+											<image id="imgheart11"
+												src="/images/heartblank.png" width="24px"
+												class="img-fluid no-filter" />
+										</a>
+									</div>
+								</div>
+								<separator />
+								<separator />
+								<label value="Matematika Dasar 1" />
+								<separator />
+								<div class="row">
+									<div class="col-6">
+										<label value="Rp "
+											style="font-size:14px; font-family:arial;font-weight:bold" />
+									</div>
+									<div align="right" class="col-6">
+										<label value="250.000,00 "
+											style="font-size:14px; font-family:arial;font-weight:bold" />
+									</div>
+								</div>
+								<separator />
+								<div class="row">
+									<div class="col-6">
+										<label value="Rating "
+											style="font-size:14px; font-family:arial;" />
+									</div>
+									<div align="right" class="col-6">
+										<hlayout>
+											<label value="5"
+												style="font-size:14px; font-family:arial;" />
+											<image
+												src="/images/star.png" width="20px"
+												class="img-fluid no-filter" />
+										</hlayout>
+									</div>
+								</div>
+								<separator />
+								<separator />
+								<div align="center">
+									<button autodisable="self"
+										style="background-color: #0069ab !important; color:white; border-radius:10px"
+										class="btn btn-info btn-block my-4" label="Beli Sekarang"
+										width="300px" tooltiptext="Beli Sekarang" />
+								</div>
+								<separator />
+							</div>
+							<div class="col"
+								style="border-style: ridge; border-radius:8px; margin: 5px; ">
+								<separator />
+								<image src="/images/lessons/math1.jpg"
+									width="100%" class="img-fluid no-filter" />
+								<separator />
+								<separator />
+								<div class="row">
+									<div class="col-6"
+										style="background-color:#AADAF2; border-radius:8px;">
+										<label value="Kategori"
+											style="font-size:14px; font-family:arial;">
+										</label>
+									</div>
+									<div align="right" class="col-6">
+										<a>
+											<image
+												src="/images/heartblank.png" width="24px"
+												class="img-fluid no-filter" />
+										</a>
+									</div>
+								</div>
+								<separator />
+								<separator />
+								<label value="Matematika Dasar 1" />
+								<separator />
+								<div class="row">
+									<div class="col-6">
+										<label value="Rp "
+											style="font-size:14px; font-family:arial;font-weight:bold" />
+									</div>
+									<div align="right" class="col-6">
+										<label value="250.000,00 "
+											style="font-size:14px; font-family:arial;font-weight:bold" />
+									</div>
+								</div>
+								<separator />
+								<div class="row">
+									<div class="col-6">
+										<label value="Rating "
+											style="font-size:14px; font-family:arial;" />
+									</div>
+									<div align="right" class="col-6">
+										<hlayout>
+											<label value="5"
+												style="font-size:14px; font-family:arial;" />
+											<image
+												src="/images/star.png" width="20px"
+												class="img-fluid no-filter" />
+										</hlayout>
+									</div>
+								</div>
+								<separator />
+								<separator />
+								<div align="center">
+									<button autodisable="self"
+										style="background-color: #0069ab !important; color:white; border-radius:10px"
+										class="btn btn-info btn-block my-4" label="Beli Sekarang"
+										width="300px" tooltiptext="Beli Sekarang" />
+								</div>
+								<separator />
+							</div>
+							<div class="col"
+								style="border-style: ridge; border-radius:8px; margin: 5px; ">
+								<separator />
+								<image src="/images/lessons/science.jpg"
+									width="100%" class="img-fluid no-filter" />
+								<separator />
+								<separator />
+								<div class="row">
+									<div class="col-6"
+										style="background-color:#AADAF2; border-radius:8px;">
+										<label value="Kategori"
+											style="font-size:14px; font-family:arial;">
+										</label>
+									</div>
+									<div align="right" class="col-6">
+										<a>
+											<image
+												src="/images/heartblank.png" width="24px"
+												class="img-fluid no-filter" />
+										</a>
+									</div>
+								</div>
+								<separator />
+								<separator />
+								<label value="Matematika Dasar 1" />
+								<separator />
+								<div class="row">
+									<div class="col-6">
+										<label value="Rp "
+											style="font-size:14px; font-family:arial;font-weight:bold" />
+									</div>
+									<div align="right" class="col-6">
+										<label value="250.000,00 "
+											style="font-size:14px; font-family:arial;font-weight:bold" />
+									</div>
+								</div>
+								<separator />
+								<div class="row">
+									<div class="col-6">
+										<label value="Rating "
+											style="font-size:14px; font-family:arial;" />
+									</div>
+									<div align="right" class="col-6">
+										<hlayout>
+											<label value="5"
+												style="font-size:14px; font-family:arial;" />
+											<image
+												src="/images/star.png" width="20px"
+												class="img-fluid no-filter" />
+										</hlayout>
+									</div>
+								</div>
+								<separator />
+								<separator />
+								<div align="center">
+									<button autodisable="self"
+										style="background-color: #0069ab !important; color:white; border-radius:10px"
+										class="btn btn-info btn-block my-4" label="Beli Sekarang"
+										width="300px" tooltiptext="Beli Sekarang" />
+								</div>
+								<separator />
+							</div>
+							<div class="col"
+								style="border-style: ridge; border-radius:8px; margin: 5px; ">
+								<separator />
+								<image
+									src="/images/lessons/science1.jpg" width="100%"
+									class="img-fluid no-filter" />
+								<separator />
+								<separator />
+								<div class="row">
+									<div class="col-6"
+										style="background-color:#AADAF2; border-radius:8px;">
+										<label value="Kategori"
+											style="font-size:14px; font-family:arial;">
+										</label>
+									</div>
+									<div align="right" class="col-6">
+										<a>
+											<image
+												src="/images/heartblank.png" width="24px"
+												class="img-fluid no-filter" />
+										</a>
+									</div>
+								</div>
+								<separator />
+								<separator />
+								<label value="Matematika Dasar 1" />
+								<separator />
+								<div class="row">
+									<div class="col-6">
+										<label value="Rp "
+											style="font-size:14px; font-family:arial;font-weight:bold" />
+									</div>
+									<div align="right" class="col-6">
+										<label value="250.000,00 "
+											style="font-size:14px; font-family:arial;font-weight:bold" />
+									</div>
+								</div>
+								<separator />
+								<div class="row">
+									<div class="col-6">
+										<label value="Rating "
+											style="font-size:14px; font-family:arial;" />
+									</div>
+									<div align="right" class="col-6">
+										<hlayout>
+											<label value="5"
+												style="font-size:14px; font-family:arial;" />
+											<image
+												src="/images/star.png" width="20px"
+												class="img-fluid no-filter" />
+										</hlayout>
+									</div>
+								</div>
+								<separator />
+								<separator />
+								<div align="center">
+									<button autodisable="self"
+										style="background-color: #0069ab !important; color:white; border-radius:10px"
+										class="btn btn-info btn-block my-4" label="Beli Sekarang"
+										width="300px" tooltiptext="Beli Sekarang" />
+								</div>
+								<separator />
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<separator />
+			<separator />
+
+			<div class="card">
+				<div class="card-header"
+					style="background-color:#55B4EA">
+					<hlayout>
+						<image src="/images/new.png" width="30px"
+							class="img-fluid no-filter" />
+						<label value="Pembelajaran Terbaru"
+							style="font-align:bottom; font-size:18px; font-family:arial; font-weight:bold" />
+					</hlayout>
+					<a>
+						<label value="Lihat Semua"
+							style="font-size:14px; font-family:arial; font-weight:underline" />
+					</a>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col"
+							style="border-style: ridge; border-radius:8px; margin: 5px; ">
+							<separator />
+							<image src="/images/lessons/math.jpg"
+								width="100%" class="img-fluid no-filter" />
+							<separator />
+							<separator />
+							<div class="row">
+								<div class="col-6"
+									style="background-color:#AADAF2; border-radius:8px;">
+									<label value="Kategori"
+										style="font-size:14px; font-family:arial;">
+									</label>
+								</div>
+								<div align="right" class="col-6">
+									<a onClick="@command('doFav')">
+										<image id="imgheart1"
+											src="/images/heartblank.png" width="24px"
+											class="img-fluid no-filter" />
+									</a>
+								</div>
+							</div>
+							<separator />
+							<separator />
+							<label value="Matematika Dasar 1" />
+							<separator />
+							<div class="row">
+								<div class="col-6">
+									<label value="Rp "
+										style="font-size:14px; font-family:arial;font-weight:bold" />
+								</div>
+								<div align="right" class="col-6">
+									<label value="250.000,00 "
+										style="font-size:14px; font-family:arial;font-weight:bold" />
+								</div>
+							</div>
+							<separator />
+							<div class="row">
+								<div class="col-6">
+									<label value="Rating "
+										style="font-size:14px; font-family:arial;" />
+								</div>
+								<div align="right" class="col-6">
+									<hlayout>
+										<label value="5"
+											style="font-size:14px; font-family:arial;" />
+										<image src="/images/star.png"
+											width="20px" class="img-fluid no-filter" />
+									</hlayout>
+								</div>
+							</div>
+							<separator />
+							<separator />
+							<div align="center">
+								<button autodisable="self"
+									style="background-color: #0069ab !important; color:white; border-radius:10px"
+									class="btn btn-info btn-block my-4" label="Beli Sekarang"
+									width="300px" tooltiptext="Beli Sekarang" />
+							</div>
+							<separator />
+						</div>
+						<div class="col"
+							style="border-style: ridge; border-radius:8px; margin: 5px; ">
+							<separator />
+							<image src="/images/lessons/math1.jpg"
+								width="100%" class="img-fluid no-filter" />
+							<separator />
+							<separator />
+							<div class="row">
+								<div class="col-6"
+									style="background-color:#AADAF2; border-radius:8px;">
+									<label value="Kategori"
+										style="font-size:14px; font-family:arial;">
+									</label>
+								</div>
+								<div align="right" class="col-6">
+									<a>
+										<image
+											src="/images/heartblank.png" width="24px"
+											class="img-fluid no-filter" />
+									</a>
+								</div>
+							</div>
+							<separator />
+							<separator />
+							<label value="Matematika Dasar 1" />
+							<separator />
+							<div class="row">
+								<div class="col-6">
+									<label value="Rp "
+										style="font-size:14px; font-family:arial;font-weight:bold" />
+								</div>
+								<div align="right" class="col-6">
+									<label value="250.000,00 "
+										style="font-size:14px; font-family:arial;font-weight:bold" />
+								</div>
+							</div>
+							<separator />
+							<div class="row">
+								<div class="col-6">
+									<label value="Rating "
+										style="font-size:14px; font-family:arial;" />
+								</div>
+								<div align="right" class="col-6">
+									<hlayout>
+										<label value="5"
+											style="font-size:14px; font-family:arial;" />
+										<image src="/images/star.png"
+											width="20px" class="img-fluid no-filter" />
+									</hlayout>
+								</div>
+							</div>
+							<separator />
+							<separator />
+							<div align="center">
+								<button autodisable="self"
+									style="background-color: #0069ab !important; color:white; border-radius:10px"
+									class="btn btn-info btn-block my-4" label="Beli Sekarang"
+									width="300px" tooltiptext="Beli Sekarang" />
+							</div>
+							<separator />
+						</div>
+						<div class="col"
+							style="border-style: ridge; border-radius:8px; margin: 5px; ">
+							<separator />
+							<image src="/images/lessons/science.jpg"
+								width="100%" class="img-fluid no-filter" />
+							<separator />
+							<separator />
+							<div class="row">
+								<div class="col-6"
+									style="background-color:#AADAF2; border-radius:8px;">
+									<label value="Kategori"
+										style="font-size:14px; font-family:arial;">
+									</label>
+								</div>
+								<div align="right" class="col-6">
+									<a>
+										<image
+											src="/images/heartblank.png" width="24px"
+											class="img-fluid no-filter" />
+									</a>
+								</div>
+							</div>
+							<separator />
+							<separator />
+							<label value="Matematika Dasar 1" />
+							<separator />
+							<div class="row">
+								<div class="col-6">
+									<label value="Rp "
+										style="font-size:14px; font-family:arial;font-weight:bold" />
+								</div>
+								<div align="right" class="col-6">
+									<label value="250.000,00 "
+										style="font-size:14px; font-family:arial;font-weight:bold" />
+								</div>
+							</div>
+							<separator />
+							<div class="row">
+								<div class="col-6">
+									<label value="Rating "
+										style="font-size:14px; font-family:arial;" />
+								</div>
+								<div align="right" class="col-6">
+									<hlayout>
+										<label value="5"
+											style="font-size:14px; font-family:arial;" />
+										<image src="/images/star.png"
+											width="20px" class="img-fluid no-filter" />
+									</hlayout>
+								</div>
+							</div>
+							<separator />
+							<separator />
+							<div align="center">
+								<button autodisable="self"
+									style="background-color: #0069ab !important; color:white; border-radius:10px"
+									class="btn btn-info btn-block my-4" label="Beli Sekarang"
+									width="300px" tooltiptext="Beli Sekarang" />
+							</div>
+							<separator />
+						</div>
+						<div class="col"
+							style="border-style: ridge; border-radius:8px; margin: 5px; ">
+							<separator />
+							<image src="/images/lessons/science1.jpg"
+								width="100%" class="img-fluid no-filter" />
+							<separator />
+							<separator />
+							<div class="row">
+								<div class="col-6"
+									style="background-color:#AADAF2; border-radius:8px;">
+									<label value="Kategori"
+										style="font-size:14px; font-family:arial;">
+									</label>
+								</div>
+								<div align="right" class="col-6">
+									<a>
+										<image
+											src="/images/heartblank.png" width="24px"
+											class="img-fluid no-filter" />
+									</a>
+								</div>
+							</div>
+							<separator />
+							<separator />
+							<label value="Matematika Dasar 1" />
+							<separator />
+							<div class="row">
+								<div class="col-6">
+									<label value="Rp "
+										style="font-size:14px; font-family:arial;font-weight:bold" />
+								</div>
+								<div align="right" class="col-6">
+									<label value="250.000,00 "
+										style="font-size:14px; font-family:arial;font-weight:bold" />
+								</div>
+							</div>
+							<separator />
+							<div class="row">
+								<div class="col-6">
+									<label value="Rating "
+										style="font-size:14px; font-family:arial;" />
+								</div>
+								<div align="right" class="col-6">
+									<hlayout>
+										<label value="5"
+											style="font-size:14px; font-family:arial;" />
+										<image src="/images/star.png"
+											width="20px" class="img-fluid no-filter" />
+									</hlayout>
+								</div>
+							</div>
+							<separator />
+							<separator />
+							<div align="center">
+								<button autodisable="self"
+									style="background-color: #0069ab !important; color:white; border-radius:10px"
+									class="btn btn-info btn-block my-4" label="Beli Sekarang"
+									width="300px" tooltiptext="Beli Sekarang" />
+							</div>
+							<separator />
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+
+		<!-- Page Login/Register -->
+		<div id="divLogin" visible="false">
+			<div
+				class="/view/indexcust.zul row animated fadeIn vh-100">
+				<div class="col-md-4 offset-md-4  my-auto">
+					<div id="fmlogin" class="col-12"
+						style="padding-left:60px; padding-right:60px; background-color: #f3fdff !important; box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24); border-radius:8px">
+						<separator />
+						<separator />
+						<n:img src="images/logo-01.png"
+							class="img-fluid mb-4 no-filter " width="40%">
+						</n:img>
+						<n:br />
+						<label sclass="text-danger" />
+						<label value="Email"
+							style="font-size:13px; font-weight:bold" />
 						<div align="center">
-					    	<textbox id="tbPassword" 
-								type="password" maxlength="20" cols="35"
-								style="background-color: #f3fdff !important; border-radius:10px"
-								 placeholder="Password" />
-					    </div>
-						<vlayout>
-							<div align="center" >
-								<button 
-									autodisable="self"
-									style="background-color: #0069ab !important; color:white; border-radius:10px"
-									class="btn btn-info btn-block my-4" label="Login" width="335px"
-									tooltiptext="Login" onClick="@command('doLogin')"/>
-							</div>
-							<div align="right" style="margin-top:-25px"> 
-								<a>
-   								 <label value="Forgot Password?" style="font-size:12px;padding:-20px"/>
-								</a>
-							</div>
-						</vlayout>
-						<n:br/>
-						<label value="Belum punya akun? Klik tombol dibawah ini" style="font-size:12px;"/>
-						<div align="center" style="margin:-22px">
-							<button 
-								autodisable="self"
-								style="background-color: #0069ab !important; color:white; border-radius:10px"
-								class="btn btn-info btn-block my-4" label="Register" width="340px"
-								tooltiptext="Register" onClick="@command('doRegist')"/>
-					
-						<n:br/>
+							<textbox id="tbUsername" maxlength="15"
+								focus="true" width="100%"
+								style="background-color: #f3fdff !important; border-radius:5px"
+								placeholder="Email" />
 						</div>
-				</div>
-				
-		</div>
-			<div class="col-md-1 my-auto"></div>
-		</div>
-	</div>
-	
-	<!-- Page Register -->
-	<div id="divRegister" visible="false"> 
-	<n:br/>
-	<div class="/view/indexcust.zul row animated fadeIn vh-200" >
-			<div class="col-md-4 offset-md-4  my-auto">
-				<div id="fmregist"
-					class="col-12"
-					style="padding-left:60px; padding-right:60px; background-color: #f3fdff !important; box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24); border-radius:8px">
-				<separator />
-				<separator />
-					<n:img src="images/logo-01.png"
-						class="img-fluid mb-4 no-filter " width="40%">
-					</n:img>
-					<n:hr />
-					<n:br/>
-					<label sclass="text-danger" />
-					<hlayout>
-					   <label value="Nama" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
-					</hlayout>
-					<div align="center">
-					    <textbox
-						    maxlength="15" focus="true" cols="35"
-						    style="background-color: #f3fdff !important; border-radius:10px"
-						    placeholder="Ketikan Nama" />
-					</div>
-					<n:br/>
-					<hlayout>
-					   <label value="NIK" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
-					</hlayout>
-					<div align="center">
-					    <textbox
-						    maxlength="15" focus="true" cols="35"
-						    style="background-color: #f3fdff !important; border-radius:10px"
-						    placeholder="Ketikan NIK" />
-					</div>
-					<n:br/>
-					<hlayout>
-					   <label value="Universitas" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
-					</hlayout>
-					<div align="center">
-					    <textbox
-						    maxlength="15" focus="true" cols="35"
-						    style="background-color: #f3fdff !important; border-radius:10px"
-						    placeholder="Ketikan Universitas" />
-					</div>
-					<n:br/>
-					<hlayout>
-					   <label value="Jurusan" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
-					</hlayout>
-					<div align="center">
-					    <textbox
-						    maxlength="15" focus="true" cols="35"
-						    style="background-color: #f3fdff !important; border-radius:10px"
-						    placeholder="Ketikan Jurusan" />
-					</div>
-					<n:br/>
-					<hlayout>
-					   <label value="No. Handphone" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
-					</hlayout>
-					<div align="center">
-					    <textbox
-						    maxlength="15" focus="true" cols="35"
-						    style="background-color: #f3fdff !important; border-radius:10px"
-						    placeholder="Ketikan No. Handphone" />
-					</div>
-					<n:br/>
-					<hlayout>
-					   <label value="Email" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
-					</hlayout>
-					<div align="center">
-					    <textbox
-						    maxlength="15" focus="true" cols="35"
-						    style="background-color: #f3fdff !important; border-radius:10px"
-						    placeholder="Ketikan Email" />
-					</div>
-					<n:br/>
-					<hlayout>
-					   <label value="Password" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
-					</hlayout>
-					<div align="center">
-					    <textbox
-						    maxlength="15" focus="true" cols="35"
-						    style="background-color: #f3fdff !important; border-radius:10px"
-						    placeholder="Ketikan Password" />
-					</div>
-					<n:br/>
-					<hlayout>
-					   <label value="Konfirmasi Password" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
-					</hlayout>
-					<div align="center">
-					    <textbox
-						    maxlength="15" focus="true" cols="35"
-						    style="background-color: #f3fdff !important; border-radius:10px"
-						    placeholder="Ketikan Konfirmasi Password" />
-					</div>
-					<vlayout>
-							<div align="center" >
-								<button 
-									autodisable="self"
+						<n:br />
+						<label value="Password"
+							style="font-size:13px; font-weight:bold" />
+						<div align="center">
+							<textbox id="tbPassword" type="password"
+								maxlength="20" width="100%"
+								style="background-color: #f3fdff !important; border-radius:5px"
+								placeholder="Password" />
+						</div>
+						<vlayout>
+							<div align="center">
+								<button autodisable="self"
 									style="background-color: #0069ab !important; color:white; border-radius:10px"
-									class="btn btn-info btn-block my-4" label="Register" width="335px"
-									tooltiptext="Register" onClick="@command('doRegist')"/>
+									class="btn btn-info btn-block my-4" label="Login" width="100%"
+									tooltiptext="Login" onClick="@command('doLogin')" />
 							</div>
-							<div align="left" style="margin-top:-25px"> 
-								<a href="/toms">
-   								 <label value="Kembali ke halaman awal" style="font-size:12px;padding:-20px"/>
+							<div align="right"
+								style="margin-top:-25px">
+								<a>
+									<label value="Forgot Password?"
+										style="font-size:12px;padding:-20px" />
 								</a>
 							</div>
 						</vlayout>
-						<n:br/>
-				</div>
-				
-		</div>
-			<div class="col-md-1 my-auto"></div>
-		</div>
-	</div>
+						<n:br />
+						<label
+							value="Belum punya akun? Klik tombol dibawah ini"
+							style="font-size:12px;" />
+						<div align="center" style="margin:-22px">
+							<button autodisable="self"
+								style="background-color: #0069ab !important; color:white; border-radius:10px"
+								class="btn btn-info btn-block my-4" label="Register" width="88%"
+								tooltiptext="Register" onClick="@command('doRegist')" />
 
-    </div>
-	<div class="page-footer bg-card mt-4" >
-		<div class="container-fluid" style="background-color: #2a91b6;">
+							<n:br />
+						</div>
+					</div>
+
+				</div>
+				<div class="col-md-1 my-auto"></div>
+			</div>
+		</div>
+
+		<!-- Page Register -->
+		<div id="divRegister" visible="false">
+			<n:br />
+			<div
+				class="/view/indexcust.zul row animated fadeIn vh-200">
+				<div class="col-md-4 offset-md-4  my-auto">
+					<div id="fmregist" class="col-12"
+						style="padding-left:60px; padding-right:60px; background-color: #f3fdff !important; box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24); border-radius:8px">
+						<separator />
+						<separator />
+						<n:img src="images/logo-01.png"
+							class="img-fluid mb-4 no-filter " width="40%">
+						</n:img>
+						<n:hr />
+						<n:br />
+						<label sclass="text-danger" />
+						<hlayout>
+							<label value="Nama"
+								style="font-size:13px; font-weight:bold" />
+							<label value="*"
+								style="font-size:13px; font-weight:bold; color:red" />
+						</hlayout>
+						<div align="center">
+							<textbox maxlength="15" focus="true"
+								width="100%"
+								style="background-color: #f3fdff !important; border-radius:10px"
+								placeholder="Ketikan Nama" />
+						</div>
+						<n:br />
+						<hlayout>
+							<label value="NIK"
+								style="font-size:13px; font-weight:bold" />
+							<label value="*"
+								style="font-size:13px; font-weight:bold; color:red" />
+						</hlayout>
+						<div align="center">
+							<textbox maxlength="15" focus="true"
+								width="100%"
+								style="background-color: #f3fdff !important; border-radius:10px"
+								placeholder="Ketikan NIK" />
+						</div>
+						<n:br />
+						<hlayout>
+							<label value="Universitas"
+								style="font-size:14px; font-weight:bold" />
+							<label value="*"
+								style="font-size:14px; font-weight:bold; color:red" />
+						</hlayout>
+						<div align="center">
+							<textbox maxlength="15" focus="true"
+								width="100%"
+								style="background-color: #f3fdff !important; border-radius:10px"
+								placeholder="Ketikan Universitas" />
+						</div>
+						<n:br />
+						<hlayout>
+							<label value="Jurusan"
+								style="font-size:13px; font-weight:bold" />
+							<label value="*"
+								style="font-size:13px; font-weight:bold; color:red" />
+						</hlayout>
+						<div align="center">
+							<textbox maxlength="15" focus="true"
+								width="100%"
+								style="background-color: #f3fdff !important; border-radius:10px"
+								placeholder="Ketikan Jurusan" />
+						</div>
+						<n:br />
+						<hlayout>
+							<label value="No. Handphone"
+								style="font-size:13px; font-weight:bold" />
+							<label value="*"
+								style="font-size:13px; font-weight:bold; color:red" />
+						</hlayout>
+						<div align="center">
+							<textbox maxlength="15" focus="true"
+								width="100%"
+								style="background-color: #f3fdff !important; border-radius:10px"
+								placeholder="Ketikan No. Handphone" />
+						</div>
+						<n:br />
+						<hlayout>
+							<label value="Email"
+								style="font-size:13px; font-weight:bold" />
+							<label value="*"
+								style="font-size:13px; font-weight:bold; color:red" />
+						</hlayout>
+						<div align="center">
+							<textbox maxlength="15" focus="true"
+								width="100%"
+								style="background-color: #f3fdff !important; border-radius:10px"
+								placeholder="Ketikan Email" />
+						</div>
+						<n:br />
+						<hlayout>
+							<label value="Password"
+								style="font-size:13px; font-weight:bold" />
+							<label value="*"
+								style="font-size:13px; font-weight:bold; color:red" />
+						</hlayout>
+						<div align="center">
+							<textbox maxlength="15" focus="true"
+								width="100%"
+								style="background-color: #f3fdff !important; border-radius:10px"
+								placeholder="Ketikan Password" />
+						</div>
+						<n:br />
+						<hlayout>
+							<label value="Konfirmasi Password"
+								style="font-size:13px; font-weight:bold" />
+							<label value="*"
+								style="font-size:13px; font-weight:bold; color:red" />
+						</hlayout>
+						<div align="center">
+							<textbox maxlength="15" focus="true"
+								width="100%"
+								style="background-color: #f3fdff !important; border-radius:10px"
+								placeholder="Ketikan Konfirmasi Password" />
+						</div>
+						<vlayout>
+							<div align="center">
+								<button autodisable="self"
+									style="background-color: #0069ab !important; color:white; border-radius:10px"
+									class="btn btn-info btn-block my-4" label="Register"
+									width="100%" tooltiptext="Register"
+									onClick="@command('doRegist')" />
+							</div>
+							<div align="left"
+								style="margin-top:-25px">
+								<a href="/toms">
+									<label
+										value="Kembali ke halaman awal"
+										style="font-size:12px;padding:-20px" />
+								</a>
+							</div>
+						</vlayout>
+						<n:br />
+					</div>
+
+				</div>
+				<div class="col-md-1 my-auto"></div>
+			</div>
+		</div>
+
+	</div>
+	<div class="page-footer bg-card mt-4">
+		<div class="container-fluid"
+			style="background-color: #2a91b6;">
 			<div class="row" style="padding:10px">
 				<div class="col">
-				  <vlayout>
-					 <label value="Tryout Management System" style="color:white;font-size:15px; font-family:arial;font-weight:bold"/>
-					 <label value="Tentang kami" style="font-size:12px; font-family:arial;color:white;"/>
-					 <label value="FAQ" style="font-size:12px; font-family:arial;color:white;"/>
-				     <label value="Site Map" style="font-size:12px; font-family:arial;color:white;"/>
-				     <label value="Kebijakan Privasi" style="font-size:12px; font-family:arial;color:white;"/>
-				     <label value="Terms and Condition" style="font-size:12px; font-family:arial;color:white;"/>
-				  </vlayout>				  
+					<vlayout>
+						<label value="Tryout Management System"
+							style="color:white;font-size:15px; font-family:arial;font-weight:bold" />
+						<label value="Tentang kami"
+							style="font-size:12px; font-family:arial;color:white;" />
+						<label value="FAQ"
+							style="font-size:12px; font-family:arial;color:white;" />
+						<label value="Site Map"
+							style="font-size:12px; font-family:arial;color:white;" />
+						<label value="Kebijakan Privasi"
+							style="font-size:12px; font-family:arial;color:white;" />
+						<label value="Terms and Condition"
+							style="font-size:12px; font-family:arial;color:white;" />
+					</vlayout>
 				</div>
-				
+
 				<div class="col">
-				  <vlayout>
-					 <label value="Contact Us" style="color:white;font-size:15px; font-family:arial;font-weight:bold"/>
-					 <label value="hello@bnc.com" style="font-size:12px; font-family:arial;color:white;"/>
-					 <label value="+62 21 8642033" style="font-size:12px; font-family:arial;color:white;"/>
-				     <label value="Jl. Otista Raya No.8, Jakarta Timur, 13330" style="font-size:12px; font-family:arial;color:white;"/>
-				  </vlayout>				  
+					<vlayout>
+						<label value="Contact Us"
+							style="color:white;font-size:15px; font-family:arial;font-weight:bold" />
+						<label value="hello@bnc.com"
+							style="font-size:12px; font-family:arial;color:white;" />
+						<label value="+62 21 8642033"
+							style="font-size:12px; font-family:arial;color:white;" />
+						<label
+							value="Jl. Otista Raya No.8, Jakarta Timur, 13330"
+							style="font-size:12px; font-family:arial;color:white;" />
+					</vlayout>
 				</div>
-				
+
 				<div class="col">
-				  <vlayout>
-					     <label value="Follow Us" style="color:white;font-size:15px; font-family:arial;font-weight:bold"/>
-					   
-					 <hlayout> 
-					     <a>
-					         <image src="/images/ic-facebook.png"
-								width="24px" class="img-fluid no-filter" tooltiptext="Facebook"/></a>
-					     <a>
-					         <image src="/images/ic-instagram.png"
-								width="24px" class="img-fluid no-filter" tooltiptext="Instagram"/></a>
-						 <a>
-					         <image src="/images/ic-twitter.png"
-								width="24px" class="img-fluid no-filter" tooltiptext="Twitter"/></a>
-					 </hlayout>
-				  </vlayout>				  
+					<vlayout>
+						<label value="Follow Us"
+							style="color:white;font-size:15px; font-family:arial;font-weight:bold" />
+
+						<hlayout>
+							<a>
+								<image src="/images/ic-facebook.png"
+									width="24px" class="img-fluid no-filter"
+									tooltiptext="Facebook" />
+							</a>
+							<a>
+								<image src="/images/ic-instagram.png"
+									width="24px" class="img-fluid no-filter"
+									tooltiptext="Instagram" />
+							</a>
+							<a>
+								<image src="/images/ic-twitter.png"
+									width="24px" class="img-fluid no-filter" tooltiptext="Twitter" />
+							</a>
+						</hlayout>
+					</vlayout>
 				</div>
-				
-				<div class="col"> 
-				   <vlayout>
-				      <label value="Download Application" style="color:white;font-size:15px; font-family:arial;font-weight:bold"/>
-				      <hlayout>
-					
-					      <a>
-					      <image src="/images/ic-playstore.png"
-								width="100px" class="img-fluid no-filter" tooltiptext="Google Play"/></a>
-					      <a>
-					      <image src="/images/ic-appstore.png"
-								width="px" class="img-fluid no-filter" tooltiptext="App Store"/></a>
-					
-					  </hlayout>
-				  </vlayout>
+
+				<div class="col">
+					<vlayout>
+						<label value="Download Application"
+							style="color:white;font-size:15px; font-family:arial;font-weight:bold" />
+						<hlayout>
+
+							<a>
+								<image src="/images/ic-playstore.png"
+									width="100px" class="img-fluid no-filter"
+									tooltiptext="Google Play" />
+							</a>
+							<a>
+								<image src="/images/ic-appstore.png"
+									width="px" class="img-fluid no-filter" tooltiptext="App Store" />
+							</a>
+
+						</hlayout>
+					</vlayout>
 				</div>
 			</div>
-			
+
 		</div>
 	</div>
 
@@ -799,7 +957,7 @@
 		function startTheme(){ let body =
 		document.getElementsByTagName("body");
 		body[0].setAttribute("data-avio", "theme-blue");
- 
+
 		$('.owl-carousel').owlCarousel({ loop:true,
 		responsiveClass:true, margin:10, autoplay: true,
 		autoplayTimeout: 2000, autoplayHoverPause: true }) }
@@ -814,72 +972,37 @@
 
 
 		//ws monitoring
-				
-//			var connected = false;
-//			var socket;
-//			
-//			function connect() {
-//			    if (! connected) {
-//			      
-//			        socket = new WebSocket("ws://localhost:9000/monitoring/");
-//			        
-//					socket.onclose = async function(){
-//				            connected = false;
-//				            console.log("ws monitoring close");
-//				
-//				            console.log("ws monitoring reconnecting");
-//				            socket.close();
-//				            
-//				              setTimeout(function() {
-//						      connect();
-//						      $(".status-ws").text("Reconnecting").css('color', 'red');
-//						    }, 1000);
-//				     
-//				    };
-//				    
-//			        socket.onopen = function() {
-//			            connected = true;
-//			            console.log("Connected to the web socket");
-//			          
-//			            $(".status-ws").text("Connected").css('color', 'green');
-//			        };
-//			        
-//			        socket.onmessage =function(m) {
-//			            console.log("Got message: " + m.data);
-//			             $("#sad").text(m.data);
-//			         
-//			        };
-//			    }
-//			}
-			//connect();
-			
-			//sleep
-			function sleep(ms) {
-			    return new Promise(resolve => setTimeout(resolve, ms));
-			}
+
+		// var connected = false; // var socket; // // function
+		connect() { // if (! connected) { // // socket = new
+		WebSocket("ws://localhost:9000/monitoring/"); // //
+		socket.onclose = async function(){ // connected = false; //
+		console.log("ws monitoring close"); // // console.log("ws
+		monitoring reconnecting"); // socket.close(); // //
+		setTimeout(function() { // connect(); //
+		$(".status-ws").text("Reconnecting").css('color', 'red'); // },
+		1000); // // }; // // socket.onopen = function() { // connected
+		= true; // console.log("Connected to the web socket"); // //
+		$(".status-ws").text("Connected").css('color', 'green'); // };
+		// // socket.onmessage =function(m) { // console.log("Got
+		message: " + m.data); // $("#sad").text(m.data); // // }; // }
+		// } //connect();
+
+		//sleep function sleep(ms) { return new Promise(resolve =>
+		setTimeout(resolve, ms)); }
 
 	</script>
 
 	<script>
-		const toastTemplate1 = Swal.mixin({
-		  toast: true,
-		  position: 'top-end',
-		  showConfirmButton: false,
-		  timer: 1200,
-		  timerProgressBar: true,
-		  didOpen: (toast) => {
-		    toast.addEventListener('mouseenter', Swal.stopTimer)
-		    toast.addEventListener('mouseleave', Swal.resumeTimer)
-		  }
-		});
-		
-		function showToast1(icon, msg){
-			toastTemplate1.fire({
-			  icon: icon,
-			  title: msg
-			});
-		}
+		const toastTemplate1 = Swal.mixin({ toast: true, position:
+		'top-end', showConfirmButton: false, timer: 1200,
+		timerProgressBar: true, didOpen: (toast) => {
+		toast.addEventListener('mouseenter', Swal.stopTimer)
+		toast.addEventListener('mouseleave', Swal.resumeTimer) } });
+
+		function showToast1(icon, msg){ toastTemplate1.fire({ icon:
+		icon, title: msg }); }
 
 	</script>
 
-</zk> 	
+</zk>

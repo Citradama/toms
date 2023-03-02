@@ -82,7 +82,7 @@ public class BankMateriListVm {
 						public void onEvent(Event event) throws Exception {
 							Map<String, Object> map = new HashMap<String, Object>();
 							map.put("obj", data);
-							Window win = (Window) Executions.createComponents("/view/quest/questsummarydetail.zul", null, map);
+							Window win = (Window) Executions.createComponents("/view/book/booksummarydetail.zul", null, map);
 							win.setWidth("70%");
 							win.setClosable(true);
 							win.doModal();
@@ -114,7 +114,10 @@ public class BankMateriListVm {
 				ObjectMapper mapper = new ObjectMapper();
 				objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Vbookcategory>>() {
 				});
-
+				
+				if(objList == null)
+					objList = new ArrayList<>();
+				
 				grid.setModel(new ListModelList<>(objList));
 				totalrecord = objList.size();
 			} else {
@@ -137,7 +140,7 @@ public class BankMateriListVm {
 
 	@Command
 	public void doAddnew() {
-		Window win = (Window) Executions.createComponents("/view/bank/banksoalform.zul", null, null);
+		Window win = (Window) Executions.createComponents("/view/bank/bankmateriform.zul", null, null);
 		win.setClosable(true);
 		win.doModal();
 		win.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {

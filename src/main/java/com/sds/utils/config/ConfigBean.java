@@ -13,6 +13,7 @@ public class ConfigBean {
 	private String endpoint_mmenu;
 	private String endpoint_tquest;
 	private String endpoint_tbook;
+	private String endpoint_tproduct;
 
 	public String getUrl_base() {
 		return url_base;
@@ -100,6 +101,14 @@ public class ConfigBean {
 
 	public void setEndpoint_tbook(String endpoint_tbook) {
 		this.endpoint_tbook = endpoint_tbook;
+	}
+
+	public String getEndpoint_tproduct() {
+		return endpoint_tproduct;
+	}
+
+	public void setEndpoint_tproduct(String endpoint_tproduct) {
+		this.endpoint_tproduct = endpoint_tproduct;
 	}
 
 }

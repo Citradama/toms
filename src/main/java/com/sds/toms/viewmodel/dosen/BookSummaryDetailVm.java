@@ -1,14 +1,12 @@
-package com.sds.toms.viewmodel;
+package com.sds.toms.viewmodel.dosen;
 
-import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.AfterCompose;
-import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
@@ -35,16 +33,17 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
 import com.sds.toms.model.Muser;
-import com.sds.toms.model.Vquestcategory;
+import com.sds.toms.model.Tbook;
+import com.sds.toms.model.Vbookcategory;
 import com.sds.toms.pojo.ObjectResp;
 import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 
-public class TquestListVM {
-
+public class BookSummaryDetailVm {
 	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
 	private Muser oUser;
-	
+
+	private Vbookcategory obj;
 	private Integer totalrecord;
 
 	@Wire
@@ -53,23 +52,26 @@ public class TquestListVM {
 	private Caption caption;
 
 	@AfterCompose
-	public void afterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("isSummary") String isSummary) {
+	public void afterCompose(@ContextParam(ContextType.VIEW) Component view,
+			@ExecutionArgParam("obj") Vbookcategory obj) {
 		Selectors.wireComponents(view, this, false);
 		oUser = (Muser) zkSession.getAttribute("oUser");
-		
-		if(isSummary != null && isSummary.equals("Y"))
-			caption.setVisible(true);
-		
+
+		if (obj != null) {
+			this.obj = obj;
+		}
 		doReset();
 		if (grid != null) {
-			grid.setRowRenderer(new RowRenderer<Vquestcategory>() {
+			grid.setRowRenderer(new RowRenderer<Tbook>() {
 
 				@Override
-				public void render(Row row, Vquestcategory data, int index) throws Exception {
+				public void render(Row row, Tbook data, int index) throws Exception {
 					row.getChildren().add(new Label(String.valueOf(index + 1)));
+					row.getChildren().add(new Label(data.getBookid()));
+					row.getChildren().add(new Label(data.getCategory()));
+					row.getChildren().add(new Label(data.getBookname()));
 					row.getChildren()
-							.add(new Label(data.getCategory() != null ? data.getCategory() : ""));
-					row.getChildren().add(new Label(data.getTotalquest() != null ? NumberFormat.getInstance().format(data.getTotalquest()) : "0"));
+							.add(new Label(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(data.getCreatetime())));
 
 					Button btnDetail = new Button();
 					btnDetail.setClass("btn btn-sm btn-info");
@@ -82,8 +84,10 @@ public class TquestListVM {
 						public void onEvent(Event event) throws Exception {
 							Map<String, Object> map = new HashMap<String, Object>();
 							map.put("obj", data);
-							Window win = (Window) Executions.createComponents("/view/quest/questsummarydetail.zul", null, map);
-							win.setWidth("70%");
+							map.put("isDetail", "Y");
+							Window win = (Window) Executions.createComponents("/view/bank/bankmateriform.zul", null,
+									map);
+							win.setWidth("60%");
 							win.setClosable(true);
 							win.doModal();
 						}
@@ -93,64 +97,45 @@ public class TquestListVM {
 					Div div = new Div();
 					div.appendChild(btnDetail);
 					row.getChildren().add(div);
-
 				}
-
 			});
 		}
 
 	}
-	
+
 	@NotifyChange("*")
 	public void doSearch() {
 		try {
 			ObjectResp Resp = null;
-			List<Vquestcategory> objList = new ArrayList<>();
+			List<Tbook> objList = new ArrayList<>();
 
-			String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_tquest() + "/categorygroup/dosen/" + oUser.getUserid();
+			String url = "";
+			url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_tbook() + "/category/"
+					+ obj.getMcategorypk() + "/dosen/" + oUser.getUserid();
 			Resp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 
 			if (Resp.getCode() == 200) {
 				ObjectMapper mapper = new ObjectMapper();
-				objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Vquestcategory>>() {
+				objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Tbook>>() {
 				});
-				
-				if(objList == null)
+
+				if (objList == null)
 					objList = new ArrayList<>();
-				
+
 				grid.setModel(new ListModelList<>(objList));
 				totalrecord = objList.size();
 			} else {
-				System.out.println("nulll");
+				System.out.println("null");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	@NotifyChange("*")
 	public void doReset() {
-		try {
-			totalrecord = 0;
-			doSearch();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-
-	@Command
-	public void doAddnew() {
-		Window win = (Window) Executions.createComponents("/view/bank/banksoalform.zul", null, null);
-		win.setClosable(true);
-		win.doModal();
-		win.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
-
-			@Override
-			public void onEvent(Event event) throws Exception {
-				doReset();
-				BindUtils.postNotifyChange(null, null, TquestListVM.this, "*");
-			}
-		});
+		totalrecord = 0;
+		doSearch();
 	}
 
 	public Integer getTotalrecord() {

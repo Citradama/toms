@@ -2,4 +2,5 @@
 *.class
 *.class
 /target/
+*.class
 *.properties
