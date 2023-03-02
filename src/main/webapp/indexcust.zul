@@ -22,7 +22,7 @@
 	</h:meta>	
 	<script src="/assets/js/plugins.js"></script>
 	
-	<div class="avio page-body">
+	<div class="avio page-body" viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.DashboardCustomerVM')">
 
 		<!-- Page Header -->
 	 <div class="body-header sticky-md-top" style="background-color: #2a91b6;">
@@ -549,19 +549,19 @@
 					</n:img> 
 					<n:br/>
 					<label sclass="text-danger" />
-					<label value="Email" style="font-size:14px; font-weight:bold"/>
+					<label value="Email" style="font-size:13px; font-weight:bold"/>
 					<div align="center">
 					<textbox id="tbUsername"
-						maxlength="15" focus="true" cols="38"
-						style="background-color: #f3fdff !important; border-radius:10px"
+						maxlength="15" focus="true" width="100%"
+						style="background-color: #f3fdff !important; border-radius:5px"
 						placeholder="Email" />
 					</div>
 						<n:br/>
-						<label value="Password"  style="font-size:14px; font-weight:bold"/>
+						<label value="Password"  style="font-size:13px; font-weight:bold"/>
 						<div align="center">
 					    	<textbox id="tbPassword" 
-								type="password" maxlength="20" cols="35"
-								style="background-color: #f3fdff !important; border-radius:10px"
+								type="password" maxlength="20"  width="100%"
+								style="background-color: #f3fdff !important; border-radius:5px"
 								 placeholder="Password" />
 					    </div>
 						<vlayout>
@@ -569,7 +569,7 @@
 								<button 
 									autodisable="self"
 									style="background-color: #0069ab !important; color:white; border-radius:10px"
-									class="btn btn-info btn-block my-4" label="Login" width="335px"
+									class="btn btn-info btn-block my-4" label="Login" width="100%"
 									tooltiptext="Login" onClick="@command('doLogin')"/>
 							</div>
 							<div align="right" style="margin-top:-25px"> 
@@ -584,7 +584,7 @@
 							<button 
 								autodisable="self"
 								style="background-color: #0069ab !important; color:white; border-radius:10px"
-								class="btn btn-info btn-block my-4" label="Register" width="340px"
+								class="btn btn-info btn-block my-4" label="Register" width="88%"
 								tooltiptext="Register" onClick="@command('doRegist')"/>
 					
 						<n:br/>
@@ -613,23 +613,23 @@
 					<n:br/>
 					<label sclass="text-danger" />
 					<hlayout>
-					   <label value="Nama" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
+					   <label value="Nama" style="font-size:13px; font-weight:bold"/>
+					   <label value="*" style="font-size:13px; font-weight:bold; color:red"/>
 					</hlayout>
 					<div align="center">
 					    <textbox
-						    maxlength="15" focus="true" cols="35"
+						    maxlength="15" focus="true"  width="100%"
 						    style="background-color: #f3fdff !important; border-radius:10px"
 						    placeholder="Ketikan Nama" />
 					</div>
 					<n:br/>
 					<hlayout>
-					   <label value="NIK" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
+					   <label value="NIK" style="font-size:13px; font-weight:bold"/>
+					   <label value="*" style="font-size:13px; font-weight:bold; color:red"/>
 					</hlayout>
 					<div align="center">
 					    <textbox
-						    maxlength="15" focus="true" cols="35"
+						    maxlength="15" focus="true"  width="100%"
 						    style="background-color: #f3fdff !important; border-radius:10px"
 						    placeholder="Ketikan NIK" />
 					</div>
@@ -640,62 +640,62 @@
 					</hlayout>
 					<div align="center">
 					    <textbox
-						    maxlength="15" focus="true" cols="35"
+						    maxlength="15" focus="true" width="100%"
 						    style="background-color: #f3fdff !important; border-radius:10px"
 						    placeholder="Ketikan Universitas" />
 					</div>
 					<n:br/>
 					<hlayout>
-					   <label value="Jurusan" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
+					   <label value="Jurusan" style="font-size:13px; font-weight:bold"/>
+					   <label value="*" style="font-size:13px; font-weight:bold; color:red"/>
 					</hlayout>
 					<div align="center">
 					    <textbox
-						    maxlength="15" focus="true" cols="35"
+						    maxlength="15" focus="true" width="100%"
 						    style="background-color: #f3fdff !important; border-radius:10px"
 						    placeholder="Ketikan Jurusan" />
 					</div>
 					<n:br/>
 					<hlayout>
-					   <label value="No. Handphone" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
+					   <label value="No. Handphone" style="font-size:13px; font-weight:bold"/>
+					   <label value="*" style="font-size:13px; font-weight:bold; color:red"/>
 					</hlayout>
 					<div align="center">
 					    <textbox
-						    maxlength="15" focus="true" cols="35"
+						    maxlength="15" focus="true" width="100%"
 						    style="background-color: #f3fdff !important; border-radius:10px"
 						    placeholder="Ketikan No. Handphone" />
 					</div>
 					<n:br/>
 					<hlayout>
-					   <label value="Email" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
+					   <label value="Email" style="font-size:13px; font-weight:bold"/>
+					   <label value="*" style="font-size:13px; font-weight:bold; color:red"/>
 					</hlayout>
 					<div align="center">
 					    <textbox
-						    maxlength="15" focus="true" cols="35"
+						    maxlength="15" focus="true" width="100%"
 						    style="background-color: #f3fdff !important; border-radius:10px"
 						    placeholder="Ketikan Email" />
 					</div>
 					<n:br/>
 					<hlayout>
-					   <label value="Password" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
+					   <label value="Password" style="font-size:13px; font-weight:bold"/>
+					   <label value="*" style="font-size:13px; font-weight:bold; color:red"/>
 					</hlayout>
 					<div align="center">
 					    <textbox
-						    maxlength="15" focus="true" cols="35"
+						    maxlength="15" focus="true" width="100%"
 						    style="background-color: #f3fdff !important; border-radius:10px"
 						    placeholder="Ketikan Password" />
 					</div>
 					<n:br/>
 					<hlayout>
-					   <label value="Konfirmasi Password" style="font-size:14px; font-weight:bold"/>
-					   <label value="*" style="font-size:14px; font-weight:bold; color:red"/>
+					   <label value="Konfirmasi Password" style="font-size:13px; font-weight:bold"/>
+					   <label value="*" style="font-size:13px; font-weight:bold; color:red"/>
 					</hlayout>
 					<div align="center">
 					    <textbox
-						    maxlength="15" focus="true" cols="35"
+						    maxlength="15" focus="true" width="100%"
 						    style="background-color: #f3fdff !important; border-radius:10px"
 						    placeholder="Ketikan Konfirmasi Password" />
 					</div>
@@ -704,7 +704,7 @@
 								<button 
 									autodisable="self"
 									style="background-color: #0069ab !important; color:white; border-radius:10px"
-									class="btn btn-info btn-block my-4" label="Register" width="335px"
+									class="btn btn-info btn-block my-4" label="Register" width="100%"
 									tooltiptext="Register" onClick="@command('doRegist')"/>
 							</div>
 							<div align="left" style="margin-top:-25px"> 

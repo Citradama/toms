@@ -5,7 +5,7 @@
 <zk xmlns:w="client" xmlns:n="native"
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
-	<window width="60%"
+	<window width="70%"
 		viewModel="@id('vm') @init('com.sds.toms.viewmodel.ProductFormVM')"
 		validationMessages="@id('vmsgs')" border="normal" closable="true"
 		action="hide: slideUp" position="center,center">
@@ -22,74 +22,139 @@
 					<h:form>
 						<div class="row">
 							<div class="col">
-								<vlayout>
-									<hlayout>
-										<label class="form-label">
-											Kode Paket Soal
-										</label>
-										<label value="*"
-											style="color:red" />
-									</hlayout>
-									<h:input id="txProductid"
-										type="text" class="form-control" value="@bind(e.productid)" />
-								</vlayout>
+								<hlayout>
+									<label class="form-label">
+										Kode Paket Soal
+									</label>
+									<label value="*" style="color:red" />
+								</hlayout>
+								<h:input id="txProductid" type="text"
+									style="width:70%" class="form-control"
+									value="@bind(e.productid)" />
+
 							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<vlayout>
-									<hlayout>
-										<label class="form-label">
-											Nama Paket Soal
-										</label>
-										<label value="*"
-											style="color:red" />
-									</hlayout>
-									<h:input id="txProductname"
-										type="text" class="form-control" value="@bind(e.productname)" />
-							</div>
-							</vlayout>
 						</div>
 						<separator />
 						<div class="row">
 							<div class="col">
-								<vlayout>
-									<hlayout>
-										<label class="form-label">
-											Kategori
-										</label>
-										<label style="color:red"
-											value="*">
-										</label>
-									</hlayout>
-									<combobox id="cbCategory"
-										placeholder="Pilih Kategori..."
-										model="@load(vm.mcategorymodel)" cols="20"
-										selectedItem="@bind(vm.mcategory)">
-										<template name="model"
-											var="mcategory">
-											<comboitem
-												label="@load(mcategory.category)" />
-										</template>
-									</combobox>
-								</vlayout>
+								<hlayout>
+									<label class="form-label">
+										Nama Paket Soal
+									</label>
+									<label value="*" style="color:red" />
+								</hlayout>
+								<h:input id="txProductname" type="text"
+									style="width:70%" class="form-control"
+									value="@bind(e.productname)" />
 							</div>
 						</div>
+						<separator />
 						<div class="row">
 							<div class="col">
-								<vlayout>
-									<hlayout>
-										<label class="form-label">
-											Sub Kategori
-										</label>
-										<label style="color:red"
-											value="*">
-										</label>
-									</hlayout>
-									<combobox></combobox>
-								</vlayout>
+								<hlayout>
+									<label class="form-label">
+										Kategori
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<combobox style="width:70%"></combobox>
 							</div>
 						</div>
+						<separator />
+						<div class="row">
+							<div class="col">
+								<hlayout>
+									<label class="form-label">
+										Sub Kategori
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<combobox style="width:70%"></combobox>
+							</div>
+						</div>
+						<separator />
+						<div class="row">
+							<div class="col">
+								<hlayout>
+									<label class="form-label">
+										Jumlah Soal
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<h:input id="txTotalquest" type="text"
+									style="width:70%" class="form-control"
+									value="@bind(e.totalquest)" />
+							</div>
+						</div>
+						<separator />
+						<div class="row">
+							<div class="col">
+								<hlayout>
+									<label class="form-label">
+										Passing Grade
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<h:input id="txPassinggrd" type="text"
+									style="width:70%" class="form-control"
+									value="@bind(e.passingscore)" />
+							</div>
+						</div>
+						<separator />
+						<div class="row">
+							<div class="col">
+								<hlayout>
+									<label class="form-label">
+										Harga
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<h:input id="txPrice" type="text"
+									style="width:70%" class="form-control" value="@bind(e.price)" />
+							</div>
+						</div>
+						<separator />
+						<div class="row">
+							<div class="col">
+								<hlayout>
+									<label class="form-label">
+										Deskripsi
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<h:input id="txDesc" type="text"
+									style="width:70%" class="form-control"
+									value="@bind(e.productdesc)" />
+							</div>
+						</div>
+						<separator />
+						<!-- <div class="row">
+							<div class="col">
+								<hlayout>
+									<label class="form-label">
+										Masa Berlaku
+									</label>
+									<label style="color:red"
+										value="*">
+									</label>
+								</hlayout>
+								<h:input id="txDesc" type="text"
+									style="width:70%" class="form-control"
+									value="" />
+							</div>
+						</div> -->
 						<separator />
 					</h:form>
 				</groupbox>
