@@ -1,0 +1,104 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="/mdb/css/mdb.min.css" ?>
+
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12213" ?>
+<?script rel="javascript" type="text/javascript" href="/js/jquery.bxslider.min.js"?>
+<?link rel="stylesheet" type="text/css" href="/css/jquery.bxslider.min.css"?>
+<?link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css"?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/avio-style.css" ?>
+
+
+<zk xmlns:w="client" xmlns:n="native"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
+	<h:meta charset="utf-8"></h:meta>
+	<h:meta http-equiv="X-UA-Compatible" content="IE=Edge"></h:meta>
+	<h:meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	</h:meta>
+	<script src="/assets/js/plugins.js"></script>
+
+	<div class="avio page-body"
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.DashboardCustomerVM')">
+		<!-- Page Header -->
+		<div class="body-header sticky-md-top"
+			style="background-color: #2a91b6;">
+			<div class="container-fluid" style="font-size: 12px;">
+				<div class="d-flex justify-content-between">
+					<div
+						class="navbar-brand d-flex align-items-center color-900">
+						<n:img src="images/logo-01.png" width="80px"
+							class="img-fluid no-filter" style="margin-right:90px;" />
+						<menubar id="menuBar" autodrop="true"
+							style="margin:15px;background-color: #2a91b6; border-color:#2a91b6">
+							<menu label="Kategori"
+								style="font-size:12px; background-color:  #2a91b6">
+								<menupopup>
+									<menuitem label="kategori 1" />
+									<menuitem label="kategori 2" />
+								</menupopup>
+							</menu>
+						</menubar>
+						<textbox id="txSearchheader" width="50%" />
+					</div>
+					<!-- List Menu -->
+					<div id="menuRoot" class="menu-link flex-fill" />
+
+					<h:ul
+						class="navbar-right d-flex align-items-center mb-0 list-unstyled">
+						<h:li>
+							<div
+								class="dropdown morphing scale-left user-profile mx-lg-3 mx-2 no-filter ">
+								<a id="aLogin" label="Login/Register"
+									class="btn btn-warning" href="#" ca:role="button" width="140px"
+									onClick="@command('doLoginRegist')">
+								</a>
+								<a id="aUser"
+									class="nav-link dropdown-toggle rounded-circle after-none p-0"
+									href="#" ca:role="button" ca:data-bs-toggle="dropdown"
+									visible="false">
+									<h:img
+										class="avatar lg img-thumbnail rounded-circle shadow"
+										src="/images/User.png" />
+								</a>
+							</div>
+						</h:li>
+					</h:ul>
+				</div>
+			</div>
+		</div>
+		<div id="divMateri">
+			<div class="container-fluid">
+				<div class="row g-1 my-md-1 justify-content-between"
+					align="center" style="border-radius:5">
+					<div class="card" align="center"
+						style="border-radius:5">
+						<div class="tab-content ">
+							<div id="slider" sclass="myslider"
+								width="600px" height="300px"
+								w:onBind="this.bxSlider = jq(this).bxSlider();"
+								w:reloadSlider="function() { this.bxSlider.reloadSlider();}">
+								<div sclass="slide">
+									<image src="/images/img1.png"
+										width="100%" class="img-fluid no-filter" />
+								</div>
+								<div sclass="slide">
+									<image src="/images/img2.png"
+										width="100%" class="img-fluid no-filter" />
+								</div>
+								<div sclass="slide">
+									<image src="/images/img3.png"
+										width="100%" class="img-fluid no-filter" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</zk>
