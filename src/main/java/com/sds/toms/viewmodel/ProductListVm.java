@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.AfterCompose;
+import org.zkoss.bind.annotation.BindingParam;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.zk.ui.Component;
@@ -214,6 +216,22 @@ public class ProductListVm {
 			e.printStackTrace();
 		}
 	}
+	
+	@Command
+	public void doAddnew() {
+		Window win = (Window) Executions.createComponents("/view/product/productform.zul", null, null);
+		win.setClosable(true);
+		win.doModal();
+		win.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				doReset();
+				BindUtils.postNotifyChange(null, null, ProductListVm.this, "*");
+			}
+		});
+	}
+
 
 	public Integer getTotalrecord() {
 		return totalrecord;

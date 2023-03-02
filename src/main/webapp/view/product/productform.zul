@@ -25,6 +25,7 @@
 						<columns>
 							<column width="20%" />
 							<column />
+							<column width="30%" />
 						</columns>
 						<rows>
 							<row>
@@ -35,8 +36,10 @@
 									<label value="*" style="color:red" />
 								</hlayout>
 								<textbox id="txProductid"
-									style="width:70%" class="form-control"
+									style="width:100%" class="form-control"
 									value="@bind(e.productid)" />
+								<label style="color:red"
+									value="@load(vmsgs['productid'])" />
 							</row>
 							<row>
 								<hlayout>
@@ -46,8 +49,10 @@
 									<label value="*" style="color:red" />
 								</hlayout>
 								<textbox id="txProductname"
-									style="width:70%" class="form-control"
+									style="width:100%" class="form-control"
 									value="@bind(e.productname)" />
+								<label style="color:red"
+									value="@load(vmsgs['productname'])" />
 							</row>
 							<row>
 								<hlayout>
@@ -58,7 +63,8 @@
 										value="*">
 									</label>
 								</hlayout>
-								<combobox style="width:70%"></combobox>
+								<combobox style="width:100%"></combobox>
+								<label style="color:red" />
 							</row>
 							<row>
 								<hlayout>
@@ -69,7 +75,8 @@
 										value="*">
 									</label>
 								</hlayout>
-								<combobox style="width:70%"></combobox>
+								<combobox style="width:100%"></combobox>
+								<label />
 							</row>
 							<row>
 								<hlayout>
@@ -80,9 +87,11 @@
 										value="*">
 									</label>
 								</hlayout>
-								<textbox id="txTotalquest"
-									style="width:70%" class="form-control"
+								<intbox id="txTotalquest"
+									style="width:100%" class="form-control"
 									value="@bind(e.totalquest)" />
+								<label style="color:red"
+									value="@load(vmsgs['totalquest'])" />
 							</row>
 							<row>
 								<hlayout>
@@ -93,9 +102,10 @@
 										value="*">
 									</label>
 								</hlayout>
-								<textbox id="txPassinggrd"
-									style="width:70%" class="form-control"
-									value="@bind(e.passingscore)" />
+								<intbox id="txPassinggrd"
+									style="width:100%" value="@bind(e.passingscore)" />
+								<label style="color:red"
+									value="@load(vmsgs['passingscore'])" />
 							</row>
 							<row>
 								<hlayout>
@@ -106,8 +116,10 @@
 										value="*">
 									</label>
 								</hlayout>
-								<textbox id="txPrice" type="text"
-									style="width:70%" class="form-control" value="@bind(e.price)" />
+								<decimalbox id="txPrice"
+									style="width:100%" value="@bind(e.price)" />
+								<label style="color:red"
+									value="@load(vmsgs['price'])" />
 							</row>
 							<row>
 								<hlayout>
@@ -118,8 +130,10 @@
 										value="*">
 									</label>
 								</hlayout>
-								<textbox id="txDesc" style="width:70%"
+								<textbox id="txDesc" style="width:100%"
 									class="form-control" value="@bind(e.productdesc)" />
+								<label style="color:red"
+									value="@load(vmsgs['productdesc'])" />
 							</row>
 							<row>
 
@@ -178,7 +192,7 @@
 										<row></row>
 									</rows>
 								</grid>
-
+								<div />
 							</row>
 						</rows>
 					</grid>
@@ -226,15 +240,67 @@
 								<hlayout>
 									<radiogroup id="rgType" />
 									<radio id="rbGenerate"
-										label="Generate Soal" radiogroup="rgType" />
+										label="Generate Soal" radiogroup="rgType"
+										onCheck="@command('doGenerate', arg='Generate')" />
 									<radio id="rbManual"
-										label="Pilih Manual" radiogroup="rgType" />
+										label="Pilih Manual" radiogroup="rgType"
+										onCheck="@command('doGenerate', arg='Manual')" />
 
 								</hlayout>
+							</row>
+
+						</rows>
+					</grid>
+					<separator />
+					<grid id="gridGenerate" visible="false">
+						<columns>
+							<column width="20%" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label class="form-label"
+									value="Dokumen Soal" />
+								<button width="20%">
+									Generate Soal
+								</button>
 							</row>
 							<row>
 								<label class="form-label" />
 								<textbox width="70%" readonly="true" />
+							</row>
+						</rows>
+					</grid>
+					<separator />
+					<grid id="gridManual" visible="false">
+						<columns>
+							<column width="20%" />
+							<column />
+							<column width="25%" />
+						</columns>
+						<rows>
+							<row>
+								<label class="form-label"
+									value="Pilih Soal" />
+								<combobox width="100%" />
+								<button width="50%"
+									class="btn btn-success btn-sm" style="border-radius:5px">
+									Tambah
+								</button>
+							</row>
+							<row>
+								<label class="form-label"
+									value="Daftar Pertanyaan" />
+								<div id="divQuest" />
+								<!-- 	<grid id="gridQuest">
+									<columns>
+									<column width="80%"
+									style="background-color:white; border:0px; border-bottom:1px;solid #fff; color:black; border-color:white" />
+									<column width="25%"
+									style="background-color:white; border:0px; border-bottom:1px;solid #fff; color:black; border-color:white" />
+									</columns>
+									</grid> -->
+								<div />
 							</row>
 						</rows>
 					</grid>
@@ -247,8 +313,8 @@
 						${labels.common.save}
 					</button>
 					<button onClick="@command('doReset')" width="100%"
-						class="btn btn-warning btn-sm">
-						Batal
+						class="btn btn-danger btn-sm">
+						HAPUS
 					</button>
 				</div>
 			</div>
