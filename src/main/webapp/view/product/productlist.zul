@@ -21,7 +21,7 @@
 			</n:h5>
 		</div>
 		<div class="card-body">
-			<!-- <groupbox id="gbSearch">
+			<groupbox id="gbSearch">
 				<caption label="${labels.common.searching}"
 					image="/images/search.png" />
 				<grid>
@@ -30,7 +30,10 @@
 						<column />
 					</columns>
 					<rows>
-
+						<row>
+							<label value="Filter" />
+							<textbox cols="25" maxlength="20" />
+						</row>
 					</rows>
 					<foot>
 						<footer />
@@ -39,10 +42,10 @@
 								<div class="col-md-1">
 									<n:div>
 										<button autodisable="self"
-											label=" ${labels.common.search}" class="btn btn-warning"
+											label=" ${labels.common.search}" class="btn btn-warning btn-sm"
 											iconSclass="z-icon-search" onClick="@command('doSearch')" />
 										<button autodisable="self"
-											label=" ${labels.common.reset}" class="btn btn-primary"
+											label=" ${labels.common.reset}" class="btn btn-primary btn-sm"
 											iconSclass="z-icon-repeat" onClick="@command('doReset')" />
 
 									</n:div>
@@ -51,31 +54,32 @@
 						</footer>
 					</foot>
 				</grid>
-			</groupbox> -->
+			</groupbox>
 			<separator />
 			<separator />
 			<!-- <div class="row">
 				<div class="col-md-12" align="right">
-					<button autodisable="self" label=" Buat Baru"
-						sclass="btn btn-primary btn-sm" iconSclass="z-icon-plus"
-						onClick="@command('doAddnew')">
-					</button>
-
+				<button autodisable="self" label=" Buat Baru"
+				sclass="btn btn-primary btn-sm" iconSclass="z-icon-plus"
+				onClick="@command('doAddnew')">
+				</button>
+				
 				</div>
-			</div> -->
+				</div> -->
 			<!-- <div class="row">
 				<div class="col-md">
-					<paging id="paging" autohide="true"
-						style="margin-bottom:-20px" />
+				<paging id="paging" autohide="true"
+				style="margin-bottom:-20px" />
 				</div>
 				<div class="col-md-2" align="right">
-					<label value="Total Data :"
-						style="font-weight: bold" />
-					<label value="@load(vm.totalrecord)"
-						style="font-weight: bold" />
+				<label value="Total Data :"
+				style="font-weight: bold" />
+				<label value="@load(vm.totalrecord)"
+				style="font-weight: bold" />
 				</div>
-			</div> -->
-			<div id="divCard"/>
+				</div> -->
+
+			<div class="card-body" id="divCard" />
 		</div>
 	</div>
 </zk>

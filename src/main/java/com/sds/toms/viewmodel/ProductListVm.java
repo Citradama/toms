@@ -84,19 +84,18 @@ public class ProductListVm {
 
 			// Kategori
 			Div rowCat = new Div();
-			rowCat.setClass("row");
-			Div colCat1 = new Div();
-			colCat1.setClass("col-3");
-			Label lbCat = new Label("Kategori");
-			lbCat.setStyle("font-weight:bold; font-size: 12px");
-			colCat1.appendChild(lbCat);
-			Div colCat2 = new Div();
-			colCat2.setClass("col-9");
-			Label lbCat2 = new Label(" : " + product.getCategory().getCategory());
-			lbCat2.setStyle("font-weight:bold; font-size: 12px");
-			colCat2.appendChild(lbCat2);
-			rowCat.appendChild(colCat1);
-			rowCat.appendChild(colCat2);
+			rowCat.setClass("row-12");
+			Label lbCat = new Label("Kategori :");
+			lbCat.setStyle("font-weight:bold; font-size: 12px; background-color:#e8e1e9; border-radius:3px");
+		
+			rowCat.appendChild(lbCat);
+
+			Div rowCat1 = new Div();
+			rowCat1.setClass("row-12");
+			rowCat1.setAlign("center");
+			Label lbCat21 = new Label(product.getCategory().getCategory());
+			lbCat21.setStyle("font-weight:bold; font-size: 12px");
+			rowCat1.appendChild(lbCat21);
 
 			// Line
 			Div rowHr = new Div();
@@ -110,12 +109,12 @@ public class ProductListVm {
 			Div row = new Div();
 			row.setClass("row");
 			Div col1 = new Div();
-			col1.setClass("col-3");
+			col1.setClass("col-4");
 			Label lbProd = new Label("Produk");
 			lbProd.setStyle("font-size: 12px");
 			col1.appendChild(lbProd);
 			Div col2 = new Div();
-			col2.setClass("col-9");
+			col2.setClass("col-8");
 			Label lbProd1 = new Label(" : " + product.getProductname());
 			lbProd1.setStyle("font-size: 12px");
 			col2.appendChild(lbProd1);
@@ -126,12 +125,12 @@ public class ProductListVm {
 			Div rowPrc = new Div();
 			rowPrc.setClass("row");
 			Div colPrc1 = new Div();
-			colPrc1.setClass("col-3");
+			colPrc1.setClass("col-4");
 			Label lbPrc1 = new Label("Harga");
 			lbPrc1.setStyle("font-size: 12px");
 			colPrc1.appendChild(lbPrc1);
 			Div colPrc2 = new Div();
-			colPrc2.setClass("col-9");
+			colPrc2.setClass("col-8");
 			Label lbPrc2 = new Label(" : Rp. " + product.getPrice());
 			lbPrc2.setStyle("font-size: 12px");
 			colPrc2.appendChild(lbPrc2);
@@ -144,7 +143,7 @@ public class ProductListVm {
 			btn.setAutodisable("self");
 			btn.setStyle("background-color:#795182 !important; color:white; border-radius:10px");
 			btn.setLabel("Detail");
-			btn.setClass("btn btn-info btn-block my-4");
+			btn.setClass("btn btn-info btn-sm btn-block my-4");
 			btn.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 
 				@Override
@@ -152,8 +151,7 @@ public class ProductListVm {
 					Map<String, Object> map = new HashMap<String, Object>();
 					map.put("objForm", product);
 					map.put("isEdit", "Y");
-					Window win = (Window) Executions.createComponents("/view/product/productform.zul", null,
-							map);
+					Window win = (Window) Executions.createComponents("/view/product/productform.zul", null, map);
 					win.setWidth("60%");
 					win.setClosable(true);
 					win.doModal();
@@ -173,6 +171,7 @@ public class ProductListVm {
 			divButton.appendChild(btn);
 
 			divBody.appendChild(rowCat);
+			divBody.appendChild(rowCat1);
 			divBody.appendChild(new Separator());
 			divBody.appendChild(rowHr);
 			divBody.appendChild(new Separator());
@@ -181,9 +180,7 @@ public class ProductListVm {
 
 			divColCard.appendChild(img);
 			divColCard.appendChild(new Separator());
-			divColCard.appendChild(new Separator());
 			divColCard.appendChild(divBody);
-			divColCard.appendChild(new Separator());
 			divColCard.appendChild(divButton);
 
 			divRow.appendChild(divColCard);
