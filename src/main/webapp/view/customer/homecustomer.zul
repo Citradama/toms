@@ -23,7 +23,7 @@
 	<script src="/assets/js/plugins.js"></script>
 
 	<div class="avio page-body"
-		viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.DashboardCustomerVM')">
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.HomeCustomerVm')">
 		<!-- Page Header -->
 		<div class="body-header sticky-md-top"
 			style="background-color: #2a91b6;">
@@ -71,7 +71,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Page Materi -->
 		<div id="divMateri">
 			<div class="container-fluid">
@@ -108,7 +108,7 @@
 						<hlayout>
 							<image src="/images/bestsell.png"
 								width="30px" class="img-fluid no-filter" />
-							<label value="Terlaris"
+							<label value="Terbaru"
 								style="font-align:bottom; font-size:18px; font-family:arial; font-weight:bold" />
 						</hlayout>
 						<a>
@@ -117,76 +117,12 @@
 						</a>
 					</div>
 					<div class="card-body">
-						<div class="row" id="cardTerbaru">
-							<div class="col"
-								style="border-style: ridge; border-radius:8px; margin: 5px; ">
-								<separator />
-								<image src="/images/lessons/math.jpg"
-									width="100%" class="img-fluid no-filter" />
-								<separator />
-								<separator />
-								<div class="row">
-									<div class="col-6"
-										style="background-color:#AADAF2; border-radius:8px;">
-										<label value="Kategori"
-											style="font-size:14px; font-family:arial;">
-										</label>
-									</div>
-									<div align="right" class="col-6">
-										<a
-											onClick="@command('doFav')">
-											<image id="imgheart11"
-												src="/images/heartblank.png" width="24px"
-												class="img-fluid no-filter" />
-										</a>
-									</div>
-								</div>
-								<separator />
-								<separator />
-								<label value="Matematika Dasar 1" />
-								<separator />
-								<div class="row">
-									<div class="col-6">
-										<label value="Rp "
-											style="font-size:14px; font-family:arial;font-weight:bold" />
-									</div>
-									<div align="right" class="col-6">
-										<label value="250.000,00 "
-											style="font-size:14px; font-family:arial;font-weight:bold" />
-									</div>
-								</div>
-								<separator />
-								<div class="row">
-									<div class="col-6">
-										<label value="Rating "
-											style="font-size:14px; font-family:arial;" />
-									</div>
-									<div align="right" class="col-6">
-										<hlayout>
-											<label value="5"
-												style="font-size:14px; font-family:arial;" />
-											<image
-												src="/images/star.png" width="20px"
-												class="img-fluid no-filter" />
-										</hlayout>
-									</div>
-								</div>
-								<separator />
-								<separator />
-								<div align="center">
-									<button autodisable="self"
-										style="background-color: #0069ab !important; color:white; border-radius:10px"
-										class="btn btn-info btn-block my-4" label="Beli Sekarang"
-										width="300px" tooltiptext="Beli Sekarang" />
-								</div>
-								<separator />
-							</div>
-						</div>
+						<div class="row" id="cardTerbaru"/>
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Page Login/Register -->
 		<div id="divLogin" visible="false">
 			<div
@@ -200,20 +136,20 @@
 							class="img-fluid mb-4 no-filter " width="40%">
 						</n:img>
 						<n:br />
-						<label sclass="text-danger" />
-						<label value="Email"
+						<label value="@bind(vm.lblMessage)" sclass="text-danger" />
+						<label value="User ID"
 							style="font-size:13px; font-weight:bold" />
 						<div align="center">
-							<textbox id="tbUsername" maxlength="15"
+							<textbox value="@bind(vm.userid)" maxlength="15"
 								focus="true" width="100%"
 								style="background-color: #f3fdff !important; border-radius:5px"
-								placeholder="Email" />
+								placeholder="User ID" />
 						</div>
 						<n:br />
-						<label value="Password"
+						<label value="Password" 
 							style="font-size:13px; font-weight:bold" />
 						<div align="center">
-							<textbox id="tbPassword" type="password"
+							<textbox value="@bind(vm.password)" type="password"
 								maxlength="20" width="100%"
 								style="background-color: #f3fdff !important; border-radius:5px"
 								placeholder="Password" />

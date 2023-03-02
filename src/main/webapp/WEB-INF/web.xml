@@ -191,6 +191,6 @@
 	</mime-mapping>
 
 	<welcome-file-list>
-		<welcome-file>indexcust.zul</welcome-file>
+		<welcome-file>/view/indexcust.zul</welcome-file>
 	</welcome-file-list>
 </web-app>
