@@ -51,8 +51,17 @@ public class ProductFormVM {
 			@ExecutionArgParam("isDetail") String isDetail) {
 		Selectors.wireComponents(view, this, false);
 		oUser = (Muser) zkSession.getAttribute("oUser");
+		
+		if (objForm != null) {
+			this.objForm = objForm;
+		}
 
 	}
+	
+	 @Command
+	 public void doReset() {
+		 objForm = new Tproduct();
+	 }
 
 	public Validator getValidator() {
 		return new AbstractValidator() {
