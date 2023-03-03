@@ -21,11 +21,6 @@
 		content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	</h:meta>
 	<script src="/assets/js/plugins.js"></script>
-	<zscript>
-	com.sds.toms.model.Muser oUser = (com.sds.toms.model.Muser) session.getAttribute("oUser");
-	if (oUser == null)
-		Executions.sendRedirect("/");
-</zscript>
 
 	<div class="avio page-body"
 		viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.HomeCustomerVm')">
@@ -36,7 +31,7 @@
 				<div class="d-flex justify-content-between">
 					<div
 						class="navbar-brand d-flex align-items-center color-900">
-						<n:img src="/images/logo-01.png" width="80px"
+						<n:img src="images/logo-01.png" width="80px"
 							class="img-fluid no-filter" style="margin-right:90px;" />
 						<menubar id="menuBar" autodrop="true"
 							style="margin:15px;background-color: #2a91b6; border-color:#2a91b6">
@@ -48,9 +43,7 @@
 								</menupopup>
 							</menu>
 						</menubar>
-						<textbox id="txSearchheader" cols="100"
-							value="@bind(vm.searchcover)"
-							placeholder="Apa yang ingin kamu cari?" />
+						<textbox id="txSearchheader" width="50%" cols="100" value="@bind(vm.searchcover)" placeholder="Apa yang ingin kamu cari?" />
 					</div>
 					<!-- List Menu -->
 					<h:ul
@@ -66,8 +59,7 @@
 											class="avatar lg img-thumbnail rounded-circle shadow"
 											src="/images/User.png" />
 									</a>
-									<label value="@bind(vm.username)"
-										style="padding-top :10px;color:white" />
+									<label value="@bind(vm.username)" style="padding:5px;color:white"/>
 								</hlayout>
 							</div>
 						</h:li>

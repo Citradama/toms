@@ -17,14 +17,14 @@ public class IndexCustVm {
 	private Map<String, Object> map = new HashMap<>();
 
 	@Wire
-	private Div divMateri;
+	private Div divContent;
 
 	@AfterCompose
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		Selectors.wireComponents(view, this, false);
 
 		map = new HashMap<String, Object>();
-		map.put("content", divMateri);
-		Executions.createComponents("indexcust.zul", divMateri, map);
+		map.put("content", divContent);
+		Executions.createComponents("/view/customercover.zul", divContent, map);
 	}
 }
