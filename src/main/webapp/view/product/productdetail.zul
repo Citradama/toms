@@ -22,11 +22,6 @@
 	</h:meta>
 	<script src="/assets/js/plugins.js"></script>
 
-	<zscript>
-		com.sds.toms.model.Muser oUser = (com.sds.toms.model.Muser) session.getAttribute("oUser");
-		if (oUser == null)
-			Executions.sendRedirect("/");
-	</zscript>
 	<div class="avio page-body"
 		viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.HomeCustomerVm')">
 		<!-- Page Header -->
@@ -106,22 +101,28 @@
 				</div>
 				<separator />
 				<separator />
-				<div class="card">
-					<div class="card-header"
-						style="background-color:#55B4EA">
-						<hlayout>
-							<image src="/images/bestsell.png"
-								width="30px" class="img-fluid no-filter" />
-							<label value="Terbaru"
-								style="font-align:bottom; font-size:18px; font-family:arial; font-weight:bold" />
-						</hlayout>
-						<a>
-							<label value="Lihat Semua"
-								style="font-size:14px; font-family:arial; font-weight:underline; color:white" />
-						</a>
+				<div id="divContent" class="row">
+					<div class="col-8">
+						<div class="card">
+							<div class="card-header"
+								style="background-color:#55B4EA">
+								<label value="Detail Paket Soal"
+									style="font-align:bottom; font-size:18px; font-family:arial; font-weight:bold" />
+							</div>
+							<div class="card-body">
+								<div class="row" />
+							</div>
+						</div>
 					</div>
-					<div class="card-body">
-						<div class="row" id="cardTerbaru" />
+					<div class="col-4">
+						<div class="card-header"
+							style="background-color:#55B4EA">
+							<label value="Beli Paket Soal"
+								style="font-align:bottom; font-size:18px; font-family:arial; font-weight:bold" />
+						</div>
+						<div class="card-body">
+							<div class="row" />
+						</div>
 					</div>
 				</div>
 			</div>
