@@ -1,11 +1,15 @@
 package com.sds.toms.viewmodel.customer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.ws.rs.core.MediaType;
 
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.json.JSONObject;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -35,6 +39,8 @@ public class CustomerCoverVm {
 	private String lblMessage;
 	private String searchcover;
 	
+	private Div divContent;
+	
 	@Wire
 	private Image imgheart1;
 	@Wire
@@ -47,11 +53,12 @@ public class CustomerCoverVm {
 	private Div divMateri, divLogin, divRegister;
 
 	@AfterCompose
-	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
+	public void afterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("content") Div divContent) {
 		Selectors.wireComponents(view, this, false);
 
 		searchcover = "";
 		imgfav1 = false;
+		this.divContent = divContent;
 	}
 
 	@Command
@@ -84,7 +91,10 @@ public class CustomerCoverVm {
 					LoginResp rsp = mapper.readValue(output, LoginResp.class);
 					if (rsp.getCode() == 200) {
 						zkSession.setAttribute("oUser", rsp.getData());
-						Executions.sendRedirect("/view/homecustomer.zul");
+						divContent.getChildren().clear();
+						Map<String, Object> map = new HashMap<String, Object>();
+						map.put("content", divContent);
+						Executions.createComponents("/view/homecustomer.zul", divContent, map);
 					} else {
 						lblMessage = rsp.getMessage();
 					}

@@ -23,7 +23,7 @@
 	<script src="/assets/js/plugins.js"></script>
 
 	<div class="avio page-body"
-		viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.HomeCustomerVm')">
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.ProductDetailCustomerVm')">
 		<!-- Page Header -->
 		<div class="body-header sticky-md-top"
 			style="background-color: #2a91b6;">
@@ -110,7 +110,43 @@
 									style="font-align:bottom; font-size:18px; font-family:arial; font-weight:bold" />
 							</div>
 							<div class="card-body">
-								<div class="row" />
+								<grid>
+									<columns>
+										<column width="20%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											<label
+												value="Nama Paket Soal" />
+											<hlayout>
+												<label value=":" />
+												<label value="@load()" />
+											</hlayout>
+										</row>
+										<row>
+											<label value="Kategori" />
+											<hlayout>
+												<label value=":" />
+												<label value="@load()" />
+											</hlayout>
+										</row>
+										<row>
+											<label value="Masa Berlaku" />
+											<hlayout>
+												<label value=":" />
+												<label value="@load()" />
+											</hlayout>
+										</row>
+										<row>
+											<label value="Deskripsi" />
+											<hlayout>
+												<label value=":" />
+												<label value="@load()" />
+											</hlayout>
+										</row>
+									</rows>
+								</grid>
 							</div>
 						</div>
 					</div>
@@ -121,7 +157,34 @@
 								style="font-align:bottom; font-size:18px; font-family:arial; font-weight:bold" />
 						</div>
 						<div class="card-body">
-							<div class="row" />
+							<n:h1>
+								<b>Harga</b>
+							</n:h1>
+							<separator />
+							<div class="card">
+								<div class="row">
+									<div class="col-2">
+										<label value="Rp."
+											style="font-weight: bold" />
+									</div>
+									<div class="col-10" align="right">
+										<label value="@load()"
+											style="font-weight: bold" />
+									</div>
+								</div>
+							</div>
+							<separator />
+							<separator />
+							<hlayout>
+								<button autodisable="self"
+									style="background-color: #0069ab !important; color:white; border-radius:10px"
+									class="btn btn-success btn-block my-4" label="Tambah ke Wishlist"
+									width="300px" tooltiptext="Tambah ke Wishlist" />
+								<button autodisable="self"
+									style="background-color: #0069ab !important; color:white; border-radius:10px"
+									class="btn btn-danger btn-block my-4" label="Beli Sekarang"
+									width="300px" tooltiptext="Beli Sekarang" />
+							</hlayout>
 						</div>
 					</div>
 				</div>
