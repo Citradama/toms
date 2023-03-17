@@ -3,7 +3,9 @@ package com.sds.toms.viewmodel.customer;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.ContextParam;
@@ -11,6 +13,7 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -26,6 +29,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.Menubar;
 import org.zkoss.zul.Separator;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -227,6 +231,17 @@ public class HomeCustomerVm {
 					btn.setLabel("Beli Sekarang");
 					btn.setWidth("90%");
 					btn.setTooltiptext("Beli Sekarang");
+					btn.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+
+						@Override
+						public void onEvent(Event event) throws Exception {
+							divContent.getChildren().clear();
+							Map<String, Object> map = new HashMap<String, Object>();
+							map.put("content", divContent);
+							Executions.createComponents("/view/product/productdetailcustomer.zul", divContent, map);
+						}
+
+					});
 					divBtn.appendChild(btn);
 					divBorder.appendChild(divBtn);
 

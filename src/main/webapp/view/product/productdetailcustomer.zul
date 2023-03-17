@@ -21,7 +21,11 @@
 		content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	</h:meta>
 	<script src="/assets/js/plugins.js"></script>
-
+	<zscript>
+		com.sds.toms.model.Muser oUser = (com.sds.toms.model.Muser) session.getAttribute("oUser");
+		if (oUser == null)
+			Executions.sendRedirect("/");
+	</zscript>
 	<div class="avio page-body"
 		viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.ProductDetailCustomerVm')">
 		<!-- Page Header -->
@@ -121,28 +125,21 @@
 												value="Nama Paket Soal" />
 											<hlayout>
 												<label value=":" />
-												<label value="@load()" />
+												<label value="@load(vm.obj.productname)" />
 											</hlayout>
 										</row>
 										<row>
 											<label value="Kategori" />
 											<hlayout>
 												<label value=":" />
-												<label value="@load()" />
-											</hlayout>
-										</row>
-										<row>
-											<label value="Masa Berlaku" />
-											<hlayout>
-												<label value=":" />
-												<label value="@load()" />
+												<label value="@load(vm.obj.category.category)" />
 											</hlayout>
 										</row>
 										<row>
 											<label value="Deskripsi" />
 											<hlayout>
 												<label value=":" />
-												<label value="@load()" />
+												<label value="@load(vm.obj.productdesc)" />
 											</hlayout>
 										</row>
 									</rows>
@@ -168,7 +165,7 @@
 											style="font-weight: bold" />
 									</div>
 									<div class="col-10" align="right">
-										<label value="@load()"
+										<label value="@load(vm.harga)"
 											style="font-weight: bold" />
 									</div>
 								</div>
