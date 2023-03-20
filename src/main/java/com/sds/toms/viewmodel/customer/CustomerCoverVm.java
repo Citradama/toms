@@ -16,6 +16,7 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.A;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Image;
@@ -39,8 +40,6 @@ public class CustomerCoverVm {
 	private String lblMessage;
 	private String searchcover;
 	
-	private Div divContent;
-	
 	@Wire
 	private Image imgheart1;
 	@Wire
@@ -53,12 +52,11 @@ public class CustomerCoverVm {
 	private Div divMateri, divLogin, divRegister;
 
 	@AfterCompose
-	public void afterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("content") Div divContent) {
+	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		Selectors.wireComponents(view, this, false);
 
 		searchcover = "";
 		imgfav1 = false;
-		this.divContent = divContent;
 	}
 
 	@Command
@@ -91,12 +89,11 @@ public class CustomerCoverVm {
 					LoginResp rsp = mapper.readValue(output, LoginResp.class);
 					if (rsp.getCode() == 200) {
 						zkSession.setAttribute("oUser", rsp.getData());
-						divContent.getChildren().clear();
-						Map<String, Object> map = new HashMap<String, Object>();
-						map.put("content", divContent);
-						Executions.createComponents("/view/homecustomer.zul", divContent, map);
+						Executions.sendRedirect("/view/headercustomer.zul");
 					} else {
 						lblMessage = rsp.getMessage();
+						Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n" + "  title: 'Informasi',\r\n"
+								+ "  text: '" + lblMessage + "'," + "})");
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -104,6 +101,8 @@ public class CustomerCoverVm {
 
 			} else {
 				lblMessage = "Userid and Password can not be empty";
+				Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n" + "  title: 'Informasi',\r\n"
+						+ "  text: '" + lblMessage + "'," + "})");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

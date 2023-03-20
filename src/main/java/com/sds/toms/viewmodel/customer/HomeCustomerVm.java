@@ -46,20 +46,11 @@ public class HomeCustomerVm {
 	private Muser oUser;
 
 	private Boolean imgfav1;
-	private String userid;
-	private String password;
-	private String lblMessage;
-	private String username;
-	private String searchcover;
 
 	private Div divContent;
 
 	@Wire
-	private Menubar menuBar;
-	@Wire
-	private Textbox txSearchheader;
-	@Wire
-	private Div divMateri, divLogin, divRegister, cardTerbaru;
+	private Div cardTerbaru;
 
 	@AfterCompose
 	@NotifyChange("*")
@@ -70,9 +61,7 @@ public class HomeCustomerVm {
 
 		if (oUser != null) {
 			imgfav1 = false;
-			username = "Hi, " + oUser.getUsername();
 			this.divContent = divContent;
-			searchcover = "";
 			doRenderTerbaru();
 		}
 	}
@@ -203,7 +192,7 @@ public class HomeCustomerVm {
 					divRating.setClass("col-6");
 
 					Hlayout hlayout = new Hlayout();
-					label = new Label(NumberFormat.getInstance().format(obj.getPassingscore()));
+					label = new Label(obj.getPassingscore() != null ? NumberFormat.getInstance().format(obj.getPassingscore()) : "0");
 					label.setStyle("font-size:14px; font-family:arial;");
 					hlayout.appendChild(label);
 
@@ -238,7 +227,8 @@ public class HomeCustomerVm {
 							divContent.getChildren().clear();
 							Map<String, Object> map = new HashMap<String, Object>();
 							map.put("content", divContent);
-							Executions.createComponents("/view/product/productdetailcustomer.zul", divContent, map);
+							map.put("obj", obj);
+							Executions.createComponents("/view/customer/productdetailcustomer.zul", divContent, map);
 						}
 
 					});
@@ -264,43 +254,4 @@ public class HomeCustomerVm {
 		this.imgfav1 = imgfav1;
 	}
 
-	public String getUserid() {
-		return userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getLblMessage() {
-		return lblMessage;
-	}
-
-	public void setLblMessage(String lblMessage) {
-		this.lblMessage = lblMessage;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getSearchcover() {
-		return searchcover;
-	}
-
-	public void setSearchcover(String searchcover) {
-		this.searchcover = searchcover;
-	}
 }

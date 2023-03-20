@@ -14,6 +14,7 @@ public class ConfigBean {
 	private String endpoint_tquest;
 	private String endpoint_tbook;
 	private String endpoint_tproduct;
+	private String endpoint_twishlist;
 
 	public String getUrl_base() {
 		return url_base;
@@ -109,6 +110,14 @@ public class ConfigBean {
 
 	public void setEndpoint_tproduct(String endpoint_tproduct) {
 		this.endpoint_tproduct = endpoint_tproduct;
+	}
+
+	public String getEndpoint_twishlist() {
+		return endpoint_twishlist;
+	}
+
+	public void setEndpoint_twishlist(String endpoint_twishlist) {
+		this.endpoint_twishlist = endpoint_twishlist;
 	}
 
 }

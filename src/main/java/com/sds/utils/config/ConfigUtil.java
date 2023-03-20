@@ -29,6 +29,7 @@ public class ConfigUtil {
 				config.setEndpoint_tquest(prop.getProperty("endpoint_tquest"));
 				config.setEndpoint_tproduct(prop.getProperty("endpoint_tproduct"));
 				config.setEndpoint_tbook(prop.getProperty("endpoint_tbook"));
+				config.setEndpoint_twishlist(prop.getProperty("endpoint_twishlist"));
 				
 				System.out.println("--- Initialize Configuration...");
 				System.out.println("--- url_base : " + config.getUrl_base());

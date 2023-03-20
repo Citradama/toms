@@ -1,0 +1,165 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="/mdb/css/mdb.min.css" ?>
+
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12218" ?>
+<?script rel="javascript" type="text/javascript" href="/js/jquery.bxslider.min.js"?>
+<?link rel="stylesheet" type="text/css" href="/css/jquery.bxslider.min.css"?>
+<?link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css"?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/avio-style.css" ?>
+
+
+<zk xmlns:w="client" xmlns:n="native"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
+	<h:meta charset="utf-8"></h:meta>
+	<h:meta http-equiv="X-UA-Compatible" content="IE=Edge"></h:meta>
+	<h:meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	</h:meta>
+	<script src="/assets/js/plugins.js"></script>
+	<zscript>
+	com.sds.toms.model.Muser oUser = (com.sds.toms.model.Muser) session.getAttribute("oUser");
+	if (oUser == null)
+		Executions.sendRedirect("/");
+</zscript>
+	<div class="avio page-body"
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.ProductDetailCustomerVm')">
+		<!-- Page Materi -->
+		<div id="divMateri">
+			<div class="container-fluid">
+				<div class="row g-1 my-md-1 justify-content-between"
+					align="center" style="border-radius:5">
+					<div class="card" align="center"
+						style="border-radius:5">
+						<div class="tab-content ">
+							<div id="slider" sclass="myslider"
+								width="600px" height="300px"
+								w:onBind="this.bxSlider = jq(this).bxSlider();"
+								w:reloadSlider="function() { this.bxSlider.reloadSlider();}">
+								<div sclass="slide">
+									<image src="/images/img1.png"
+										width="100%" class="img-fluid no-filter" />
+								</div>
+								<div sclass="slide">
+									<image src="/images/img2.png"
+										width="100%" class="img-fluid no-filter" />
+								</div>
+								<div sclass="slide">
+									<image src="/images/img3.png"
+										width="100%" class="img-fluid no-filter" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<separator />
+				<separator />
+				<div class="row">
+					<div class="col-7">
+						<div class="card">
+							<div class="card-header"
+								style="background-color:#55B4EA">
+								<label value="Detail Paket Soal"
+									style="font-align:bottom; font-size:18px; font-family:arial; font-weight:bold" />
+							</div>
+							<div class="card-body">
+								<grid style="border:0px">
+									<columns>
+										<column width="20%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											<label
+												value="Nama Paket Soal" />
+											<hlayout>
+												<label value=":" />
+												<label
+													value="@load(vm.obj.productname)" />
+											</hlayout>
+										</row>
+										<row>
+											<label value="Kategori" />
+											<hlayout>
+												<label value=":" />
+												<label
+													value="@load(vm.obj.category.category)" />
+											</hlayout>
+										</row>
+										<row>
+											<label value="Deskripsi" />
+											<hlayout>
+												<label value=":" />
+												<label
+													value="@load(vm.obj.productdesc)" />
+											</hlayout>
+										</row>
+									</rows>
+								</grid>
+								<separator />
+								<separator />
+								<div style="padding:20px">
+									<vlayout>
+										<label
+											value="@load(vm.lblTotalmateri)" />
+										<label
+											value="@load(vm.lblTotalsoal)" />
+									</vlayout>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-5">
+						<div class="card">
+							<div class="card-header"
+								style="background-color:#55B4EA">
+								<label value="Beli Paket Soal"
+									style="font-align:bottom; font-size:18px; font-family:arial; font-weight:bold" />
+							</div>
+							<div class="card-body">
+								<n:h4>
+									<n:b>Harga</n:b>
+								</n:h4>
+								<separator />
+								<div class="card"
+									style="border: 1px solid #D7D7D7; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
+									<div class="row" style="padding:10px">
+										<div class="col-2">
+											<label value="Rp."
+												style="font-weight: bold" />
+										</div>
+										<div class="col-10"
+											align="right">
+											<label
+												value="@load(vm.harga)" style="font-weight: bold" />
+										</div>
+									</div>
+								</div>
+								<div align="center">
+									<hlayout>
+										<button autodisable="self"
+											id="btnWishlist" iconSclass="z-icon-heart"
+											style="border-radius:10px" onClick="@command('doWishlist')"
+											class="btn btn-success btn-block my-4"
+											label="Tambah ke Wishlist" width="200px"
+											tooltiptext="Tambah ke Wishlist" />
+										<separator />
+										<separator />
+										<button autodisable="self"
+											iconSclass="z-icon-shopping-cart" style="border-radius:10px"
+											width="200px" class="btn btn-danger btn-block my-4"
+											label="Beli Sekarang" tooltiptext="Beli Sekarang" />
+									</hlayout>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</zk>
