@@ -18,7 +18,6 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Div;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
 import com.sds.toms.model.Mcust;
@@ -26,13 +25,13 @@ import com.sds.toms.model.Muser;
 import com.sds.toms.model.Tproduct;
 import com.sds.toms.model.Twishlist;
 import com.sds.toms.pojo.ObjectResp;
-import com.sds.toms.pojo.SearchReq;
 import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 
 public class ProductDetailCustomerVm {
 	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
 	private Muser oUser;
+	private Mcust oCust;
 
 	private Tproduct obj;
 	private String username;
@@ -40,9 +39,9 @@ public class ProductDetailCustomerVm {
 	private String harga;
 	private String lblTotalmateri;
 	private String lblTotalsoal;
-	
+
 	private Div divContent;
-	
+
 	@Wire
 	private Button btnWishlist;
 
@@ -51,6 +50,7 @@ public class ProductDetailCustomerVm {
 			@ExecutionArgParam("content") Div divContent) {
 		Selectors.wireComponents(view, this, false);
 		oUser = (Muser) zkSession.getAttribute("oUser");
+		oCust = (Mcust) zkSession.getAttribute("oCust");
 
 		this.obj = obj;
 		this.divContent = divContent;
@@ -69,36 +69,22 @@ public class ProductDetailCustomerVm {
 			ObjectMapper mapper = new ObjectMapper();
 			ObjectResp rsp = null;
 
-			SearchReq req = new SearchReq();
-			req.setGeneral(oUser.getUserid());
+			Twishlist objWish = new Twishlist();
+			objWish.setMcust(oCust);
+			objWish.setTproduct(obj);
 
-			url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mcust();
-
-			rsp = RespHandler.responObj(url, mapper.writeValueAsString(req), AppUtil.METHOD_POST, oUser);
+			url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_twishlist();
+			rsp = RespHandler.responObj(url, mapper.writeValueAsString(objWish), AppUtil.METHOD_POST, oUser);
 			if (rsp.getCode() == 201 || rsp.getCode() == 200) {
-				Mcust mcust = mapper.convertValue(rsp.getData(), new TypeReference<Mcust>() {
-				});
-				
-				if(mcust != null) {
-					Twishlist objWish = new Twishlist();
-					objWish.setMcust(mcust);
-					objWish.setTproduct(obj);
-					
-					url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_twishlist();
-					rsp = RespHandler.responObj(url, mapper.writeValueAsString(req), AppUtil.METHOD_POST, oUser);
-					if (rsp.getCode() == 201 || rsp.getCode() == 200) {
-						btnWishlist.setLabel("Hapus Wishlist");
-						Clients.evalJavaScript(
-								"swal.fire({" + "icon: 'success',\r\n" + "  title: 'Berhasil',\r\n"
-										+ "  text: 'Paket berhasil disimpan.'," + "})");
-					}
-				}
+				btnWishlist.setLabel("Hapus Wishlist");
+				Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n" + "  title: 'Berhasil',\r\n"
+						+ "  text: 'Paket berhasil disimpan.'," + "})");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Command
 	public void doBuy() {
 		try {

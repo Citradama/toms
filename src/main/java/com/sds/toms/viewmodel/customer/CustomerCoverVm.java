@@ -23,9 +23,16 @@ import org.zkoss.zul.Image;
 import org.zkoss.zul.Menubar;
 import org.zkoss.zul.Textbox;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sds.toms.handler.RespHandler;
+import com.sds.toms.model.Mcust;
+import com.sds.toms.model.Muser;
 import com.sds.toms.pojo.LoginResp;
+import com.sds.toms.pojo.ObjectResp;
+import com.sds.toms.pojo.SearchReq;
+import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -39,7 +46,7 @@ public class CustomerCoverVm {
 	private String password;
 	private String lblMessage;
 	private String searchcover;
-	
+
 	@Wire
 	private Image imgheart1;
 	@Wire
@@ -64,7 +71,8 @@ public class CustomerCoverVm {
 		try {
 			if (userid != null && !userid.trim().equals("") && password != null && !password.trim().equals("")) {
 				try {
-					String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_muser() + "/login";
+					String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_muser()
+							+ "/login";
 					System.out.println("url : " + url);
 					Client client = Client.create();
 					client.setConnectTimeout(40 * 1000);
@@ -88,6 +96,21 @@ public class CustomerCoverVm {
 					mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 					LoginResp rsp = mapper.readValue(output, LoginResp.class);
 					if (rsp.getCode() == 200) {
+						Muser oUser = rsp.getData();
+						SearchReq req = new SearchReq();
+						req.setGeneral(rsp.getData().getUserid());
+
+						ObjectResp rspObj = null;
+						url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mcust();
+						rspObj = RespHandler.responObj(url, mapper.writeValueAsString(req), AppUtil.METHOD_POST, oUser);
+						if (rspObj.getCode() == 201 || rspObj.getCode() == 200) {
+							Mcust mcust = mapper.convertValue(rsp.getData(), new TypeReference<Mcust>() {
+							});
+
+							if (mcust != null) {
+								zkSession.setAttribute("oCust", mcust);
+							}
+						}
 						zkSession.setAttribute("oUser", rsp.getData());
 						Executions.sendRedirect("/view/headercustomer.zul");
 					} else {
@@ -104,7 +127,9 @@ public class CustomerCoverVm {
 				Clients.evalJavaScript("swal.fire({" + "icon: 'warning',\r\n" + "  title: 'Informasi',\r\n"
 						+ "  text: '" + lblMessage + "'," + "})");
 			}
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -117,7 +142,7 @@ public class CustomerCoverVm {
 		divMateri.setVisible(false);
 		divLogin.setVisible(true);
 	}
-	
+
 	@Command
 	public void doRegist() {
 		aLogin.setVisible(false);
