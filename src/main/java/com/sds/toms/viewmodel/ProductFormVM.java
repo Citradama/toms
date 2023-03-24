@@ -74,6 +74,8 @@ public class ProductFormVM {
 	@Wire
 	private Div divFooter;
 	@Wire
+	private Button btnDel;
+	@Wire
 	private Radio rbGenerate, rbManual;
 	@Wire
 	private Combobox cbCategory, cbBook, cbQuest;
@@ -90,6 +92,9 @@ public class ProductFormVM {
 		if (objForm != null) {
 			this.objForm = objForm;
 			isInsert = false;
+			
+		} else {
+			btnDel.setVisible(false);
 		}
 
 	}
@@ -372,6 +377,43 @@ public class ProductFormVM {
 			}
 		});
 
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Command
+	@NotifyChange("*")
+	public void doDelete() {
+		Messagebox.show(Labels.getLabel("common.delete.confirm"),
+				"Confirm Dialog", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, new EventListener() {
+
+					public void onEvent(Event event) throws Exception {
+						if (event.getName().equals("onOK")) {
+							try {
+								String url = ConfigUtil.getConfig().getUrl_base()
+										+ ConfigUtil.getConfig().getEndpoint_tproduct() + "/"
+										+ objForm.getId();
+								System.out.println(url);
+								objForm.setLastupdated(null);
+								objForm.setCreatetime(null);
+								ObjectMapper mapper = new ObjectMapper();
+								ObjectResp rsp = RespHandler.responObj(url,
+										mapper.writeValueAsString(objForm), AppUtil.METHOD_DEL,
+										oUser);
+
+								if (rsp.getCode() == 200) {
+									Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n"
+											+ "  title: 'Berhasil',\r\n" + "  text: '"
+											+ Labels.getLabel("common.delete.success") + "'," + "})");
+
+									Event closeEvent = new Event("onClose", winProduct, null);
+									Events.postEvent(closeEvent);
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				});
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

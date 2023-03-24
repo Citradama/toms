@@ -335,7 +335,7 @@
 						style="background-color: #481449;">
 						${labels.common.save}
 					</button>
-					<button onClick="@command('doReset')" width="100%"
+					<button id="btnDel" onClick="@command('doDelete')" width="100%"
 						class="btn btn-danger btn-sm">
 						HAPUS
 					</button>
