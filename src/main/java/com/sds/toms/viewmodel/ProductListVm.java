@@ -80,17 +80,17 @@ public class ProductListVm {
 			Div divColCard = new Div();
 			divColCard.setClass("col");
 			divColCard.setWidth("20%");
-			divColCard.setStyle("border-radius:8px; margin: 5px; background-color:#aeafdd");
+			divColCard.setStyle("border-radius:3px; margin: 5px; background-color:#c3b1c6");
 
 			divColCard.appendChild(new Separator());
 
 			// image product
 			Image img = new Image();
-			img.setSrc("/images/lessons/math.jpg");
+			img.setSrc("/images/lessons/science1.jpg");
 			img.setWidth("100%");
 
 			Div divBody = new Div();
-			divBody.setStyle("border-radius:8px; background-color:#e3e4fa; margin: 5px;");
+			divBody.setStyle("border-radius:5px; background-color:#e3e4fa; margin: 5px;");
 
 			// Kategori
 			Div rowCat = new Div();

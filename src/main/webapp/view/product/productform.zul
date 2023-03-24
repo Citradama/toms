@@ -133,7 +133,7 @@
 										value="*">
 									</label>
 								</hlayout>
-								<textbox id="txDesc" style="width:100%"
+								<textbox id="txDesc" style="width:100%; font-size:12px" 
 									rows="3" class="form-control" value="@bind(e.productdesc)" />
 								<label style="color:red"
 									value="@load(vmsgs['productdesc'])" />
