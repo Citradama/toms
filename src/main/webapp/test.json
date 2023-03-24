@@ -1,10 +1,16 @@
 {
-	"muniversitypk": 2,
-	"universityname": "UNIVERSITAS PANCASILA 1",
-	"rowstat": null,
-	"rowedit": null,
-	"createtime": null,
-	"createdby": "ADMIN",
-	"lastupdated": null,
-	"updatedby": "ADMIN"
+  "id":null,
+  "productid":"Q53543",
+  "productname":"PAKET 2",
+  "categoryname":"ILMU KOMPUTER KOMUNIKASI",
+  "categoryid":1,
+  "productdesc":"test123",
+  "totalquest":2,
+  "totalbook":0,
+  "duration":0,
+  "passingscore":66,
+  "price":120000,
+  "buildtype":"",
+  "questids":["6","6"],
+  "bookids":["9","9"]
 }

@@ -6,12 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.xmlbeans.impl.tool.StreamInstanceValidator;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
@@ -57,9 +59,14 @@ public class ProductListVm {
 	@AfterCompose
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		Selectors.wireComponents(view, this, false);
-		oUser = (Muser) zkSession.getAttribute("oUser");
-		doReset();
-		generateCard();
+		try {
+
+			oUser = (Muser) zkSession.getAttribute("oUser");
+			doReset();
+			generateCard();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -71,8 +78,9 @@ public class ProductListVm {
 		for (Tproduct product : objList) {
 
 			Div divColCard = new Div();
-			divColCard.setClass("col-3");
-			divColCard.setStyle("border-style: ridge; border-radius:8px; margin: 2px; ");
+			divColCard.setClass("col");
+			divColCard.setWidth("20%");
+			divColCard.setStyle("border-radius:8px; margin: 5px; background-color:#aeafdd");
 
 			divColCard.appendChild(new Separator());
 
@@ -82,13 +90,13 @@ public class ProductListVm {
 			img.setWidth("100%");
 
 			Div divBody = new Div();
-			divBody.setStyle("border-radius:8px; background-color:#fcfcfc; margin: 5px;");
+			divBody.setStyle("border-radius:8px; background-color:#e3e4fa; margin: 5px;");
 
 			// Kategori
 			Div rowCat = new Div();
 			rowCat.setClass("row-12");
 			Label lbCat = new Label("Kategori :");
-			lbCat.setStyle("font-weight:bold; font-size: 12px; background-color:#e8e1e9; border-radius:3px");
+			lbCat.setStyle("font-weight:bold; font-size: 12px; background-color:#e8e1e9; border-radius:2px");
 		
 			rowCat.appendChild(lbCat);
 
@@ -193,6 +201,7 @@ public class ProductListVm {
 
 	}
 
+	@NotifyChange("*")
 	public void doReset() {
 		doRefreshModel();
 	}
@@ -218,6 +227,7 @@ public class ProductListVm {
 	}
 	
 	@Command
+	@NotifyChange("*")
 	public void doAddnew() {
 		Window win = (Window) Executions.createComponents("/view/product/productform.zul", null, null);
 		win.setClosable(true);

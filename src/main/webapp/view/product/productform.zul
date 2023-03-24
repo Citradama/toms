@@ -19,11 +19,11 @@
 
 				<div class="row" style="background-color:#481449;"
 					width="2px" />
-				<groupbox mold="3d">
+				<groupbox>
 					<caption label="Form Paket Soal" />
 					<grid>
 						<columns>
-							<column width="20%" />
+							<column width="20%" valign="top" />
 							<column />
 							<column width="30%" />
 						</columns>
@@ -36,8 +36,7 @@
 									<label value="*" style="color:red" />
 								</hlayout>
 								<textbox id="txProductid"
-									style="width:100%" class="form-control"
-									value="@bind(e.productid)" />
+									style="width:100%; font-size:12px" value="@bind(e.productid)" />
 								<label style="color:red"
 									value="@load(vmsgs['productid'])" />
 							</row>
@@ -49,7 +48,7 @@
 									<label value="*" style="color:red" />
 								</hlayout>
 								<textbox id="txProductname"
-									style="width:100%" class="form-control"
+									style="width:100%; font-size:12px"
 									value="@bind(e.productname)" />
 								<label style="color:red"
 									value="@load(vmsgs['productname'])" />
@@ -63,21 +62,24 @@
 										value="*">
 									</label>
 								</hlayout>
-								<combobox style="width:100%"></combobox>
+								<combobox
+									style="width:100%; font-size:12px"
+									onSelect="@command('doSelectCategory')"
+									selectedItem="@bind(vm.objForm.category)" id="cbCategory" />
 								<label style="color:red" />
 							</row>
-							<row>
+							<!-- <row>
 								<hlayout>
-									<label class="form-label">
-										Sub Kategori
-									</label>
-									<label style="color:red"
-										value="*">
-									</label>
+								<label class="form-label">
+								Sub Kategori
+								</label>
+								<label style="color:red"
+								value="*">
+								</label>
 								</hlayout>
 								<combobox style="width:100%"></combobox>
 								<label />
-							</row>
+								</row> -->
 							<row>
 								<hlayout>
 									<label class="form-label">
@@ -88,8 +90,8 @@
 									</label>
 								</hlayout>
 								<intbox id="txTotalquest"
-									style="width:100%" class="form-control"
-									value="@bind(e.totalquest)" />
+									style="width:100%; font-size:12px"
+									value="@bind(vm.objForm.totalquest)" />
 								<label style="color:red"
 									value="@load(vmsgs['totalquest'])" />
 							</row>
@@ -103,7 +105,8 @@
 									</label>
 								</hlayout>
 								<intbox id="txPassinggrd"
-									style="width:100%" value="@bind(e.passingscore)" />
+									style="width:100%; font-size:12px"
+									value="@bind(e.passingscore)" />
 								<label style="color:red"
 									value="@load(vmsgs['passingscore'])" />
 							</row>
@@ -117,7 +120,7 @@
 									</label>
 								</hlayout>
 								<decimalbox id="txPrice"
-									style="width:100%" value="@bind(e.price)" />
+									style="width:100%; font-size:12px" value="@bind(e.price)" />
 								<label style="color:red"
 									value="@load(vmsgs['price'])" />
 							</row>
@@ -131,7 +134,7 @@
 									</label>
 								</hlayout>
 								<textbox id="txDesc" style="width:100%"
-									class="form-control" value="@bind(e.productdesc)" />
+									rows="3" class="form-control" value="@bind(e.productdesc)" />
 								<label style="color:red"
 									value="@load(vmsgs['productdesc'])" />
 							</row>
@@ -144,7 +147,7 @@
 					<n:br />
 				</groupbox>
 				<separator />
-				<groupbox mold="3d">
+				<groupbox>
 					<caption label="Materi" />
 					<grid>
 						<columns>
@@ -162,9 +165,12 @@
 										value="*">
 									</label>
 								</hlayout>
-								<combobox width="100%" />
+								<combobox
+									style="width:100%; font-size:12px"
+									selectedItem="@bind(vm.book)" id="cbBook" />
 								<button width="50%"
-									class="btn btn-success btn-sm" style="border-radius:5px">
+									onClick="@command('addBook')" class="btn btn-success btn-sm"
+									style="border-radius:5px">
 									Tambah
 								</button>
 							</row>
@@ -199,35 +205,35 @@
 				</groupbox>
 				<separator />
 				<groupbox>
-					<caption label="Materi" />
+					<caption label="Soal" />
 					<grid>
 						<columns>
 							<column width="20%" />
 							<column />
 						</columns>
 						<rows>
-							<row>
+							<!-- <row>
 								<hlayout>
-									<label class="form-label">
-										Nama
-									</label>
-									<label style="color:red"
-										value="*">
-									</label>
+								<label class="form-label">
+								Nama
+								</label>
+								<label style="color:red"
+								value="*">
+								</label>
 								</hlayout>
 								<textbox width="70%" />
-							</row>
-							<row>
+								</row>
+								<row>
 								<hlayout>
-									<label class="form-label">
-										Deskripsi
-									</label>
-									<label style="color:red"
-										value="*">
-									</label>
+								<label class="form-label">
+								Deskripsi
+								</label>
+								<label style="color:red"
+								value="*">
+								</label>
 								</hlayout>
 								<textbox width="70%" />
-							</row>
+								</row> -->
 							<row>
 								<hlayout>
 									<label class="form-label">
@@ -240,9 +246,9 @@
 								<hlayout>
 									<radiogroup id="rgType" />
 									<radio id="rbGenerate"
-										label="Generate Soal" radiogroup="rgType"
+										label="Generate Soal" radiogroup="rgType" disabled="true"
 										onCheck="@command('doGenerate', arg='Generate')" />
-									<radio id="rbManual"
+									<radio id="rbManual" disabled="true"
 										label="Pilih Manual" radiogroup="rgType"
 										onCheck="@command('doGenerate', arg='Manual')" />
 
@@ -261,20 +267,22 @@
 							<row>
 								<label class="form-label"
 									value="Dokumen Soal" />
-								<button width="20%">
+								<button width="20%"
+									onClick="@command('autoGenerateQuest')"
+									class="btn btn-info btn-sm" style="border-radius:5px">
 									Generate Soal
 								</button>
 							</row>
-							<row>
+							<!-- <row>
 								<label class="form-label" />
 								<textbox width="70%" readonly="true" />
-							</row>
+								</row> -->
 						</rows>
 					</grid>
 					<separator />
 					<grid id="gridManual" visible="false">
 						<columns>
-							<column width="20%" />
+							<column width="20%" valign="top" />
 							<column />
 							<column width="25%" />
 						</columns>
@@ -282,24 +290,39 @@
 							<row>
 								<label class="form-label"
 									value="Pilih Soal" />
-								<combobox width="100%" />
+								<combobox
+									style="width:100%; font-size:12px"
+									selectedItem="@bind(vm.quest)" id="cbQuest" />
 								<button width="50%"
-									class="btn btn-success btn-sm" style="border-radius:5px">
+									onClick="@command('addQuest')" class="btn btn-success btn-sm"
+									style="border-radius:5px">
 									Tambah
 								</button>
 							</row>
+						</rows>
+					</grid>
+					<grid id="gridQs" visible="false">
+						<columns>
+							<column width="20%" valign="top" />
+							<column />
+							<column width="25%" />
+						</columns>
+						<rows>
 							<row>
 								<label class="form-label"
 									value="Daftar Pertanyaan" />
-								<div id="divQuest" />
-								<!-- 	<grid id="gridQuest">
+								<grid id="gridQuest">
 									<columns>
-									<column width="80%"
-									style="background-color:white; border:0px; border-bottom:1px;solid #fff; color:black; border-color:white" />
-									<column width="25%"
-									style="background-color:white; border:0px; border-bottom:1px;solid #fff; color:black; border-color:white" />
+										<column width="10%" label="No"
+											style="background-color:white; border:0px; border-bottom:1px;solid #fff; color:black; border-color:white" />
+										<column width="75%"
+											label="Daftar Soal"
+											style="background-color:white; border:0px; border-bottom:1px;solid #fff; color:black; border-color:white" />
+										<column width="15%"
+											style="background-color:white; border:0px; border-bottom:1px;solid #fff; color:black; border-color:white" />
+
 									</columns>
-									</grid> -->
+								</grid>
 								<div />
 							</row>
 						</rows>
