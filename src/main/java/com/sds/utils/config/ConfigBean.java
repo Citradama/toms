@@ -11,6 +11,7 @@ public class ConfigBean {
 	private String endpoint_mcust;
 	private String endpoint_mcategory;
 	private String endpoint_mmenu;
+	private String endpoint_mpaymethod;
 	private String endpoint_tquest;
 	private String endpoint_tbook;
 	private String endpoint_tproduct;
@@ -118,6 +119,14 @@ public class ConfigBean {
 
 	public void setEndpoint_twishlist(String endpoint_twishlist) {
 		this.endpoint_twishlist = endpoint_twishlist;
+	}
+
+	public String getEndpoint_mpaymethod() {
+		return endpoint_mpaymethod;
+	}
+
+	public void setEndpoint_mpaymethod(String endpoint_mpaymethod) {
+		this.endpoint_mpaymethod = endpoint_mpaymethod;
 	}
 
 }

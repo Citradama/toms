@@ -149,7 +149,7 @@
 											tooltiptext="Tambah ke Wishlist" />
 										<separator />
 										<separator />
-										<button autodisable="self"
+										<button autodisable="self" onClick="@command('doBuy')"
 											iconSclass="z-icon-shopping-cart" style="border-radius:10px"
 											width="200px" class="btn btn-danger btn-block my-4"
 											label="Beli Sekarang" tooltiptext="Beli Sekarang" />

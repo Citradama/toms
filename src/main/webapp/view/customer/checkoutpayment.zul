@@ -1,0 +1,20 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="/mdb/css/mdb.min.css" ?>
+
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12218" ?>
+<?script rel="javascript" type="text/javascript" href="/js/jquery.bxslider.min.js"?>
+<?link rel="stylesheet" type="text/css" href="/css/jquery.bxslider.min.css"?>
+<?link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css"?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/avio-style.css" ?>
+
+<zk xmlns:w="client" xmlns:n="native">
+	<window border="normal" closable="true" action="hide: slideUp"
+		position="center,center" viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.CheckoutPaymentVm')">
+		<caption label="Pilih Pembayaran" />
+		<div id="divMethod"/>
+	</window>
+</zk>
