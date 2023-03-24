@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
 import com.sds.toms.model.Mcategory;
 import com.sds.toms.model.Mdosen;
+import com.sds.toms.model.Mpaymethod;
 import com.sds.toms.model.Muser;
 import com.sds.toms.pojo.ObjectResp;
 import com.sds.utils.config.ConfigUtil;
@@ -49,6 +50,19 @@ public class AppData {
 		if (Resp.getCode() == 200) {
 			ObjectMapper mapper = new ObjectMapper();
 			list = mapper.convertValue(Resp.getData(), new TypeReference<List<Mcategory>>() {
+			});
+		}
+		return list;
+	}
+	
+	public static List<Mpaymethod> getMpaymethod() throws Exception {
+		ObjectResp Resp = null;
+		String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mpaymethod();
+		Resp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
+		List<Mpaymethod> list = new ArrayList<Mpaymethod>();
+		if (Resp.getCode() == 200) {
+			ObjectMapper mapper = new ObjectMapper();
+			list = mapper.convertValue(Resp.getData(), new TypeReference<List<Mpaymethod>>() {
 			});
 		}
 		return list;

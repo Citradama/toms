@@ -24,50 +24,6 @@
 
 	<div class="avio page-body"
 		viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.HomeCustomerVm')">
-		<!-- Page Header -->
-		<div class="body-header sticky-md-top"
-			style="background-color: #2a91b6;">
-			<div class="container-fluid" style="font-size: 12px;">
-				<div class="d-flex justify-content-between">
-					<div
-						class="navbar-brand d-flex align-items-center color-900">
-						<n:img src="images/logo-01.png" width="80px"
-							class="img-fluid no-filter" style="margin-right:90px;" />
-						<menubar id="menuBar" autodrop="true"
-							style="margin:15px;background-color: #2a91b6; border-color:#2a91b6">
-							<menu label="Kategori"
-								style="font-size:12px; background-color:  #2a91b6">
-								<menupopup>
-									<menuitem label="kategori 1" />
-									<menuitem label="kategori 2" />
-								</menupopup>
-							</menu>
-						</menubar>
-						<textbox id="txSearchheader" width="50%" cols="100" value="@bind(vm.searchcover)" placeholder="Apa yang ingin kamu cari?" />
-					</div>
-					<!-- List Menu -->
-					<h:ul
-						class="navbar-right d-flex align-items-center mb-0 list-unstyled">
-						<h:li>
-							<div
-								class="dropdown morphing scale-left user-profile mx-lg-3 mx-2 no-filter ">
-								<hlayout>
-									<a id="aUser"
-										class="nav-link dropdown-toggle rounded-circle after-none p-0"
-										href="#" ca:role="button" ca:data-bs-toggle="dropdown">
-										<h:img
-											class="avatar lg img-thumbnail rounded-circle shadow"
-											src="/images/User.png" />
-									</a>
-									<label value="@bind(vm.username)" style="padding:5px;color:white"/>
-								</hlayout>
-							</div>
-						</h:li>
-					</h:ul>
-				</div>
-			</div>
-		</div>
-
 		<!-- Page Materi -->
 		<div id="divMateri">
 			<div class="container-fluid">
