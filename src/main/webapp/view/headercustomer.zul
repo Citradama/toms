@@ -51,7 +51,7 @@
 								</menu>
 							</menubar>
 							<textbox id="txSearchheader"
-								style="box-sizing: border-box; position: absolute; width: 560px; height: 50px; left: 400px; top: 20px; background: #FAFAFA; border: 1px solid #D7D7D7; border-radius: 5px;"
+								style="box-sizing: border-box; position: absolute; width: 560px; height: 30px; left: 400px; top: 20px; background: #FAFAFA; border: 1px solid #D7D7D7; border-radius: 5px;"
 								value="@bind(vm.searchcover)"
 								placeholder="Apa yang ingin kamu cari?" />
 						</div>
@@ -82,91 +82,89 @@
 			</div>
 		</div>
 		<div id="divContent" />
-		<div class="page-footer bg-card mt-4">
-			<div class="container-fluid"
-				style="background-color: #2a91b6;">
-				<div class="row" style="padding:10px">
-					<div class="col">
-						<vlayout>
-							<label value="Tryout Management System"
-								style="color:white;font-size:15px; font-family:arial;font-weight:bold" />
-							<label value="Tentang kami"
-								style="font-size:12px; font-family:arial;color:white;" />
-							<label value="FAQ"
-								style="font-size:12px; font-family:arial;color:white;" />
-							<label value="Site Map"
-								style="font-size:12px; font-family:arial;color:white;" />
-							<label value="Kebijakan Privasi"
-								style="font-size:12px; font-family:arial;color:white;" />
-							<label value="Terms and Condition"
-								style="font-size:12px; font-family:arial;color:white;" />
-						</vlayout>
-					</div>
-
-					<div class="col">
-						<vlayout>
-							<label value="Contact Us"
-								style="color:white;font-size:15px; font-family:arial;font-weight:bold" />
-							<label value="hello@bnc.com"
-								style="font-size:12px; font-family:arial;color:white;" />
-							<label value="+62 21 8642033"
-								style="font-size:12px; font-family:arial;color:white;" />
-							<label
-								value="Jl. Otista Raya No.8, Jakarta Timur, 13330"
-								style="font-size:12px; font-family:arial;color:white;" />
-						</vlayout>
-					</div>
-
-					<div class="col">
-						<vlayout>
-							<label value="Follow Us"
-								style="color:white;font-size:15px; font-family:arial;font-weight:bold" />
-
-							<hlayout>
-								<a>
-									<image src="/images/ic-facebook.png"
-										width="24px" class="img-fluid no-filter"
-										tooltiptext="Facebook" />
-								</a>
-								<a>
-									<image
-										src="/images/ic-instagram.png" width="24px"
-										class="img-fluid no-filter" tooltiptext="Instagram" />
-								</a>
-								<a>
-									<image src="/images/ic-twitter.png"
-										width="24px" class="img-fluid no-filter"
-										tooltiptext="Twitter" />
-								</a>
-							</hlayout>
-						</vlayout>
-					</div>
-
-					<div class="col">
-						<vlayout>
-							<label value="Download Application"
-								style="color:white;font-size:15px; font-family:arial;font-weight:bold" />
-							<hlayout>
-
-								<a>
-									<image
-										src="/images/ic-playstore.png" width="100px"
-										class="img-fluid no-filter" tooltiptext="Google Play" />
-								</a>
-								<a>
-									<image src="/images/ic-appstore.png"
-										width="px" class="img-fluid no-filter"
-										tooltiptext="App Store" />
-								</a>
-
-							</hlayout>
-						</vlayout>
-					</div>
+	</window>
+	<div class="page-footer bg-card mt-4">
+		<div class="container-fluid"
+			style="background-color: #2a91b6;">
+			<div class="row" style="padding:10px">
+				<div class="col">
+					<vlayout>
+						<label value="Tryout Management System"
+							style="color:white;font-size:15px; font-family:arial;font-weight:bold" />
+						<label value="Tentang kami"
+							style="font-size:12px; font-family:arial;color:white;" />
+						<label value="FAQ"
+							style="font-size:12px; font-family:arial;color:white;" />
+						<label value="Site Map"
+							style="font-size:12px; font-family:arial;color:white;" />
+						<label value="Kebijakan Privasi"
+							style="font-size:12px; font-family:arial;color:white;" />
+						<label value="Terms and Condition"
+							style="font-size:12px; font-family:arial;color:white;" />
+					</vlayout>
 				</div>
 
+				<div class="col">
+					<vlayout>
+						<label value="Contact Us"
+							style="color:white;font-size:15px; font-family:arial;font-weight:bold" />
+						<label value="hello@bnc.com"
+							style="font-size:12px; font-family:arial;color:white;" />
+						<label value="+62 21 8642033"
+							style="font-size:12px; font-family:arial;color:white;" />
+						<label
+							value="Jl. Otista Raya No.8, Jakarta Timur, 13330"
+							style="font-size:12px; font-family:arial;color:white;" />
+					</vlayout>
+				</div>
+
+				<div class="col">
+					<vlayout>
+						<label value="Follow Us"
+							style="color:white;font-size:15px; font-family:arial;font-weight:bold" />
+
+						<hlayout>
+							<a>
+								<image src="/images/ic-facebook.png"
+									width="24px" class="img-fluid no-filter"
+									tooltiptext="Facebook" />
+							</a>
+							<a>
+								<image src="/images/ic-instagram.png"
+									width="24px" class="img-fluid no-filter"
+									tooltiptext="Instagram" />
+							</a>
+							<a>
+								<image src="/images/ic-twitter.png"
+									width="24px" class="img-fluid no-filter" tooltiptext="Twitter" />
+							</a>
+						</hlayout>
+					</vlayout>
+				</div>
+
+				<div class="col">
+					<vlayout>
+						<label value="Download Application"
+							style="color:white;font-size:15px; font-family:arial;font-weight:bold" />
+						<hlayout>
+
+							<a>
+								<image src="/images/ic-playstore.png"
+									width="100px" class="img-fluid no-filter"
+									tooltiptext="Google Play" />
+							</a>
+							<a>
+								<image src="/images/ic-appstore.png"
+									width="px" class="img-fluid no-filter" tooltiptext="App Store" />
+							</a>
+
+						</hlayout>
+					</vlayout>
+				</div>
 			</div>
+
 		</div>
-	</window>
+	</div>
 	<script type="text/javascript" src="/assets/js/theme.js"></script>
 	<script type="text/javascript"
 		src="/assets/js/bundle/owlcarousel.bundle.js">
