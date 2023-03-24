@@ -85,7 +85,7 @@ public class HomeCustomerVm {
 
 				for (Tproduct obj : objList) {
 					Div divBorder = new Div();
-					divBorder.setClass("col-3");
+					divBorder.setClass("col-2");
 					divBorder.setStyle("border-style: ridge; border-radius:8px; margin: 5px;");
 
 					Separator separator = new Separator();
