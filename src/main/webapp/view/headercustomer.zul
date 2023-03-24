@@ -27,29 +27,32 @@
 	if (oUser == null)
 		Executions.sendRedirect("/");
 </zscript>
-	<window style="padding:0px" viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.HeaderCustomerVm')">
+	<window style="padding:0px"
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.HeaderCustomerVm')">
 		<div class="avio page-body">
 			<!-- Page Header -->
 			<div class="body-header sticky-md-top"
-				style="background-color: #2a91b6;">
+				style="background-color: #CCE9F7;">
 				<div class="container-fluid" style="font-size: 12px;">
 					<div class="d-flex justify-content-between">
 						<div
 							class="navbar-brand d-flex align-items-center color-900">
-							<n:img src="images/logo-01.png" width="80px"
-								class="img-fluid no-filter" style="margin-right:90px;" />
+							<image src="/images/logo-01.png"
+								width="80px" class="img-fluid no-filter"
+								style="margin-right:90px;" />
 							<menubar id="menuBar" autodrop="true"
-								style="margin:15px;background-color: #2a91b6; border-color:#2a91b6">
+								style="margin:15px;background-color: #CCE9F7; border-color:#CCE9F7">
 								<menu label="Kategori"
-									style="font-size:12px; background-color:  #2a91b6">
+									style="font-size:12px; background-color:  #CCE9F7">
 									<menupopup>
 										<menuitem label="kategori 1" />
 										<menuitem label="kategori 2" />
 									</menupopup>
 								</menu>
 							</menubar>
-							<textbox id="txSearchheader" width="50%"
-								cols="100" value="@bind(vm.searchcover)"
+							<textbox id="txSearchheader"
+								style="box-sizing: border-box; position: absolute; width: 560px; height: 50px; left: 400px; top: 20px; background: #FAFAFA; border: 1px solid #D7D7D7; border-radius: 5px;"
+								value="@bind(vm.searchcover)"
 								placeholder="Apa yang ingin kamu cari?" />
 						</div>
 						<!-- List Menu -->
@@ -66,8 +69,10 @@
 												class="avatar lg img-thumbnail rounded-circle shadow"
 												src="/images/User.png" />
 										</a>
-										<label
-											value="@bind(vm.username)" style="padding:5px;color:white" />
+										<div style="padding:10px;">
+											<label
+												value="@bind(vm.username)" />
+										</div>
 									</hlayout>
 								</div>
 							</h:li>

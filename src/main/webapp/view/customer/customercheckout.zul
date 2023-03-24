@@ -106,7 +106,7 @@
 								<separator />
 								<separator />
 								<n:h6>
-									<n:b>Pilih Metode Pembayaran</n:b>
+									<n:b>Metode Pembayaran</n:b>
 								</n:h6>
 								<div class="card"
 									onClick="@command('doSelectPayment')"
@@ -115,12 +115,13 @@
 										style="cursor:hand;cursor:pointer">
 										<div class="row">
 											<div class="col-10">
-												<label
-													value="Pilih Metode Pembayaran" />
+												<label style="font-weight: bold"
+													value="@load(vm.paymethod)" />
 											</div>
 											<div class="col-2"
 												align="right">
-												<label value=">" />
+												<image
+													src="/images/arrow.png" width="20px" />
 											</div>
 										</div>
 									</div>
@@ -137,6 +138,9 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="card-body">
+			<div class="row" id="divWishlist" />
 		</div>
 	</div>
 </zk>

@@ -12,9 +12,18 @@
 <?link rel="stylesheet" type="text/css"	href="/assets/css/avio-style.css" ?>
 
 <zk xmlns:w="client" xmlns:n="native">
-	<window border="normal" closable="true" action="hide: slideUp"
-		position="center,center" viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.CheckoutPaymentVm')">
-		<caption label="Pilih Pembayaran" />
-		<div id="divMethod"/>
+	<window id="winPaymethod" border="normal" closable="true" action="hide: slideUp"
+		position="center,center"
+		viewModel="@id('vm') @init('com.sds.toms.viewmodel.customer.CheckoutPaymentVm')">
+		<caption />
+		<div class="card" style="padding-left:10px">
+			<n:h6>
+				<n:b>Pilih Pembayaran</n:b>
+			</n:h6>
+		</div>
+		<separator />
+		<separator />
+		<separator />
+		<div id="divMethod" />
 	</window>
 </zk>
