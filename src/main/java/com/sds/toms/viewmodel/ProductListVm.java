@@ -237,7 +237,6 @@ public class ProductListVm {
 			@Override
 			public void onEvent(Event event) throws Exception {
 				doReset();
-				generateCard();
 				BindUtils.postNotifyChange(null, null, ProductListVm.this, "*");
 			}
 		});
