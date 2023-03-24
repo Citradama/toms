@@ -5,7 +5,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.ws.rs.core.MediaType;
 
-
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.internal.MultiPartWriter;
 
@@ -171,20 +170,19 @@ public class RespHandler {
 			Client client = Client.create(clientConfig);
 			client.setConnectTimeout(40 * 1000);
 			client.setReadTimeout(40 * 1000);
-			
+
 			ObjectMapper mapper = new ObjectMapper();
 			WebResource webResource = client.resource(url.trim());
 			System.out.println("url : " + url);
-			
+
 			FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
-			formDataMultiPart.field("file", new File(filepath),
-					MediaType.APPLICATION_OCTET_STREAM_TYPE);
+			formDataMultiPart.field("file", new File(filepath), MediaType.APPLICATION_OCTET_STREAM_TYPE);
 			formDataMultiPart.field("filename", filename);
 			formDataMultiPart.setMediaType(MediaType.MULTIPART_FORM_DATA_TYPE);
-			
+
 			ClientResponse response = null;
-			response = webResource.header("Authorization", "Bearer " + user.getToken())
-					.type("multipart/form-data").post(ClientResponse.class, formDataMultiPart);
+			response = webResource.header("Authorization", "Bearer " + user.getToken()).type("multipart/form-data")
+					.post(ClientResponse.class, formDataMultiPart);
 			String output = response.getEntity(String.class);
 			System.out.println("response : " + output);
 			client.destroy();

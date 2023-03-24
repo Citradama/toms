@@ -26,7 +26,7 @@ public class AuthentificationVm {
 	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
 	private String userid;
 	private String password;
-	private String lblMessage;
+	private String lblMessage; 
 
 	@AfterCompose
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {

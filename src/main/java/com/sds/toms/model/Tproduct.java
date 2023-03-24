@@ -3,6 +3,8 @@ package com.sds.toms.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Tproduct {
 	private Integer id;
 	private String productid;
@@ -19,8 +21,12 @@ public class Tproduct {
 	private Integer productimgsize;
 	private String buildtype;
 	private String status;
+
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private Date createtime;
 	private String createdby;
+
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private Date lastupdated;
 	private String updatedby;
 	private Mcategory category;

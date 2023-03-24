@@ -19,6 +19,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Grid;
@@ -64,7 +65,7 @@ public class McustListVM {
 					row.getChildren().add(new Label(data.getCustname() != null ? data.getCustname() : ""));
 					row.getChildren().add(new Label(data.getMajor() != null ? data.getMajor() : ""));
 					row.getChildren().add(
-							new Label(data.getUniversity()!= null ? data.getUniversity().getUniversityname() : ""));
+							new Label(data.getUniversity() != null ? data.getUniversity().getUniversityname() : ""));
 
 					Button btnDetail = new Button();
 					btnDetail.setClass("btn btn-sm btn-info");
@@ -154,9 +155,11 @@ public class McustListVM {
 																oUser);
 
 														if (rsp.getCode() == 200) {
-															Messagebox.show(Labels.getLabel("common.delete.success"),
-																	WebApps.getCurrent().getAppName(), Messagebox.OK,
-																	Messagebox.INFORMATION);
+															Clients.evalJavaScript(
+																	"swal.fire({" + "icon: 'success',\r\n"
+																			+ "  title: 'Berhasil',\r\n" + "  text: '"
+																			+ Labels.getLabel("common.delete.success")
+																			+ "'," + "})");
 														}
 														doReset();
 														BindUtils.postNotifyChange(null, null, McustListVM.this, "*");
