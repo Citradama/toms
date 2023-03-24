@@ -97,7 +97,7 @@ public class ProductListVm {
 			rowCat.setClass("row-12");
 			Label lbCat = new Label("Kategori :");
 			lbCat.setStyle("font-weight:bold; font-size: 12px; background-color:#e8e1e9; border-radius:2px");
-		
+
 			rowCat.appendChild(lbCat);
 
 			Div rowCat1 = new Div();
@@ -225,7 +225,7 @@ public class ProductListVm {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Command
 	@NotifyChange("*")
 	public void doAddnew() {
@@ -241,7 +241,6 @@ public class ProductListVm {
 			}
 		});
 	}
-
 
 	public Integer getTotalrecord() {
 		return totalrecord;
