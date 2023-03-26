@@ -82,7 +82,7 @@ public class TquestFormVM {
 	@Wire
 	private Window winCategory;
 	@Wire
-	private Div divFooter, divPassword, divAnswers, divSetright, divApprove;
+	private Div divFooter, divPassword, divAnswers, divSetright, divApprove; 
 	@Wire
 	private Combobox cbCategory;
 	@Wire
