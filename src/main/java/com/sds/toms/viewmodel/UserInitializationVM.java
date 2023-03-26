@@ -67,7 +67,7 @@ public class UserInitializationVM {
 			ObjectResp Resp = null;
 
 			String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_musergroupmenu()
-					+ "/usergroup/1";
+					+ "/usergroup/" + oUser.getUsergroup().getId();
 			Resp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 
 			if (Resp.getCode() == 200) {

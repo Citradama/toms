@@ -2,7 +2,7 @@
 <?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
 <?link rel="stylesheet" type="text/css"	href="/assets2/css/custom.css?v=1279713" ?>
 
-<zk xmlns:w="client" xmlns:n="native"  
+<zk xmlns:w="client" xmlns:n="native"
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
 	<window width="60%"
@@ -21,21 +21,19 @@
 					<caption label="Form Soal" />
 					<h:form>
 						<div class="row">
-							<div class="col">
+							<div class="col-6">
 								<label class="form-label">
 									ID Dosen
 								</label>
-								<h:input id="txDosenid" type="text"
-									class="form-control" value="@bind(vm.dosenid)" readonly="true" />
+								<textbox value="@bind(vm.dosenid)"
+									width="100%" readonly="true" />
 							</div>
-							<div class="col">
+							<div class="col-6">
 								<label class="form-label">
 									Nama Dosen
 								</label>
-								<h:input id="txDosenname" type="text"
-									class="form-control" value="@bind(vm.dosenname)"
-									readonly="true" />
-
+								<textbox value="@bind(vm.dosenname)"
+									width="100%" readonly="true" />
 							</div>
 						</div>
 						<separator />
@@ -48,10 +46,10 @@
 									value="@load(vmsgs['mcategory'])">
 								</label>
 							</hlayout>
-							<combobox id="cbCategory" 
+							<combobox id="cbCategory"
 								placeholder="Pilih Kategori..." model="@load(vm.mcategorymodel)"
 								cols="20" selectedItem="@bind(vm.mcategory)">
-								<template name="model" 
+								<template name="model"
 									var="mcategory">
 									<comboitem
 										label="@load(mcategory.category)" />
@@ -74,11 +72,12 @@
 									value="@load(vmsgs['questtext'])" />
 							</hlayout>
 							<vlayout>
-								<button label="Upload Gambar" id="btnImage" 
-									sclass="btn btn-default btn-sm" upload="true,maxsize=2048"
+								<button label="Upload Gambar"
+									id="btnImage" sclass="btn btn-default btn-sm"
+									upload="true,maxsize=2048"
 									onUpload="@command('doUpload', upEvent=event)"
 									autodisable="self" />
-								<image id="img"/>
+								<image id="img" />
 								<textbox id="tbQuest" rows="3"
 									value="@bind(e.questtext)" placeholder="Soal"
 									sclass="form-control" />
@@ -117,6 +116,18 @@
 						class="btn btn-warning">
 						Batal
 					</button>
+				</div>
+				<div id="divApprove" visible="false">
+					<div class="row">
+						<textbox rows="4" maxlength="200" placeholder="Catatan"
+							value="@bind(vm.reason)" />
+						<button onClick="@command('doApprove', arg='A')" class="btn btn-success">
+							Approve
+						</button>
+						<button onClick="@command('doReset', arg='D')" class="btn btn-danger">
+							Decline
+						</button>
+					</div>
 				</div>
 			</div>
 
