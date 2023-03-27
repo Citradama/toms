@@ -14,7 +14,6 @@ import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.AfterCompose;
-import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
@@ -82,7 +81,7 @@ public class TquestFormVM {
 	@Wire
 	private Window winCategory;
 	@Wire
-	private Div divFooter, divPassword, divAnswers, divSetright, divApprove; 
+	private Div divFooter, divPassword, divAnswers, divSetright; 
 	@Wire
 	private Combobox cbCategory;
 	@Wire
@@ -442,21 +441,6 @@ public class TquestFormVM {
 			e.printStackTrace();
 		}
 
-	}
-	
-	@Command
-	public void doApprove(@BindingParam("arg") String arg) {
-		try {
-			if(arg.equals("A") || arg.equals("D") && reason.trim().length() > 0) {
-				
-			} else {
-				Clients.evalJavaScript(
-						"swal.fire({" + "icon: 'warning',\r\n" + "  title: 'Informasi',\r\n"
-								+ "  text: 'Silahkan isi catatan terlebih dahulu.'," + "})");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Command

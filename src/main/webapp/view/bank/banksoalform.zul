@@ -117,21 +117,7 @@
 						Batal
 					</button>
 				</div>
-				<div id="divApprove" visible="false">
-					<div class="row">
-						<textbox rows="4" maxlength="200" placeholder="Catatan"
-							value="@bind(vm.reason)" />
-						<button onClick="@command('doApprove', arg='A')" class="btn btn-success">
-							Approve
-						</button>
-						<button onClick="@command('doReset', arg='D')" class="btn btn-danger">
-							Decline
-						</button>
-					</div>
-				</div>
 			</div>
-
-
 		</div>
 		<separator />
 	</window>
