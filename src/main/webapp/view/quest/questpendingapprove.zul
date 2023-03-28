@@ -52,72 +52,56 @@
 					</grid>
 				</groupbox>
 				<separator />
-				<panel border="normal">
-					<panelchildren>
-						<tabbox id="tabbox" width="100%"
-							sclass="nav_tabs">
-							<tabs id="tabs" />
-						</tabbox>
+				<div class="row">
+					<div class="col-md">
+						<paging id="paging" autohide="true"
+							style="margin-bottom:-20px" />
+					</div>
+					<div class="col-md-2" align="right">
+						<label value="Total Data :"
+							style="font-weight: bold" />
+						<label value="@load(vm.totalrecord)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<div style="max-width:1400px; overflow:auto">
+					<timer id="timer" />
+					<grid id="grid" mold="paging" pagingPosition="top"
+						pageSize="10" emptyMessage="${labels.common.emptymsg}">
+						<columns>
+							<column label="${labels.common.no}"
+								width="5%" align="right" class="head-color " />
+							<column align="center" width="5%"
+								class="head-color ">
+								<checkbox id="chkAll"
+									onCheck="@command('doCheckedall', checked=self.checked)" />
+							</column>
+							<column label="ID Soal" width="15%"
+								class="head-color " />
+							<column label="Kategori" width="20%"
+								class="head-color " />
+							<column label="Soal" class="head-color " />
+							<column label="Waktu Dibuat" width="15%"
+								class="head-color " align="center" />
+							<column label="${labels.common.action}"
+								width="8%" align="center" class="head-color" />
+						</columns>
+					</grid>
+					<separator />
+					<div align="right">
+						<textbox rows="4" maxlength="200" cols="80"
+							placeholder="Catatan" value="@bind(vm.reason)" />
 						<separator />
-						<div class="row">
-							<div class="col-md">
-								<paging id="paging" autohide="true"
-									style="margin-bottom:-20px" />
-							</div>
-							<div class="col-md-2" align="right">
-								<label value="Total Data :"
-									style="font-weight: bold" />
-								<label value="@load(vm.totalrecord)"
-									style="font-weight: bold" />
-							</div>
-						</div>
-						<div style="max-width:1400px; overflow:auto">
-							<timer id="timer" />
-							<grid id="grid" mold="paging"
-								pagingPosition="top" pageSize="10"
-								emptyMessage="${labels.common.emptymsg}">
-								<columns>
-									<column label="${labels.common.no}"
-										width="5%" align="right" class="head-color " />
-									<column align="center" width="5%"
-										class="head-color ">
-										<checkbox id="chkAll"
-											onCheck="@command('doCheckedall', checked=self.checked)" />
-									</column>
-									<column label="ID Soal" width="15%"
-										class="head-color " />
-									<column label="Kategori" width="20%"
-										class="head-color " />
-									<column label="Soal"
-										class="head-color " />
-									<column label="Waktu Dibuat"
-										width="15%" class="head-color " align="center" />
-									<column
-										label="${labels.common.action}" width="8%" align="center"
-										class="head-color" />
-								</columns>
-							</grid>
-							<separator />
-							<div>
-								<div style="padding-left: 20px" class="row" width="100%">
-									<textbox rows="4" maxlength="200"
-										placeholder="Catatan" value="@bind(vm.reason)" />
-									<separator />
-								</div>
-								<button
-									onClick="@command('doApprove', arg='A')" iconSclass="z-icon-check"
-									class="btn btn-primary">
-									Approve
-								</button>
-								<button
-									onClick="@command('doApprove', arg='D')" iconSclass="z-icon-close"
-									class="btn btn-danger">
-									Decline
-								</button>
-							</div>
-						</div>
-					</panelchildren>
-				</panel>
+						<button onClick="@command('doApprove', arg='A')"
+							iconSclass="z-icon-check" class="btn btn-primary">
+							Approve
+						</button>
+						<button onClick="@command('doApprove', arg='D')"
+							iconSclass="z-icon-close" class="btn btn-danger">
+							Decline
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</window>
