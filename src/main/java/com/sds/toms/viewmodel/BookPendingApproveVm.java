@@ -1,4 +1,4 @@
-package com.sds.toms.viewmodel.dosen;
+package com.sds.toms.viewmodel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -37,20 +38,22 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
 import com.sds.toms.model.Muser;
+import com.sds.toms.model.Tbook;
 import com.sds.toms.pojo.BanksoalReq;
 import com.sds.toms.pojo.ObjectResp;
 import com.sds.toms.pojo.QuestApprovalReq;
 import com.sds.toms.util.AppUtil;
+import com.sds.toms.viewmodel.dosen.BookDraftListVm;
 import com.sds.utils.config.ConfigUtil;
 
-public class QuestPendingApproveVm {
+public class BookPendingApproveVm {
 
 	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
 	private Muser oUser;
 
 	private QuestApprovalReq objReq;
 	private List<Long> questids = new ArrayList<>();
-	private Map<Long, BanksoalReq> map = new HashMap<>();
+	private Map<Long, Tbook> map = new HashMap<>();
 
 	private Integer totalrecord;
 	private String reason;
@@ -65,11 +68,12 @@ public class QuestPendingApproveVm {
 
 		doReset();
 		if (grid != null) {
-			grid.setRowRenderer(new RowRenderer<BanksoalReq>() {
+			grid.setRowRenderer(new RowRenderer<Tbook>() {
 
 				@Override
-				public void render(Row row, BanksoalReq data, int index) throws Exception {
+				public void render(Row row, Tbook data, int index) throws Exception {
 					row.getChildren().add(new Label(String.valueOf(index + 1)));
+
 					Checkbox check = new Checkbox();
 					check.setAttribute("obj", data);
 					check.addEventListener(Events.ON_CHECK, new EventListener<Event>() {
@@ -86,11 +90,10 @@ public class QuestPendingApproveVm {
 					if (map.get(data.getId()) != null)
 						check.setChecked(true);
 					row.getChildren().add(check);
-					row.getChildren().add(new Label(data.getQuestid()));
+					row.getChildren().add(new Label(data.getBookid()));
 					row.getChildren().add(new Label(data.getCategory()));
-					row.getChildren().add(new Label(data.getQuesttext()));
-					row.getChildren()
-							.add(new Label(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(data.getCreatetime())));
+					row.getChildren().add(new Label(data.getBookname()));
+					row.getChildren().add(new Label(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(data.getCreatetime())));
 					Button btnDetail = new Button();
 					btnDetail.setClass("btn btn-sm btn-info");
 					btnDetail.setIconSclass("z-icon-eye");
@@ -102,8 +105,8 @@ public class QuestPendingApproveVm {
 						public void onEvent(Event event) throws Exception {
 							Map<String, Object> map = new HashMap<String, Object>();
 							map.put("obj", data);
-							map.put("isDetail", "Y");
-							Window win = (Window) Executions.createComponents("/view/bank/banksoalform.zul", null, map);
+							map.put("isDetail", "Y"); 
+							Window win = (Window) Executions.createComponents("/view/bank/bankmateriform.zul", null, map);
 							win.setWidth("60%");
 							win.setClosable(true);
 							win.doModal();
@@ -123,15 +126,15 @@ public class QuestPendingApproveVm {
 	public void doSearch() {
 		try {
 			ObjectResp Resp = null;
-			List<BanksoalReq> objList = new ArrayList<>();
+			List<Tbook> objList = new ArrayList<>();
 
-			String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_tquest()
-					+ "/abc";
+			String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_tbook()
+					+ "/waitapproval";
 			Resp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 
 			if (Resp.getCode() == 200) {
 				ObjectMapper mapper = new ObjectMapper();
-				objList = mapper.convertValue(Resp.getData(), new TypeReference<List<BanksoalReq>>() {
+				objList = mapper.convertValue(Resp.getData(), new TypeReference<List<Tbook>>() {
 				});
 
 				if (objList == null)
@@ -171,8 +174,8 @@ public class QuestPendingApproveVm {
 										ObjectMapper mapper = new ObjectMapper();
 										ObjectResp rsp = null;
 
-										for (Entry<Long, BanksoalReq> entry : map.entrySet()) {
-											BanksoalReq obj = entry.getValue();
+										for (Entry<Long, Tbook> entry : map.entrySet()) {
+											Tbook obj = entry.getValue();
 											questids.add(obj.getId());
 										}
 
