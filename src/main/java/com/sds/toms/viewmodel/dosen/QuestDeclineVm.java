@@ -118,8 +118,6 @@ public class QuestDeclineVm {
 				
 				grid.setModel(new ListModelList<>(objList));
 				totalrecord = objList.size();
-			} else {
-				System.out.println("null");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

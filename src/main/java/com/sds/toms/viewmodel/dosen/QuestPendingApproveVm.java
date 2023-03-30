@@ -126,7 +126,7 @@ public class QuestPendingApproveVm {
 			List<BanksoalReq> objList = new ArrayList<>();
 
 			String url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_tquest()
-					+ "/abc";
+					+ "/waitapproval";
 			Resp = RespHandler.responObj(url, null, AppUtil.METHOD_GET, oUser);
 
 			if (Resp.getCode() == 200) {
