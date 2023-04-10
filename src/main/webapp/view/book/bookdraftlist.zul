@@ -7,6 +7,7 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<window border="normal" closable="true" action="hide: slideUp"
 		position="center,center">
+		<caption id="caption" visible="false" />
 		<div class="card"
 			viewModel="@id('vm') @init('com.sds.toms.viewmodel.dosen.BookDraftListVm')">
 			<div class="card-header" style="background-color:white;">

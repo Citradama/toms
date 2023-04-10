@@ -103,12 +103,30 @@ public class QuestSummaryDetailVm {
 							label.setStyle("font-weight: bold");
 						vlayout.appendChild(label);
 					}
+					
+					Div divRow = new Div();
+					divRow.setClass("row");
+					
 					Div div = new Div();
+					div.setClass("col-6");
+					div.setStyle("padding-right:40px");
+					label = new Label(data.getQuestid());
+					div.appendChild(label);
+					divRow.appendChild(div);
+					
+					div = new Div();
+					div.setClass("col-6");
 					div.setAlign("right");
 					div.setStyle("padding-right:40px");
 					label = new Label(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(data.getCreatetime()));
 					div.appendChild(label);
-					vlayout.appendChild(div);
+					divRow.appendChild(div);
+					
+					separator = new Separator();
+					vlayout.appendChild(separator);
+					separator = new Separator();
+					vlayout.appendChild(separator);
+					vlayout.appendChild(divRow);
 					HtmlNativeComponent hr = new HtmlNativeComponent("hr");
 					vlayout.appendChild(hr);
 					row.appendChild(vlayout);

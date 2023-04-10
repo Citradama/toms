@@ -15,22 +15,37 @@
 							<div class="col-12" align="center">
 								<image src="/images/download2.png"
 									style="padding-right:12px; width:13%" />
-								<label value="BANK SOAL"
-									style="font-size: 24px; font-weight: bold" />
+								<label value="BANK"
+									style="font-size: 20px; font-weight: bold" />
 							</div>
 						</div>
 					</div>
-					<div class="card-body"
-						style="cursor:hand;cursor:pointer"
-						onClick="@command('doView', arg='JUMLAH')">
-						<div class="row">
+					<div class="card-body">
+						<div class="row"
+							style="cursor:hand;cursor:pointer"
+							onClick="@command('doViewQuest', arg='JUMLAH')">
 							<div class="col-5">
 								<label value="JUMLAH SOAL"
-									style="font-size: 24px; font-weight: bold" />
+									style="font-size: 20px; font-weight: bold" />
 							</div>
 							<div class="col-7" align="right">
-								<label style="font-size: 26px; font-weight: bold"
+								<label
+									style="font-size: 24px; font-weight: bold"
 									value="@load(vm.obj.totalquest) @converter('formatedNumber', format='#,###')" />
+							</div>
+						</div>
+						<separator />
+						<div class="row"
+							style="cursor:hand;cursor:pointer"
+							onClick="@command('doViewBook', arg='JUMLAH')">
+							<div class="col-5">
+								<label value="JUMLAH MATERI"
+									style="font-size: 20px; font-weight: bold" />
+							</div>
+							<div class="col-7" align="right">
+								<label
+									style="font-size: 24px; font-weight: bold"
+									value="@load(vm.objBook.totalbook) @converter('formatedNumber', format='#,###')" />
 							</div>
 						</div>
 					</div>
@@ -44,21 +59,36 @@
 								<image src="/images/approve.png"
 									style="padding-right:12px; width:13%" />
 								<label value="MENUNGGU PERSETUJUAN"
-									style="font-size: 24px; font-weight: bold" />
+									style="font-size: 20px; font-weight: bold" />
 							</div>
 						</div>
 					</div>
-					<div class="card-body"
-						style="cursor:hand;cursor:pointer"
-						onClick="@command('doView', arg='approve')">
-						<div class="row">
+					<div class="card-body">
+						<div class="row"
+							style="cursor:hand;cursor:pointer"
+							onClick="@command('doViewQuest', arg='approve')">
 							<div class="col-5">
 								<label value="JUMLAH SOAL"
-									style="font-size: 24px; font-weight: bold" />
+									style="font-size: 20px; font-weight: bold" />
 							</div>
 							<div class="col-7" align="right">
-								<label style="font-size: 26px; font-weight: bold"
+								<label
+									style="font-size: 24px; font-weight: bold"
 									value="@load(vm.obj.approvalquest) @converter('formatedNumber', format='#,###')" />
+							</div>
+						</div>
+						<separator />
+						<div class="row"
+							style="cursor:hand;cursor:pointer"
+							onClick="@command('doViewBook', arg='approve')">
+							<div class="col-5">
+								<label value="JUMLAH MATERI"
+									style="font-size: 20px; font-weight: bold" />
+							</div>
+							<div class="col-7" align="right">
+								<label
+									style="font-size: 24px; font-weight: bold"
+									value="@load(vm.objBook.approvalbook) @converter('formatedNumber', format='#,###')" />
 							</div>
 						</div>
 					</div>
@@ -71,22 +101,37 @@
 							<div class="col-12" align="center">
 								<image src="/images/pending2.png"
 									style="padding-right:12px; width:13%" />
-								<label value="DRAFT SOAL"
-									style="font-size: 24px; font-weight: bold" />
+								<label value="DRAFT"
+									style="font-size: 20px; font-weight: bold" />
 							</div>
 						</div>
 					</div>
-					<div class="card-body"
-						style="cursor:hand;cursor:pointer"
-						onClick="@command('doView', arg='draft')">
-						<div class="row">
+					<div class="card-body">
+						<div class="row"
+							style="cursor:hand;cursor:pointer"
+							onClick="@command('doViewQuest', arg='draft')">
 							<div class="col-5">
 								<label value="JUMLAH SOAL"
-									style="font-size: 24px; font-weight: bold" />
+									style="font-size: 20px; font-weight: bold" />
 							</div>
 							<div class="col-7" align="right">
-								<label style="font-size: 26px; font-weight: bold"
+								<label
+									style="font-size: 24px; font-weight: bold"
 									value="@load(vm.obj.draftquest) @converter('formatedNumber', format='#,###')" />
+							</div>
+						</div>
+						<separator />
+						<div class="row"
+							style="cursor:hand;cursor:pointer"
+							onClick="@command('doViewBook', arg='draft')">
+							<div class="col-5">
+								<label value="JUMLAH MATERI"
+									style="font-size: 20px; font-weight: bold" />
+							</div>
+							<div class="col-7" align="right">
+								<label
+									style="font-size: 24px; font-weight: bold"
+									value="@load(vm.objBook.draftbook) @converter('formatedNumber', format='#,###')" />
 							</div>
 						</div>
 					</div>
@@ -100,21 +145,36 @@
 								<image src="/images/reject2.png"
 									style="padding-right:12px; width:13%" />
 								<label value="DITOLAK"
-									style="font-size: 24px; font-weight: bold" />
+									style="font-size: 20px; font-weight: bold" />
 							</div>
 						</div>
 					</div>
-					<div class="card-body"
-						style="cursor:hand;cursor:pointer"
-						onClick="@command('doView', arg='decline')">
-						<div class="row">
+					<div class="card-body">
+						<div class="row"
+							style="cursor:hand;cursor:pointer"
+							onClick="@command('doViewQuest', arg='decline')">
 							<div class="col-5">
 								<label value="JUMLAH SOAL"
-									style="font-size: 24px; font-weight: bold" />
+									style="font-size: 20px; font-weight: bold" />
 							</div>
 							<div class="col-7" align="right">
-								<label style="font-size: 26px; font-weight: bold"
+								<label
+									style="font-size: 24px; font-weight: bold"
 									value="@load(vm.obj.declinequest) @converter('formatedNumber', format='#,###')" />
+							</div>
+						</div>
+						<separator />
+						<div class="row"
+							style="cursor:hand;cursor:pointer"
+							onClick="@command('doViewBook', arg='decline')">
+							<div class="col-5">
+								<label value="JUMLAH MATERI"
+									style="font-size: 20px; font-weight: bold" />
+							</div>
+							<div class="col-7" align="right">
+								<label
+									style="font-size: 24px; font-weight: bold"
+									value="@load(vm.objBook.declinebook) @converter('formatedNumber', format='#,###')" />
 							</div>
 						</div>
 					</div>

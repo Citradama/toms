@@ -13,6 +13,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
@@ -25,6 +26,7 @@ import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Caption;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Grid;
@@ -56,11 +58,16 @@ public class BookDraftListVm {
 
 	@Wire
 	private Grid grid;
+	@Wire
+	private Caption caption;
 
 	@AfterCompose
-	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
+	public void afterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("isSummary") String isSummary) {
 		Selectors.wireComponents(view, this, false);
 		oUser = (Muser) zkSession.getAttribute("oUser");
+		
+		if(isSummary != null && isSummary.equals("Y"))
+			caption.setVisible(true);
 		
 		doReset();
 		if (grid != null) {
