@@ -60,7 +60,7 @@
 											<hlayout>
 												<label value=":" />
 												<label
-													value="@load(vm.obj.category.category)" />
+													value="@load(vm.obj.categoryname)" />
 											</hlayout>
 										</row>
 										<row>
@@ -128,8 +128,8 @@
 								</div>
 								<separator />
 								<div align="center">
-									<button autodisable="self"
-										id="btnWishlist" style="border-radius:10px"
+									<button autodisable="self" onClick="@command('doSave')"
+										id="btnProcess" style="border-radius:10px"
 										class="btn btn-success btn-block my-4" label="Proses"
 										width="200px" tooltiptext="Proses" />
 								</div>

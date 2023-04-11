@@ -87,7 +87,7 @@
 											<hlayout>
 												<label value=":" />
 												<label
-													value="@load(vm.obj.category.category)" />
+													value="@load(vm.obj.categoryname)" />
 											</hlayout>
 										</row>
 										<row>
@@ -127,7 +127,8 @@
 								<separator />
 								<div class="card"
 									style="border: 1px solid #D7D7D7; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
-									<div class="row" style="padding:10px">
+									<div class="row"
+										style="padding:10px">
 										<div class="col-2">
 											<label value="Rp."
 												style="font-weight: bold" />
@@ -147,12 +148,19 @@
 											class="btn btn-success btn-block my-4"
 											label="Tambah ke Wishlist" width="200px"
 											tooltiptext="Tambah ke Wishlist" />
+										<button autodisable="self" visible="false"
+											id="btnUnwishlist" iconSclass="z-icon-heart"
+											style="border-radius:10px" onClick="@command('doWishlist')"
+											class="btn btn-danger btn-block my-4"
+											label="Tambah ke Wishlist" width="200px"
+											tooltiptext="Hapus Wishlist" />
 										<separator />
 										<separator />
-										<button autodisable="self" onClick="@command('doBuy')"
-											iconSclass="z-icon-shopping-cart" style="border-radius:10px"
-											width="200px" class="btn btn-danger btn-block my-4"
-											label="Beli Sekarang" tooltiptext="Beli Sekarang" />
+										<button autodisable="self"
+											onClick="@command('doBuy')" iconSclass="z-icon-shopping-cart"
+											style="border-radius:10px" width="200px"
+											class="btn btn-danger btn-block my-4" label="Beli Sekarang"
+											tooltiptext="Beli Sekarang" />
 									</hlayout>
 								</div>
 							</div>

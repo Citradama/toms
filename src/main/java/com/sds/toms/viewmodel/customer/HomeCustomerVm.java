@@ -26,10 +26,7 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Hlayout;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
-import org.zkoss.zul.Menubar;
 import org.zkoss.zul.Separator;
-import org.zkoss.zul.Textbox;
-import org.zkoss.zul.Window;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -109,7 +106,7 @@ public class HomeCustomerVm {
 					divCol.setStyle("background-color:#AADAF2; border-radius:8px;");
 					divCol.setClass("col-6");
 
-					Label kategori = new Label(obj.getCategory().getCategory());
+					Label kategori = new Label(obj.getCategoryname());
 					kategori.setStyle("font-size:65%; font-family:arial");
 					divCol.appendChild(kategori);
 					divRow.appendChild(divCol);

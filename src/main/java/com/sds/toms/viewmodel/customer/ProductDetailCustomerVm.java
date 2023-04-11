@@ -43,7 +43,7 @@ public class ProductDetailCustomerVm {
 	private Div divContent;
 
 	@Wire
-	private Button btnWishlist;
+	private Button btnWishlist, btnUnwishlist;
 
 	@AfterCompose
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("obj") Tproduct obj,
@@ -60,6 +60,14 @@ public class ProductDetailCustomerVm {
 
 		lblTotalmateri = "- Terdiri dari 1 modul materi pembelajaran yang diberikan.";
 		lblTotalsoal = "- Terdiri dari paket soal try out dengan jawaban yang diberikan diakhir pengerjaan sebanyak 10 soal";
+
+		if (obj.getIswishlist() != null && obj.getIswishlist().equals("Y")) {
+			btnUnwishlist.setVisible(true);
+			btnWishlist.setVisible(false);
+		} else {
+			btnWishlist.setVisible(true);
+			btnUnwishlist.setVisible(false);
+		}
 	}
 
 	@Command
@@ -70,21 +78,45 @@ public class ProductDetailCustomerVm {
 			ObjectResp rsp = null;
 
 			Twishlist objWish = new Twishlist();
-			objWish.setMcust(oCust);
-			objWish.setTproduct(obj);
+			objWish.setCustid(oCust.getCustid());
+			objWish.setCustname(oCust.getCustname());
+			objWish.setProduct(obj);
 
 			url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_twishlist();
 			rsp = RespHandler.responObj(url, mapper.writeValueAsString(objWish), AppUtil.METHOD_POST, oUser);
 			if (rsp.getCode() == 201 || rsp.getCode() == 200) {
-				btnWishlist.setLabel("Hapus Wishlist");
-				Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n" + "  title: 'Berhasil',\r\n"
-						+ "  text: 'Paket berhasil disimpan.'," + "})");
+				url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_tproduct();
+				obj.setIswishlist("Y");
+
+				url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_twishlist();
+				rsp = RespHandler.responObj(url, mapper.writeValueAsString(objWish), AppUtil.METHOD_PUT, oUser);
+
+				if (rsp.getCode() == 201 || rsp.getCode() == 200) {
+					btnUnwishlist.setVisible(true);
+					btnWishlist.setVisible(false);
+					Clients.evalJavaScript("swal.fire({" + "icon: 'success',\r\n" + "  title: 'Berhasil',\r\n"
+							+ "  text: 'Paket berhasil disimpan.'," + "})");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	@Command
+	public void doUnwishlist() {
+		try {
+			String url = "";
+			ObjectMapper mapper = new ObjectMapper();
+			ObjectResp rsp = null;
+			
+			url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_twishlist();
+			rsp = RespHandler.responObj(url, null, AppUtil.METHOD_DEL, oUser);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	@Command
 	public void doBuy() {
 		try {
