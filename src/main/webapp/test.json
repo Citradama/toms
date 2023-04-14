@@ -1,16 +1,13 @@
 {
-  "id":null,
-  "productid":"Q53543",
-  "productname":"PAKET 2",
-  "categoryname":"ILMU KOMPUTER KOMUNIKASI",
-  "categoryid":1,
-  "productdesc":"test123",
-  "totalquest":2,
-  "totalbook":0,
-  "duration":0,
-  "passingscore":66,
-  "price":120000,
-  "buildtype":"",
-  "questids":["6","6"],
-  "bookids":["9","9"]
+	"checkoutid": null,
+	"custid": "1234",
+	"custname": "SALSABILA, M.KOM.",
+	"categoryid": 1,
+	"category": "ILMU KOMPUTER KOMUNIKASI",
+	"productid": "P-2023830003",
+	"productname": "PAKET 7",
+	"productdesc": "TESTY",
+	"productimglink": null,
+	"price": 300000,
+	"checktime": "2023-04-13T11:22:48"
 }

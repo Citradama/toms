@@ -1,15 +1,11 @@
 package com.sds.toms.viewmodel.customer;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ws.rs.core.MediaType;
 
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.json.JSONObject;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -23,16 +19,9 @@ import org.zkoss.zul.Image;
 import org.zkoss.zul.Menubar;
 import org.zkoss.zul.Textbox;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sds.toms.handler.RespHandler;
-import com.sds.toms.model.Mcust;
-import com.sds.toms.model.Muser;
 import com.sds.toms.pojo.LoginResp;
-import com.sds.toms.pojo.ObjectResp;
-import com.sds.toms.pojo.SearchReq;
-import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -96,21 +85,6 @@ public class CustomerCoverVm {
 					mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 					LoginResp rsp = mapper.readValue(output, LoginResp.class);
 					if (rsp.getCode() == 200) {
-						Muser oUser = rsp.getData();
-						SearchReq req = new SearchReq();
-						req.setGeneral(rsp.getData().getUserid());
-
-						ObjectResp rspObj = null;
-						url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_mcust();
-						rspObj = RespHandler.responObj(url, mapper.writeValueAsString(req), AppUtil.METHOD_POST, oUser);
-						if (rspObj.getCode() == 201 || rspObj.getCode() == 200) {
-							Mcust mcust = mapper.convertValue(rsp.getData(), new TypeReference<Mcust>() {
-							});
-
-							if (mcust != null) {
-								zkSession.setAttribute("oCust", mcust);
-							}
-						}
 						zkSession.setAttribute("oUser", rsp.getData());
 						Executions.sendRedirect("/view/headercustomer.zul");
 					} else {

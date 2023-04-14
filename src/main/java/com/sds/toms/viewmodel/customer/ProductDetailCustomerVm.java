@@ -20,10 +20,8 @@ import org.zkoss.zul.Div;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.toms.handler.RespHandler;
-import com.sds.toms.model.Mcust;
 import com.sds.toms.model.Muser;
 import com.sds.toms.model.Tproduct;
-import com.sds.toms.model.Twishlist;
 import com.sds.toms.pojo.ObjectResp;
 import com.sds.toms.util.AppUtil;
 import com.sds.utils.config.ConfigUtil;
@@ -31,7 +29,6 @@ import com.sds.utils.config.ConfigUtil;
 public class ProductDetailCustomerVm {
 	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
 	private Muser oUser;
-	private Mcust oCust;
 
 	private Tproduct obj;
 	private String username;
@@ -50,7 +47,6 @@ public class ProductDetailCustomerVm {
 			@ExecutionArgParam("content") Div divContent) {
 		Selectors.wireComponents(view, this, false);
 		oUser = (Muser) zkSession.getAttribute("oUser");
-		oCust = (Mcust) zkSession.getAttribute("oCust");
 
 		this.obj = obj;
 		this.divContent = divContent;
@@ -77,19 +73,15 @@ public class ProductDetailCustomerVm {
 			ObjectMapper mapper = new ObjectMapper();
 			ObjectResp rsp = null;
 
-			Twishlist objWish = new Twishlist();
-			objWish.setCustid(oCust.getCustid());
-			objWish.setCustname(oCust.getCustname());
-			objWish.setProduct(obj);
+			String productid = obj.getProductid();
 
 			url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_twishlist();
-			rsp = RespHandler.responObj(url, mapper.writeValueAsString(objWish), AppUtil.METHOD_POST, oUser);
+			rsp = RespHandler.responObj(url, mapper.writeValueAsString(productid), AppUtil.METHOD_POST, oUser);
 			if (rsp.getCode() == 201 || rsp.getCode() == 200) {
-				url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_tproduct();
 				obj.setIswishlist("Y");
-
-				url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_twishlist();
-				rsp = RespHandler.responObj(url, mapper.writeValueAsString(objWish), AppUtil.METHOD_PUT, oUser);
+				
+				url = ConfigUtil.getConfig().getUrl_base() + ConfigUtil.getConfig().getEndpoint_tproduct();
+				rsp = RespHandler.responObj(url, mapper.writeValueAsString(obj), AppUtil.METHOD_PUT, oUser);
 
 				if (rsp.getCode() == 201 || rsp.getCode() == 200) {
 					btnUnwishlist.setVisible(true);
@@ -129,6 +121,7 @@ public class ProductDetailCustomerVm {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public Tproduct getObj() {
 		return obj;

@@ -3,6 +3,8 @@ package com.sds.toms.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Tcheckout {
 
 	private Long checkoutid;
@@ -15,6 +17,8 @@ public class Tcheckout {
 	private String productdesc;
 	private String productimglink;
 	private BigDecimal price;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private Date checktime;
 	
 	public Long getCheckoutid() {
